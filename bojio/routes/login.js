@@ -6,9 +6,9 @@ router.get('/',
   passport.authenticate('facebook'));
 
 router.get('/return', 
-  passport.authenticate('facebook', { failureRedirect: '/' }),
+  passport.authenticate('facebook', { failureRedirect: 'http://localhost:3000/' }),
   function(req, res) {
-    res.redirect('/');
+    res.redirect('http://localhost:3000/');
   });
 
 module.exports = router;

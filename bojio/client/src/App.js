@@ -3,6 +3,18 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  state = { user: null }
+
+  componentDidMount() {
+    fetch('/user', { credentials: 'same-origin' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.user) {
+          this.setState({ user: data.user })
+        }
+      });
+  }
+
   render() {
     return (
       <div className="App">
@@ -13,8 +25,17 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        { this._loginStatus() }
       </div>
     );
+  }
+
+  _loginStatus() {
+    if (this.state.user) {
+      return <span>Logged in as { this.state.user.displayName }</span>;
+    } else {
+      return <a href="http://localhost:3001/login">Login with Facebook</a>;
+    }
   }
 }
 

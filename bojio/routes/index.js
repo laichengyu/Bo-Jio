@@ -7,7 +7,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/user',
-  require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
     res.json({ user: req.user });
   });
