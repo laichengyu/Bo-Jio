@@ -5,5 +5,12 @@
     "database": "bojio",
     "host": "127.0.0.1",
     "dialect": "mysql"
+  },
+  "production": {
+    "username": "aws",
+    "password": "database",
+    "database": "aa1ak57hkpjcl51",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }
