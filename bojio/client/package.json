@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "1.0.11"
+    "react-scripts": "1.0.11",
+    "semantic-ui-react": "^0.71.5"
   },
   "scripts": {
     "start": "PORT=3000 react-scripts start",

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './img/logo.png';
-import fbButton from './img/fb-button.png';
-import Services from './services';
-import './App.css';
+import Services from '../services';
+import Login from './Login';
+import MainApp from './MainApp';
+import { Dimmer, Loader } from 'semantic-ui-react'
 
 class App extends Component {
   state = { user: null, isLoading: true, services: null }
@@ -32,32 +32,18 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Don't say bojio!</h2>
-          { this._loginStatus() }
-        </div>
-      </div>
-    );
-  }
-
-  _loginStatus() {
     if (this.state.isLoading) {
-      return null;
-    }
-    if (this.state.user) {
       return (
-        <div>
-          <img src={ this.state.user.pictureUrl } alt="fb-profile" />
-          <span>Logged in as { this.state.user.name }</span>
-        </div>
-      );
+        <Dimmer active inverted>
+          <Loader size='massive'>Loading</Loader>
+        </Dimmer>
+      )
+    }
+
+    if (this.state.services) {
+      return <MainApp services={this.state.services} />
     } else {
-      return <a href="http://localhost:3001/login">
-        <img src={fbButton} className="fb-login-button" alt="login-button"/>
-      </a>;
+      return <Login />
     }
   }
 }

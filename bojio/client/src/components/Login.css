@@ -1,13 +1,13 @@
-.App {
+.Login {
   text-align: center;
 }
 
-.App-logo {
-  /*animation: App-logo-spin infinite 20s linear;*/
+.Login-logo {
+  /*animation: Login-logo-spin infinite 20s linear;*/
   height: 100px;
 }
 
-.App-header {
+.Login-header {
   height: 220px;
   padding: 20px;
   position: absolute;
@@ -18,7 +18,7 @@
   left: 0;
 }
 
-.App-header h2 {
+.Login-header h2 {
   color: grey;
   font-style: italic;
   font-family: 'Aclonica';
@@ -28,10 +28,3 @@
   width: 200px;
   height: auto;
 }
-
-/*
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-*/
