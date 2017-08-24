@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../img/logo.png';
 import { Dimmer, Loader, Header, Image, Menu, Button } from 'semantic-ui-react'
+import SearchExampleStandard from './SearchExampleStandard';
 
 class NavBar extends Component {
   state = {
@@ -31,6 +32,20 @@ class NavBar extends Component {
       <Menu size='large'>
         <Menu.Item name='home'>
           <Image size='tiny' src={logo} />
+        </Menu.Item>
+
+        <Menu.Item name='home-text'>
+          <Header as='h5' content='Home'></Header>
+        </Menu.Item>
+
+        <Menu.Item name='my-events'>
+          <Header as='h5' content='My Events'></Header>
+        </Menu.Item>
+
+        <Menu.Item name='search-bar'>
+          <Header as='h5'>
+            <SearchExampleStandard/>
+          </Header>
         </Menu.Item>
 
         <Menu.Menu position='right'>
