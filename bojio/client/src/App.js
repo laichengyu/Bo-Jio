@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './img/logo.png';
+import fbButton from './img/fb-button.png';
 import './App.css';
 
 class App extends Component {
@@ -20,12 +21,9 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>Don't say bojio</h2>
+          { this._loginStatus() }
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        { this._loginStatus() }
       </div>
     );
   }
@@ -34,7 +32,9 @@ class App extends Component {
     if (this.state.user) {
       return <span>Logged in as { this.state.user.displayName }</span>;
     } else {
-      return <a href="http://localhost:3001/login">Login with Facebook</a>;
+      return <a href="http://localhost:3001/login">
+        <img src={fbButton} className="fb-login-button" alt="login-button"/>
+      </a>;
     }
   }
 }

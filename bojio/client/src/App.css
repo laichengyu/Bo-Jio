@@ -3,22 +3,35 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
+  /*animation: App-logo-spin infinite 20s linear;*/
   height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  height: 200px;
   padding: 20px;
-  color: white;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
-.App-intro {
-  font-size: large;
+.App-header h2 {
+  color: grey;
+  font-style: italic;
+  font-family: 'Aclonica';
 }
 
+.fb-login-button {
+  width: 15%;
+  height: auto;
+}
+
+/*
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+*/
