@@ -1,21 +1,33 @@
 import React, { Component } from 'react';
 import logo from './img/logo.png';
 import fbButton from './img/fb-button.png';
+import Services from './services';
 import './App.css';
 
 class App extends Component {
-  state = { user: null, isLoading: true }
+  state = { user: null, isLoading: true, services: null }
 
   componentDidMount() {
     fetch('/login_status', { credentials: 'same-origin' })
       .then(res => res.json())
       .then(data => {
-        if (data.status === 'OK') {
-          this.setState({ user: data.user })
-        }
         this.setState({
           isLoading: false
         });
+
+        if (data.status !== 'OK') {
+          return;
+        }
+
+        const services = new Services(data.user.accessToken, data.user.id);
+        services.facebook
+          .userInfo()
+          .then(user => {
+            this.setState({
+              services: services,
+              user: user
+            });
+          });
       });
   }
 
@@ -36,7 +48,12 @@ class App extends Component {
       return null;
     }
     if (this.state.user) {
-      return <span>Logged in as { this.state.user.displayName }</span>;
+      return (
+        <div>
+          <img src={ this.state.user.pictureUrl } alt="fb-profile" />
+          <span>Logged in as { this.state.user.name }</span>
+        </div>
+      );
     } else {
       return <a href="http://localhost:3001/login">
         <img src={fbButton} className="fb-login-button" alt="login-button"/>
