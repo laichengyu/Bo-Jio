@@ -7,10 +7,10 @@ class App extends Component {
   state = { user: null }
 
   componentDidMount() {
-    fetch('/user', { credentials: 'same-origin' })
+    fetch('/login_status', { credentials: 'same-origin' })
       .then(res => res.json())
       .then(data => {
-        if (data.user) {
+        if (data.status === 'OK') {
           this.setState({ user: data.user })
         }
       });
