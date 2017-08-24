@@ -4,7 +4,7 @@ import fbButton from './img/fb-button.png';
 import './App.css';
 
 class App extends Component {
-  state = { user: null }
+  state = { user: null, isLoading: true }
 
   componentDidMount() {
     fetch('/login_status', { credentials: 'same-origin' })
@@ -13,6 +13,9 @@ class App extends Component {
         if (data.status === 'OK') {
           this.setState({ user: data.user })
         }
+        this.setState({
+          isLoading: false
+        });
       });
   }
 
@@ -29,6 +32,9 @@ class App extends Component {
   }
 
   _loginStatus() {
+    if (this.state.isLoading) {
+      return null;
+    }
     if (this.state.user) {
       return <span>Logged in as { this.state.user.displayName }</span>;
     } else {
