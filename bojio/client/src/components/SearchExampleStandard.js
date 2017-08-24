@@ -1,15 +1,15 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import { Search, Grid, Header, Image } from 'semantic-ui-react'
+import { Search, Grid, Header } from 'semantic-ui-react'
 import logo from '../img/logo.png'
 
 const source = _.times(5, () => ({
   /*
-  The values here are just dummy entries, to be filled with database items
+  The values for source are just dummy entries, to be filled with database items
   */
   title: 'test-title',
   description: 'test-desc',
-  image: <Image src={logo} />,
+  image: <img src={logo} />,
   price: '$2.40',
 }))
 
