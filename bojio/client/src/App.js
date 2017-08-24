@@ -11,11 +11,10 @@ class App extends Component {
     fetch('/login_status', { credentials: 'same-origin' })
       .then(res => res.json())
       .then(data => {
-        this.setState({
-          isLoading: false
-        });
-
         if (data.status !== 'OK') {
+          this.setState({
+            isLoading: false
+          });
           return;
         }
 
@@ -25,7 +24,8 @@ class App extends Component {
           .then(user => {
             this.setState({
               services: services,
-              user: user
+              user: user,
+              isLoading: false
             });
           });
       });
