@@ -1,4 +1,10 @@
 {
-  "CLIENT_ID": "1500889993326538",
-  "CLIENT_SECRET": "43aa525db80dba749e869eb1e06f4694"
+  "development": {
+    "CLIENT_ID": "148189835771440",
+    "CLIENT_SECRET": "410da93c1c2e104f70c4eab546ec3355"
+  },
+  "production": {
+    "CLIENT_ID": "1500889993326538",
+    "CLIENT_SECRET": "43aa525db80dba749e869eb1e06f4694"
+  }
 }

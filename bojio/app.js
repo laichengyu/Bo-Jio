@@ -4,7 +4,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var path = require('path');
 
-var facebookConfig = require(path.join(__dirname, 'config', 'facebook.json'));
+var env       = process.env.NODE_ENV || "development";
+var facebookConfig = require(path.join(__dirname, 'config', 'facebook.json'))[env];
 var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
 
