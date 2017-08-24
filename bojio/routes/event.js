@@ -24,6 +24,18 @@ router.post('/create',
     });
   });
 
+router.get('/list',
+  login.ensureLoggedIn(),
+  function(req, res) {
+    models.Event.findAll({})
+      .then(function(events) {
+      res.json({
+        status: 'OK',
+        events: events
+      });
+    });
+  });
+
 router.get('/:event_id/info',
   login.ensureLoggedIn(),
   function(req, res) {
