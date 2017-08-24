@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../img/logo.png';
 import { Dimmer, Loader, Header, Image, Menu, Button } from 'semantic-ui-react'
-import './NavBar.css';
 
 class NavBar extends Component {
   state = {
