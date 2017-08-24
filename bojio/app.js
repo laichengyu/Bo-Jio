@@ -19,7 +19,7 @@ var Strategy = require('passport-facebook').Strategy;
 passport.use(new Strategy({
     clientID: facebookConfig.CLIENT_ID,
     clientSecret: facebookConfig.CLIENT_SECRET,
-    callbackURL: 'http://localhost:3001/login/return'
+    callbackURL: '/login/return'
   },
   function(accessToken, refreshToken, profile, cb) {
     // In this example, the user's Facebook profile is supplied as the user
@@ -27,7 +27,11 @@ passport.use(new Strategy({
     // be associated with a user record in the application's database, which
     // allows for account linking and authentication with other identity
     // providers.
-    return cb(null, profile);
+    return cb(null, {
+      id: profile.id,
+      displayName: profile.displayName,
+      accessToken: accessToken
+    });
   }));
 
 
