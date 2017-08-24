@@ -67,6 +67,7 @@ app.use(passport.session());
 
 app.use('/', require('./routes/index'));
 app.use('/login', require('./routes/login'));
+app.use('/event', require('./routes/event'));
 
 app.use(function(req, res, next) {
   res.json({ status: "Not Found" });

@@ -4,18 +4,21 @@ var router = express.Router();
 var passport = require('passport');
 
 router.get('/',
-  passport.authenticate('facebook'));
-
-router.get('/return', 
-  passport.authenticate('facebook', { failureRedirect: 'http://localhost:3000/' }),
-    function(req, res) {
+  function(req, res, next) {
+    if (req.user) {
       models.User.findOrCreate({
         where: {
           facebookId: req.user.id
         }
-      }).then(function() {
-      res.redirect('http://localhost:3000/');
-    });
-  });
+      });
+      res.redirect('http://localhost:3000');
+    } else {
+      next();
+    }
+  },
+  passport.authenticate('facebook'));
+
+router.get('/return',
+  passport.authenticate('facebook', { successReturnToOrRedirect: '/login', failureRedirect: '/login' }));
 
 module.exports = router;
