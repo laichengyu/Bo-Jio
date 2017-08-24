@@ -6,9 +6,18 @@ router.get('/', function(req, res, next) {
   res.json({ status: "Success" });
 });
 
-router.get('/user',
-  function(req, res){
-    res.json({ user: req.user });
+router.get('/login_status',
+  function(req, res) {
+    if (req.user) {
+      res.json({
+        status: 'OK',
+        user: req.user
+      });
+    } else {
+      res.json({
+        status: 'FAILED'
+      });
+    }
   });
 
 module.exports = router;
