@@ -1,5 +1,9 @@
+.MainApp {
+  margin-top: 100px;
+}
+
 .Wrapper {
-  width: 100%;
+  width: 70%;
   height: 100%;
   display: table;
   min-height: 100%;
