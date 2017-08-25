@@ -29,7 +29,7 @@ class NavBar extends Component {
       )
     }
     return (
-      <Menu size='large'>
+      <Menu size='large' secondary>
         <Menu.Item name='home'>
           <Image size='tiny' src={logo} />
         </Menu.Item>
