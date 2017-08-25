@@ -43,9 +43,7 @@ class NavBar extends Component {
         </Menu.Item>
 
         <Menu.Item name='search-bar'>
-          <Header as='h5'>
             <SearchExampleStandard/>
-          </Header>
         </Menu.Item>
 
         <Menu.Menu position='right'>

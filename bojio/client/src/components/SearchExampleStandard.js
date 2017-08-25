@@ -9,7 +9,7 @@ const source = _.times(5, () => ({
   */
   title: 'test-title',
   description: 'test-desc',
-  image: <img src={logo} />,
+  image: <img src={logo} alt='thumbnail'/>,
   price: '$2.40',
 }))
 
