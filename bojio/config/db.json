@@ -10,7 +10,7 @@
     "username": "aws",
     "password": "database",
     "database": "ebdb",
-    "host": "aatul5wj2gaxfo.clfq7a9km8wz.ap-southeast-1.rds.amazonaws.com",
+    "host": "aaz4f8r0mi9gf1.clfq7a9km8wz.ap-southeast-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }

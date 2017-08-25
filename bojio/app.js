@@ -20,7 +20,7 @@ var Strategy = require('passport-facebook').Strategy;
 passport.use(new Strategy({
     clientID: facebookConfig.CLIENT_ID,
     clientSecret: facebookConfig.CLIENT_SECRET,
-    callbackURL: '/login/return'
+    callbackURL: '/api/login/return'
   },
   function(accessToken, refreshToken, profile, cb) {
     // In this example, the user's Facebook profile is supplied as the user

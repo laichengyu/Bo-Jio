@@ -10,7 +10,7 @@ class Login extends Component {
         <div className="Login-header">
           <img src={logo} className="Login-logo" alt="logo" />
           <h2>Don't say bojio!</h2>
-          <a href="http://localhost:8081/login">
+          <a href="/api/login">
             <img src={fbButton} className="fb-login-button" alt="login-button"/>
           </a>
         </div>

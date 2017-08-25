@@ -24,6 +24,6 @@ router.get('/',
   passport.authenticate('facebook'));
 
 router.get('/return',
-  passport.authenticate('facebook', { successReturnToOrRedirect: '/login', failureRedirect: '/login' }));
+  passport.authenticate('facebook', { successReturnToOrRedirect: '/api/login', failureRedirect: '/api/login' }));
 
 module.exports = router;
