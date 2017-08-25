@@ -66,9 +66,14 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveU
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', require('./routes/index'));
-app.use('/login', require('./routes/login'));
-app.use('/event', require('./routes/event'));
+if (env === 'production') {
+  // Serve static files from the React app
+  app.use(express.static(path.join(__dirname, 'client/build')));
+}
+
+app.use('/api', require('./routes/index'));
+app.use('/api/login', require('./routes/login'));
+app.use('/api/event', require('./routes/event'));
 
 app.use(function(req, res, next) {
   res.json({ status: "Not Found" });

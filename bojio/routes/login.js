@@ -2,6 +2,7 @@ var models  = require('../models');
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var env       = process.env.NODE_ENV || "development";
 
 router.get('/',
   function(req, res, next) {
@@ -11,7 +12,11 @@ router.get('/',
           facebookId: req.user.id
         }
       });
-      res.redirect('http://localhost:3000');
+      if (env === "production") {
+        res.redirect('/');
+      } else {
+        res.redirect('http://localhost:3000');
+      }
     } else {
       next();
     }
