@@ -19,7 +19,7 @@ class Facebook {
     return fetch(this._buildURL(`${this.FACEBOOK_API_URL}/${facebookId}`, {
       access_token: this.accessToken,
       fields: 'id, name, first_name, last_name, picture'
-    }))
+    }), { cache: "no-store" })
       .then(res => res.json())
       .then(data => {
         return {

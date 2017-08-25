@@ -8,7 +8,7 @@ class App extends Component {
   state = { user: null, isLoading: true, services: null }
 
   componentDidMount() {
-    fetch('/api/login_status', { credentials: 'same-origin' })
+    fetch('/api/login_status', { credentials: 'same-origin', cache: "no-store" })
       .then(res => res.json())
       .then(data => {
         if (data.status !== 'OK') {

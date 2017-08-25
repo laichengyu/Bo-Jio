@@ -55,11 +55,19 @@ passport.deserializeUser(function(obj, cb) {
 
 var app = express();
 
+app.use(function (req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    next()
+});
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.disable('view cache');
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
