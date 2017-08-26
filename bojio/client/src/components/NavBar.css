@@ -1,11 +1,11 @@
 #NavBar-menu {
   background-color: #FAFAFB;
-  padding-left: 23%;
-  padding-right: 23%;
+  padding-left: 20%;
+  padding-right: 20%;
   border-top: 4px solid #00B5AD;
 }
 
 #NavBar-search {
-  margin-left: 100px;
-  width: 550px;
+  margin-left: auto;
+  width: 50%;
 }

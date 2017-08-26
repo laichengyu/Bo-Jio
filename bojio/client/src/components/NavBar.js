@@ -45,13 +45,13 @@ class NavBar extends Component {
       inverted
     />;
     return (
-      <Menu size='medium' fixed='top' id='NavBar-menu' compact borderless pointing>
+      <Menu size='medium' fixed='top' id='NavBar-menu' borderless>
         <Menu.Item name='home'>
           <Image width='70px' src={logo} />
         </Menu.Item>
 
 
-        <Menu.Item id='NavBar-search' name='search-bar' position='standard'>
+        <Menu.Item id='NavBar-search' name='search-bar' position='standard' fitted>
             <Input
               fluid
               action={<Dropdown button floating options={this.options} className='teal' defaultValue='fun' />}
