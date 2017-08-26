@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var env       = process.env.NODE_ENV || "development";
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.json({ status: "Success" });
 });
@@ -17,6 +17,16 @@ router.get('/login_status',
       res.json({
         status: 'FAILED'
       });
+    }
+  });
+
+router.get('/logout',
+  function(req, res) {
+    req.logout();
+    if (env === "production") {
+      res.redirect('/');
+    } else {
+      res.redirect('http://localhost:3000');
     }
   });
 

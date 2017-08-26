@@ -44,6 +44,13 @@ class NavBar extends Component {
       position='bottom center'
       inverted
     />;
+
+    const signOutIcon = <Popup
+      trigger={<a href={this._getLogoutUrl()}><Icon name='sign out icon' size='large' link /></a>}
+      content='Sign Out'
+      position='bottom center'
+      inverted
+    />;
     return (
       <Menu size='medium' fixed='top' id='NavBar-menu' borderless>
         <Menu.Item name='home'>
@@ -73,9 +80,22 @@ class NavBar extends Component {
           <Menu.Item>
             {userToken}
           </Menu.Item>
+
+          <Menu.Item icon>
+            {signOutIcon}
+          </Menu.Item>
         </Menu.Menu>
       </Menu>
     );
+  }
+
+  _getLogoutUrl() {
+    const env = process.env.NODE_ENV || "development";
+    if (env === 'production') {
+      return '/api/logout';
+    } else {
+      return 'http://localhost:8081/api/logout';
+    }
   }
 }
 
