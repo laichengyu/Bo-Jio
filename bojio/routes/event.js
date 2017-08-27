@@ -11,9 +11,9 @@ router.post('/create',
       title: req.body.title,
       description: req.body.description,
       date: req.body.date,
-      location: req.body.location,
-      thumbnail: req.body.thumbnail
+      location: req.body.location
     }).then(function(event) {
+      event.setCategory(req.body.category);
       event.setCreator(req.user.id);
       event.addParticipant(req.user.id);
 
@@ -29,10 +29,15 @@ router.get('/list',
   function(req, res) {
     models.Event.findAll({})
       .then(function(events) {
-      res.json({
-        status: 'OK',
-        events: events
-      });
+
+      Promise
+        .all(events.map(event => event.fetch()))
+        .then(results => {
+          res.json({
+            status: 'OK',
+            events: results
+          });
+        });
     });
   });
 

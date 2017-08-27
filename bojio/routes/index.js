@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.json({ status: "Success" });
 });
 
-router.get('/login_status',
+router.get('/status',
   function(req, res) {
     if (req.user) {
       res.json({
@@ -29,5 +29,9 @@ router.get('/logout',
       res.redirect('http://localhost:3000');
     }
   });
+
+router.use('/login', require('./login'));
+router.use('/event', require('./event'));
+router.use('/category', require('./category'));
 
 module.exports = router;

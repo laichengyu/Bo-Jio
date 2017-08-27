@@ -79,9 +79,7 @@ if (env === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
-app.use('/api', require('./routes/index'));
-app.use('/api/login', require('./routes/login'));
-app.use('/api/event', require('./routes/event'));
+app.use('/api', require('./routes'));
 
 app.use(function(req, res, next) {
   res.json({ status: "Not Found" });

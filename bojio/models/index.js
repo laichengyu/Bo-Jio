@@ -3,6 +3,7 @@
 var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
+var sequelizeFixtures = require('sequelize-fixtures');
 var env       = process.env.NODE_ENV || "development";
 var config    = require(path.join(__dirname, '..', 'config', 'db.json'))[env];
 if (process.env.DATABASE_URL) {
@@ -27,6 +28,9 @@ Object.keys(db).forEach(function(modelName) {
     db[modelName].associate(db);
   }
 });
+
+// Preload category.
+sequelizeFixtures.loadFile('fixtures/category.yaml', db);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

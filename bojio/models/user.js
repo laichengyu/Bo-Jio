@@ -5,5 +5,11 @@ module.exports = function(sequelize, DataTypes) {
     facebookId: { type: DataTypes.STRING, primaryKey: true }
   });
 
+  User.prototype.rawValues = function() {
+    return {
+      facebookId: this.facebookId
+    };
+  };
+
   return User;
 };
