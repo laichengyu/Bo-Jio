@@ -11,7 +11,7 @@ router.get('/list',
       .then(function(categories) {
       res.json({
         status: 'OK',
-        events: categories
+        categories: categories
       });
     });
   });

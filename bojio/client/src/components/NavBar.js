@@ -4,16 +4,13 @@ import { Loader, Header, Image, Menu, Icon, Input, Dropdown, Popup } from 'seman
 import './NavBar.css';
 
 class NavBar extends Component {
+  ANY_CATEGORY_OPTION = { key: 'all', text: 'All', value: 'all' };
+
   state = {
     user: null,
-    isLoading: true
+    isLoading: true,
+    categories: [this.ANY_CATEGORY_OPTION]
   }
-
-  options = [
-    { key: 'fun', text: 'All', value: 'fun' },
-    { key: 'org', text: 'Movies', value: 'org' },
-    { key: 'site', text: 'LOL', value: 'site' },
-  ]
 
   componentDidMount() {
     this.props.services.facebook
@@ -24,6 +21,21 @@ class NavBar extends Component {
           isLoading: false
         });
       });
+    this.props.services.category
+      .list()
+      .then(categories =>
+        categories.map(category => {
+          return {
+            key: category.id,
+            text: category.name,
+            value: category.id
+          }
+        }))
+      .then(categories => {
+        this.setState({
+          categories: [this.ANY_CATEGORY_OPTION, ...categories]
+        });
+      });
   }
 
   render() {
@@ -32,36 +44,36 @@ class NavBar extends Component {
       : <Loader active inline='centered'size='small' />;
 
     const addEventIcon = <Popup
-      trigger={<Icon name='add to calendar icon' size='large' link />}
+      trigger={<Icon name='add to calendar' size='large' link />}
       content='Create an event'
       position='bottom center'
       inverted
     />;
 
     const myEventsIcon = <Popup
-      trigger={<Icon name='book icon' size='large' link />}
+      trigger={<Icon name='book' size='large' link />}
       content='My Events'
       position='bottom center'
       inverted
     />;
 
     const signOutIcon = <Popup
-      trigger={<a href={this._getLogoutUrl()}><Icon name='sign out icon' size='large' link /></a>}
+      trigger={<a href={this._getLogoutUrl()}><Icon name='sign out' size='large' link /></a>}
       content='Sign Out'
       position='bottom center'
       inverted
     />;
     return (
-      <Menu size='medium' fixed='top' id='NavBar-menu' borderless>
+      <Menu fixed='top' id='NavBar-menu' borderless>
         <Menu.Item name='home'>
           <Image width='70px' src={logo} />
         </Menu.Item>
 
 
-        <Menu.Item id='NavBar-search' name='search-bar' position='standard' fitted>
+        <Menu.Item id='NavBar-search' name='search-bar' fitted>
             <Input
               fluid
-              action={<Dropdown button floating options={this.options} className='teal' defaultValue='fun' />}
+              action={<Dropdown button floating options={this.state.categories} className='teal' defaultValue='all' />}
               actionPosition='left'
               placeholder='Search...'
               size='large'
