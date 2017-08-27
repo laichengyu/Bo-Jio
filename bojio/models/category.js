@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     id: { type: DataTypes.STRING, primaryKey: true },
     name: DataTypes.STRING,
     defaultImage: DataTypes.STRING,
+    icon: DataTypes.STRING,
     order_: DataTypes.INTEGER
   });
 

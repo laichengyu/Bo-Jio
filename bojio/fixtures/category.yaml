@@ -4,40 +4,47 @@ fixtures:
       id: eat
       order_: 1
       name: Eat
+      icon: food
       defaultImage: http://gph.is/1UiEGmh
   - model: Category
     data:
       id: coffee
       order_: 2
       name: Coffee
+      icon: coffee
       defaultImage: http://gph.is/2lpxDLQ
   - model: Category
     data:
       id: movie
       order_: 3
       name: Movie
+      icon: film
       defaultImage: http://gph.is/1NeUCj9
   - model: Category
     data:
       id: sports
       order_: 4
       name: Sports
+      icon: soccer
       defaultImage: http://gph.is/2cwTxMq
   - model: Category
     data:
       id: party
       order_: 5
       name: Party
+      icon: cocktail
       defaultImage: http://gph.is/2bcGfQj
   - model: Category
     data:
       id: travel
       order_: 6
       name: Travel
+      icon: suitcase
       defaultImage: http://gph.is/1IZ3EjJ
   - model: Category
     data:
       id: others
       order_: 7
       name: Others
+      icon: empty star
       defaultImage: http://gph.is/16vsmBU

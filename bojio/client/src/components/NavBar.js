@@ -4,12 +4,13 @@ import { Loader, Header, Image, Menu, Icon, Input, Dropdown, Popup } from 'seman
 import './NavBar.css';
 
 class NavBar extends Component {
-  ANY_CATEGORY_OPTION = { key: 'all', text: 'All', value: 'all' };
+  ANY_CATEGORY_OPTION = { key: 'all', text: 'All', value: 'all', searchIcon: 'search' };
 
   state = {
     user: null,
     isLoading: true,
-    categories: [this.ANY_CATEGORY_OPTION]
+    categories: [this.ANY_CATEGORY_OPTION],
+    selectedCategory: this.ANY_CATEGORY_OPTION
   }
 
   componentDidMount() {
@@ -26,9 +27,9 @@ class NavBar extends Component {
       .then(categories =>
         categories.map(category => {
           return {
-            key: category.id,
             text: category.name,
-            value: category.id
+            value: category.id,
+            searchIcon: category.icon
           }
         }))
       .then(categories => {
@@ -36,6 +37,13 @@ class NavBar extends Component {
           categories: [this.ANY_CATEGORY_OPTION, ...categories]
         });
       });
+  }
+
+  onSelectCategory = (event, data) => {
+    const matchingCategory = this.state.categories.filter(category => (category.value === data.value))[0];
+    this.setState({
+      selectedCategory: matchingCategory
+    });
   }
 
   render() {
@@ -73,7 +81,22 @@ class NavBar extends Component {
         <Menu.Item id='NavBar-search' name='search-bar' fitted>
             <Input
               fluid
-              action={<Dropdown button floating options={this.state.categories} className='teal' defaultValue='all' />}
+              action={
+                <Dropdown
+                  button
+                  floating
+                  icon={this.state.selectedCategory.searchIcon}
+                  labeled
+                  options={this.state.categories.map(
+                    category => {
+                      var newCategory = {...category};
+                      delete newCategory.searchIcon;
+                      return newCategory
+                    })}
+                  className='icon teal'
+                  defaultValue={this.state.selectedCategory.value}
+                  onChange={this.onSelectCategory}
+                  />}
               actionPosition='left'
               placeholder='Search...'
               size='large'
