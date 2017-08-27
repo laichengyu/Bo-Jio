@@ -29,7 +29,8 @@ class NavBar extends Component {
           return {
             text: category.name,
             value: category.id,
-            searchIcon: category.icon
+            searchIcon: category.icon,
+            icon: <Icon name={category.icon} className='right floated' />
           }
         }))
       .then(categories => {
@@ -87,6 +88,9 @@ class NavBar extends Component {
                   floating
                   icon={this.state.selectedCategory.searchIcon}
                   labeled
+                  header={
+                    <Dropdown.Header icon='list layout' content='Filter by category' />
+                  }
                   options={this.state.categories.map(
                     category => {
                       var newCategory = {...category};
@@ -94,7 +98,7 @@ class NavBar extends Component {
                       return newCategory
                     })}
                   className='icon teal'
-                  defaultValue={this.state.selectedCategory.value}
+                  value={this.state.selectedCategory.value}
                   onChange={this.onSelectCategory}
                   />}
               actionPosition='left'
