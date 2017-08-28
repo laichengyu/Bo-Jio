@@ -6,11 +6,10 @@ class EventBlock extends Component {
 
   render() {
     return (
-      <List.Item key={this.props.id} className="EventBlock">
+      <List.Item className="EventBlock">
         <Segment.Group horizontal>
           <Segment id="EventBlock-thumbnail">
-            <Image size='small'>{this.props.thumbnail}</Image>
-            {/* Category thumbnail */}
+            <Image size='small' src={this.props.category.defaultImage} />
           </Segment>
 
           <Segment id="EventBlock-description">
@@ -22,13 +21,13 @@ class EventBlock extends Component {
             <Segment.Group>
               <Segment>
                 <List>
-                  <List.Item>{this.props.date}, {this.props.time}</List.Item>
+                  <List.Item>{this.props.date}</List.Item>
                   <List.Item><Header as='h1'>{this.props.title}</Header></List.Item>
                   <List.Item>{this.props.location}</List.Item>
                 </List>
               </Segment>
               <Segment>
-                <List.Item>{this.props.category}</List.Item>
+                <List.Item>{this.props.category.name}</List.Item>
                 {/* FB like button goes here */}
               </Segment>
             </Segment.Group>

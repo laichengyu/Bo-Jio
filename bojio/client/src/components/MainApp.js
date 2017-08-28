@@ -9,7 +9,7 @@ class MainApp extends Component {
     return (
       <div className="MainApp">
         <NavBar services={this.props.services} />
-        <EventList />
+        <EventList services={this.props.services} />
         
         <FacebookProvider appId={this.props.services.facebook.appId}>
           <Comments href="http://localhost:3000/test" />

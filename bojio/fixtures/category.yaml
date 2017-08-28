@@ -5,46 +5,46 @@ fixtures:
       order_: 1
       name: Eat
       icon: food
-      defaultImage: http://gph.is/1UiEGmh
+      defaultImage: https://media.giphy.com/media/3o72F2CaK3Hk53WxGg/giphy.gif
   - model: Category
     data:
       id: coffee
       order_: 2
       name: Coffee
       icon: coffee
-      defaultImage: http://gph.is/2lpxDLQ
+      defaultImage: https://media.giphy.com/media/6NlmBQLhWy2QM/giphy.gif
   - model: Category
     data:
       id: movie
       order_: 3
       name: Movie
       icon: film
-      defaultImage: http://gph.is/1NeUCj9
+      defaultImage: https://media.giphy.com/media/pUeXcg80cO8I8/giphy.gif
   - model: Category
     data:
       id: sports
       order_: 4
       name: Sports
       icon: soccer
-      defaultImage: http://gph.is/2cwTxMq
+      defaultImage: https://media.giphy.com/media/T0E5Kmtiz5uXS/giphy.gif
   - model: Category
     data:
       id: party
       order_: 5
       name: Party
       icon: cocktail
-      defaultImage: http://gph.is/2bcGfQj
+      defaultImage: https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif
   - model: Category
     data:
       id: travel
       order_: 6
       name: Travel
       icon: suitcase
-      defaultImage: http://gph.is/1IZ3EjJ
+      defaultImage: https://media.giphy.com/media/TZWXgCCUZz1fy/giphy.gif
   - model: Category
     data:
       id: others
       order_: 7
       name: Others
       icon: empty star
-      defaultImage: http://gph.is/16vsmBU
+      defaultImage: https://media.giphy.com/media/rIJo9BAnfXaBG/giphy.gif
