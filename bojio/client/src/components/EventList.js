@@ -25,10 +25,10 @@ class EventList extends Component {
       <div className="EventList">
         <Header as='h2' id="EventList-intro">Check out what your friends are up to!</Header>
 
-        <Item.Group divided>
+        <Item.Group divided relaxed>
         {
           this.state.events.map(
-            event => <EventBlock services={this.props.services} {...event} />)
+            event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
         }
         </Item.Group>
       </div>

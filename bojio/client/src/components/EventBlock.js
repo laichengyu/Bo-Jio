@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Header, Segment, Item, Image, Icon } from 'semantic-ui-react';
+import { Item, Icon, Label } from 'semantic-ui-react';
 import FacebookProvider, { Comments, CommentsCount } from 'react-facebook';
+import EventCreator from './EventCreator';
 import './EventBlock.css';
 
 class EventBlock extends Component {
@@ -10,12 +11,21 @@ class EventBlock extends Component {
     return (
       <Item>
         <Item.Image
-          label={{ as: 'a', color: 'orange', content: this.props.category.name, icon: this.props.category.icon, ribbon: true }}
-          size='medium'
-          src={this.props.category.defaultImage} />
+          size='medium'>
+          <Label
+            as='a'
+            color='orange'
+            content={this.props.category.name}
+            icon={this.props.category.icon}
+            ribbon
+          />
+          <img src={this.props.category.defaultImage} alt={this.props.category.name} />
+
+          <EventCreator services={this.props.services} id={this.props.creator.facebookId} />
+        </Item.Image>
 
         <Item.Content>
-          <Item.Header as='h2'>{this.props.title}</Item.Header>
+          <Item.Header>{this.props.title}</Item.Header>
           <Item.Meta>{this.props.date}, {this.props.location}</Item.Meta>
           <Item.Description>
             {this.props.description}
@@ -31,7 +41,7 @@ class EventBlock extends Component {
   }
 
   _getUrl() {
-    return `http://localhost:3000/bojio/events/${this.props.id}`;
+    return `http://bojio.ap-southeast-1.elasticbeanstalk.com/events/${this.props.id}`;
   }
 
   _renderCommentCount() {
