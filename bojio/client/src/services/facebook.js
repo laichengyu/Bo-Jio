@@ -1,7 +1,8 @@
 class Facebook {
   FACEBOOK_API_URL = 'https://graph.facebook.com/v2.10/';
 
-  constructor(accessToken, currentUserId) {
+  constructor(appId, accessToken, currentUserId) {
+    this.appId = appId;
     this.accessToken = accessToken;
     this.currentUserId = currentUserId;
   }

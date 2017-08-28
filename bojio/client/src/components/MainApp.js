@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 import { Header, Segment, List, Image } from 'semantic-ui-react';
 import placeholder from '../img/placeholder.jpg';
+import FacebookProvider, { Comments } from 'react-facebook';
 import './MainApp.css';
 
 class MainApp extends Component {
@@ -97,6 +98,10 @@ class MainApp extends Component {
               })}
           </List>
         </div>
+
+        <FacebookProvider appId={this.props.services.facebook.appId}>
+          <Comments href="http://localhost:3000/test" />
+        </FacebookProvider>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var env       = process.env.NODE_ENV || "development";
+var facebookConfig = require(require('path').join(__dirname, '..', 'config', 'facebook.json'))[env];
 
 router.get('/', function(req, res, next) {
   res.json({ status: "Success" });
@@ -11,7 +12,8 @@ router.get('/status',
     if (req.user) {
       res.json({
         status: 'OK',
-        user: req.user
+        user: req.user,
+        appId: facebookConfig.CLIENT_ID
       });
     } else {
       res.json({

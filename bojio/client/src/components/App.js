@@ -18,7 +18,7 @@ class App extends Component {
           return;
         }
 
-        const services = new Services(data.user.accessToken, data.user.id);
+        const services = new Services(data.appId, data.user.accessToken, data.user.id);
         services.facebook
           .userInfo()
           .then(user => {
