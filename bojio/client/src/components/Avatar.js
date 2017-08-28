@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Image } from 'semantic-ui-react';
+import { Image, Popup } from 'semantic-ui-react';
 
 class Avatar extends Component {
   state = {
     isLoading: true,
-    image: "https://cdn0.vox-cdn.com/images/verge/default-avatar.v989902574302a6378709709f7baab789b242ebbb.gif"
+    image: "https://cdn0.vox-cdn.com/images/verge/default-avatar.v989902574302a6378709709f7baab789b242ebbb.gif",
+    name: ""
   }
 
   componentDidMount() {
@@ -14,13 +15,20 @@ class Avatar extends Component {
       .then(user => {
         this.setState({
           isLoading: false,
-          image: user.pictureUrl
+          image: user.pictureUrl,
+          name: user.firstName
         })
       });
   }
 
   render() {
-    return <span className="Avatar "><Image avatar src={this.state.image} /></span>;
+    return <span className="Avatar ">
+      <Popup
+        trigger={<Image avatar src={this.state.image} />}
+        content={this.state.name}
+        position='bottom center'
+      />
+    </span>;
   }
 }
 
