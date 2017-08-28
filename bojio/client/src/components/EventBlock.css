@@ -1,0 +1,32 @@
+.EventBlock {
+  display: inline-block;
+  clear: both;
+  margin: auto;
+}
+
+#EventBlock-thumbnail {
+  vertical-align: text-top;
+  text-align: center;
+  width: 25%;
+  display: flex;
+  align-items: center;
+}
+
+#EventBlock-thumbnail .image {
+  margin: 0 auto;
+}
+
+#EventBlock-description {
+  width: 50%;
+  word-wrap:break-word;
+}
+
+#EventBlock-description span {
+  vertical-align: top;
+  font-size: large;
+}
+
+#EventBlock-info {
+  width: 25%;
+  word-wrap:break-word;
+}

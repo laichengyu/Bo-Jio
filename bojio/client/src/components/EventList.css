@@ -1,0 +1,20 @@
+.EventList {
+  width: 70%;
+  height: 100%;
+  display: table;
+  min-height: 100%;
+  overflow:auto;
+  margin: auto;
+}
+
+#EventList-intro {
+  text-align: center;
+  font-family: 'Aclonica';
+}
+
+.EventList-list {
+  width: 70%;
+  height: auto;
+  margin: 0 auto !important;
+  clear: both;
+}

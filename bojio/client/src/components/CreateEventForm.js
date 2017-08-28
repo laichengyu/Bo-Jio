@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './createEventForm.css';
+import './CreateEventForm.css';
 
-class createEventForm extends Component {
+class CreateEventForm extends Component {
   render() {
     return (
       
