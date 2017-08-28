@@ -20,7 +20,7 @@ class Avatar extends Component {
   }
 
   render() {
-    return <span className="Avatar"><Image avatar src={this.state.image} /></span>;
+    return <span className="Avatar "><Image avatar src={this.state.image} /></span>;
   }
 }
 

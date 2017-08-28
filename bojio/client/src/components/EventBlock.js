@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Item, Icon, Label } from 'semantic-ui-react';
 import FacebookProvider, { Comments, CommentsCount } from 'react-facebook';
 import EventCreator from './EventCreator';
+import Facepile from './Facepile';
 import './EventBlock.css';
 
 class EventBlock extends Component {
@@ -22,6 +23,7 @@ class EventBlock extends Component {
           <img src={this.props.category.defaultImage} alt={this.props.category.name} />
 
           <EventCreator services={this.props.services} id={this.props.creator.facebookId} />
+          <Facepile services={this.props.services} ids={[this.props.creator.facebookId,this.props.creator.facebookId,this.props.creator.facebookId, this.props.creator.facebookId, this.props.creator.facebookId]} />
         </Item.Image>
 
         <Item.Content>

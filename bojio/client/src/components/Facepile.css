@@ -1,0 +1,13 @@
+.Facepile {
+  display: flex;
+  margin-top: 10px;
+}
+
+.Facepile .Avatar:not(:first-child) {
+  flex: 0 0 auto;
+  margin-left: -10px;
+}
+
+#Facepile-label {
+  margin-left: -2px;
+}
