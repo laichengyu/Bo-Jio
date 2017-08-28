@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, List } from 'semantic-ui-react';
+import { Header, Item } from 'semantic-ui-react';
 import EventBlock from './EventBlock';
 import './EventList.css';
 
@@ -17,7 +17,6 @@ class EventList extends Component {
           isLoading: false,
           events: events
         });
-        console.log(events);
       });
   }
 
@@ -26,14 +25,12 @@ class EventList extends Component {
       <div className="EventList">
         <Header as='h2' id="EventList-intro">Check out what your friends are up to!</Header>
 
-        <List
-          className="EventList-list"
-          items={
-            this.state.events.map(
-              event => <EventBlock {...event} />
-            )
-          }
-        />
+        <Item.Group divided>
+        {
+          this.state.events.map(
+            event => <EventBlock services={this.props.services} {...event} />)
+        }
+        </Item.Group>
       </div>
     );
   }

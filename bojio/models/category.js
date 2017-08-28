@@ -13,7 +13,8 @@ module.exports = function(sequelize, DataTypes) {
     return {
       id: this.id,
       name: this.name,
-      defaultImage: this.defaultImage
+      defaultImage: this.defaultImage,
+      icon: this.icon
     };
   };
 
