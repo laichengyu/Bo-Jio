@@ -8,6 +8,7 @@
     "react-dom": "^15.6.1",
     "react-facebook": "^4.0.14",
     "react-scripts": "1.0.11",
+    "semantic-ui-calendar": "0.0.8",
     "semantic-ui-react": "^0.71.5"
   },
   "scripts": {

@@ -1,0 +1,19 @@
+form {
+  width: 45%;
+  height: auto;
+  margin: auto;
+  padding-top: 30px;
+}
+
+#CreateEventForm-intro {
+  text-align: center;
+  font-family: 'Aclonica';
+}
+
+.description textarea {
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
+
+label {
+
+}
