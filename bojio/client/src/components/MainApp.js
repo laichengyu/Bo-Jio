@@ -9,8 +9,7 @@ class MainApp extends Component {
     return (
       <div className="MainApp">
         <NavBar services={this.props.services} />
-        {/* <EventList services={this.props.services} /> */}
-        <CreateEventForm/>
+        <EventList services={this.props.services} />
       </div>
     );
   }
