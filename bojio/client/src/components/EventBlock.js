@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { Item, Icon, Label } from 'semantic-ui-react';
+import { Item, Icon, Label, List } from 'semantic-ui-react';
 import FacebookProvider, { Comments, CommentsCount } from 'react-facebook';
 import EventCreator from './EventCreator';
 import Facepile from './Facepile';
 import './EventBlock.css';
+
+var dateFormat = require('dateformat');
 
 class EventBlock extends Component {
   state = { showDetails: false };
 
   render() {
     return (
-      <Item>
+      <Item className="EventBlock">
         <Item.Image
           size='medium'>
           <Label
@@ -28,7 +30,13 @@ class EventBlock extends Component {
 
         <Item.Content>
           <Item.Header>{this.props.title}</Item.Header>
-          <Item.Meta>{this.props.date}, {this.props.location}</Item.Meta>
+          <Item.Meta>
+            <List divided horizontal>
+                <List.Item icon='calendar' content={dateFormat(this.props.date, "ddd, d mmm yyyy")} />
+                <List.Item icon='time' content={dateFormat(this.props.date, "HH:MM")} />
+                <List.Item icon='marker' content={this.props.location}  />
+            </List>
+          </Item.Meta>
           <Item.Description>
             {this.props.description}
           </Item.Description>

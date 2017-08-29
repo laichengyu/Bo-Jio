@@ -19,7 +19,7 @@ class Facepile extends Component {
                   services={this.props.services}
                 />;
               } else if (index === this.MAX - 1) {
-                return <Label key={`Facepile.${index}`} id="Facepile-label" circular size="large">+{this.props.ids.length - this.MAX + 1}</Label>;
+                return <Label key={`Facepile.${index}`} id="Facepile-label" color="teal" circular size="large">+{this.props.ids.length - this.MAX + 1}</Label>;
               } else {
                 return null;
               }

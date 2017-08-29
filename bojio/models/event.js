@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
   var Event = sequelize.define("Event", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     title: DataTypes.STRING,
-    description: DataTypes.STRING,
+    description: DataTypes.TEXT,
     date: DataTypes.DATE,
     location: DataTypes.STRING
   });
@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
       id: this.id,
       title: this.title,
       description: this.description,
-      date: this.date,
+      date: this.date.getTime(),
       location: this.location
     };
 

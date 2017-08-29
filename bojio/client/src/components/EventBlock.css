@@ -1,3 +1,7 @@
 .EventBlock-commentsCount div {
   display: inline !important;
 }
+
+.EventBlock .item .icon {
+  padding-top: 2.5px !important;
+}
