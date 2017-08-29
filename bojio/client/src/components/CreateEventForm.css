@@ -13,3 +13,9 @@ form {
 .description textarea {
   font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
 }
+
+.CreateEventForm-submitButton {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}

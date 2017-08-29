@@ -55,11 +55,11 @@ class CreateEventForm extends Component {
             </Form.TextArea>
           </div>
 
-          <div className="field">
-            <Button  className="ui primary button" type="submit">Jio!</Button>
-            <Label className="left pointing label">
+          <div className="CreateEventForm-submitButton">
+            <Label className="right pointing label">
               *Event will be created, and your friends will see it on their event feed!
             </Label>
+            <Button  className="ui primary button" type="submit">Jio!</Button>
           </div>
         </form>
       </div>
