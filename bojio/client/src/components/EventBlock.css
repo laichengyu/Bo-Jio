@@ -1,5 +1,9 @@
-.EventBlock-commentsCount div {
-  display: inline !important;
+.EventBlock-commentsCount {
+  cursor: pointer;
+}
+
+.EventBlock-hideComments {
+  cursor: pointer;
 }
 
 .EventBlock .item .icon {
