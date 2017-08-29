@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../img/logo.png';
-import { Loader, Header, Image, Menu, Icon, Input, Dropdown, Popup } from 'semantic-ui-react'
+import { Loader, Header, Image, Menu, Icon, Input, Dropdown, Popup, Modal } from 'semantic-ui-react'
+import CreateEventForm from './CreateEventForm';
 import './NavBar.css';
 
 class NavBar extends Component {
@@ -47,17 +48,28 @@ class NavBar extends Component {
     });
   }
 
+  _renderModal() {
+    return (
+      <Modal size="tiny" trigger={<Icon name='add to calendar' size='large' link />}>
+        <Modal.Content>
+          <CreateEventForm />
+        </Modal.Content>
+      </Modal>
+    );
+  }
+
   render() {
     const userToken = !this.state.isLoading
       ? <Header as='h5' image={<Image shape='circular' src={this.state.user.pictureUrl} />} content={this.state.user.firstName} />
       : <Loader active inline='centered'size='small' />;
 
-    const addEventIcon = <Popup
+    /*const addEventIcon = <Popup
       trigger={<Icon name='add to calendar' size='large' link />}
       content='Create an event'
       position='bottom center'
       inverted
-    />;
+    />;*/
+    const addEventIcon = this._renderModal();
 
     const myEventsIcon = <Popup
       trigger={<Icon name='book' size='large' link />}
