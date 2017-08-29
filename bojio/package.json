@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "preload" : "PRELOAD_DB=true PORT=8081 node ./bin/www",
     "start": "PORT=8081 node ./bin/www"
   },
   "dependencies": {

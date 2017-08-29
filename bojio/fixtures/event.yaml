@@ -1,0 +1,33 @@
+fixtures:
+  - model: Event
+    data:
+      title: Netflix and Chill
+      description: Let's binge watch something
+      date: 1503566340000
+      location: Home
+      CategoryId: movie
+      creatorFacebookId: 1852623078088890
+  - model: Event
+    data:
+      title: Soccer match with other kids
+      description: Let's win this thing boys!
+      date: 1503966340000
+      location: Clementi soccer field
+      CategoryId: sports
+      creatorFacebookId: 1852623078088890
+  - model: Event
+    data:
+      title: Catch up with me!
+      description: Will be here for a while, let's catch up.
+      date: 1503866340000
+      location: Starbucks (really)
+      CategoryId: coffee
+      creatorFacebookId: 1852623078088890
+  - model: Event
+    data:
+      title: Super long title long title long title long title long title long title!
+      description: Super long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc long desc!
+      date: 1503866340000
+      location: Starbucksbucks bucksbucks bucksbucksbucks
+      CategoryId: others
+      creatorFacebookId: 1852623078088890

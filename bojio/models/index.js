@@ -30,7 +30,11 @@ Object.keys(db).forEach(function(modelName) {
 });
 
 // Preload category.
-sequelizeFixtures.loadFile('fixtures/category.yaml', db);
+if (process.env.PRELOAD_DB || false) {
+  sequelizeFixtures.loadFile('fixtures/category.yaml', db);
+  sequelizeFixtures.loadFile('fixtures/user.yaml', db);
+  sequelizeFixtures.loadFile('fixtures/event.yaml', db);
+}
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

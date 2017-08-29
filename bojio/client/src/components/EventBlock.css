@@ -12,6 +12,7 @@
 
 .EventBlock-toolBar {
   display: flex;
+  margin-right: 0px !important;
   align-items: center;
   justify-content: space-between;
 }
@@ -22,5 +23,6 @@
 }
 
 .EventBlock-joinLabel {
+  display: flex !important;
   margin-left: 10px !important;
 }

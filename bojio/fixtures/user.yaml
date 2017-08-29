@@ -1,0 +1,4 @@
+fixtures:
+  - model: User
+    data:
+      facebookId: 1852623078088890
