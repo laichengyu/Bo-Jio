@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Item, Icon, Label, List } from 'semantic-ui-react';
-import FacebookProvider, { Comments, CommentsCount } from 'react-facebook';
+import { Item, Icon, Label, List, Button, Divider } from 'semantic-ui-react';
+import FacebookProvider, { Comments, CommentsCount, Like } from 'react-facebook';
 import EventCreator from './EventCreator';
 import Facepile from './Facepile';
 import './EventBlock.css';
@@ -29,21 +29,31 @@ class EventBlock extends Component {
         </Item.Image>
 
         <Item.Content>
-          <Item.Header>{this.props.title}</Item.Header>
+          <Item.Header className="EventBlock-header">
+            {this.props.title}
+            {this._renderJoinLabel()}
+          </Item.Header>
           <Item.Meta>
-            <List divided horizontal>
+            <List className="EventBlock-date" divided horizontal>
                 <List.Item icon='calendar' content={dateFormat(this.props.date, "ddd, d mmm yyyy")} />
                 <List.Item icon='time' content={dateFormat(this.props.date, "HH:MM")} />
-                <List.Item icon='marker' content={this.props.location}  />
+            </List>
+            <List divided horizontal>
+                <List.Item icon='marker' content={this.props.location} />
             </List>
           </Item.Meta>
           <Item.Description>
             {this.props.description}
           </Item.Description>
-          <Item.Extra as='a' onClick={() => this.setState({ showDetails: !this.state.showDetails })}>
-            {this._renderCommentCount()}
+          <Divider />
+          <Item.Extra>
+            <div className="EventBlock-toolBar">
+              {this._renderCommentCount()}
+              <FacebookProvider appId={this.props.services.facebook.appId}>
+                <Like href={this._getUrl()} layout="button_count" size="large" />
+              </FacebookProvider>
+            </div>
           </Item.Extra>
-
           {this._maybeRenderDetails()}
         </Item.Content>
       </Item>
@@ -54,23 +64,34 @@ class EventBlock extends Component {
     return `http://bojio.ap-southeast-1.elasticbeanstalk.com/events/${this.props.id}`;
   }
 
+  _renderJoinLabel() {
+    return (
+      <Label className="EventBlock-joinLabel" color="green" size="tiny">
+        <Icon name='checkmark' /> Joined
+      </Label>
+    );
+  }
+
   _renderCommentCount() {
+    const toggle = () => this.setState({ showDetails: !this.state.showDetails });
     return !this.state.showDetails
       ? (
         <FacebookProvider appId={this.props.services.facebook.appId}>
-          <span className='EventBlock-commentsCount'>
+          <span
+            className='EventBlock-commentsCount'
+            onClick={toggle}>
             <CommentsCount href={this._getUrl()} /> <Icon name='comment' />
           </span>
         </FacebookProvider>
       )
-      : "Hide comments";
+      : <span onClick={toggle}>Hide comments</span>;
   }
 
   _maybeRenderDetails() {
     return this.state.showDetails
       ? (
         <FacebookProvider appId={this.props.services.facebook.appId}>
-          <Comments href={this._getUrl()} />
+          <Comments href={this._getUrl()} width="100%" />
         </FacebookProvider>
       )
       : null;

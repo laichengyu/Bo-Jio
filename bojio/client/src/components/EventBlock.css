@@ -5,3 +5,22 @@
 .EventBlock .item .icon {
   padding-top: 2.5px !important;
 }
+
+.EventBlock-date {
+  display: block !important;
+}
+
+.EventBlock-toolBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.EventBlock-header {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.EventBlock-joinLabel {
+  margin-left: 10px !important;
+}
