@@ -1,0 +1,18 @@
+.GiphySearch {
+  margin-top: 15px;
+}
+
+.GiphySearch-loader {
+  height: 216px;
+}
+
+.GiphySearch-images {
+  height: 216px;
+  overflow: scroll;
+  overflow-y: hidden;
+  display: flex;
+}
+
+.GiphySearch-image img {
+  max-width: none !important;
+}

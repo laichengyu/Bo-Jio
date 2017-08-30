@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 import './CreateEventForm.css';
 import { Label, Button, Header, Form } from 'semantic-ui-react';
 import { SingleDatePicker } from 'react-dates';
+import GiphySearch from './GiphySearch';
 
 class CreateEventForm extends Component {
   state = {
     isFocused: false,
-    date: null
+    date: null,
+    gifSearchText: ""
   };
+
+  gifSearchTextChange = (event) => {
+    this.setState({
+      gifSearchText: event.target.value
+    });
+  }
 
   render() {
     return (
@@ -64,8 +72,18 @@ class CreateEventForm extends Component {
           </div>
 
           <div className="field">
-            <label>Image/GIF</label>
-            <input type="text" name="image" placeholder="Add GIF/Image"></input>
+            <label>Giphy</label>
+            <input
+              type="text"
+              name="image"
+              placeholder="keywords?"
+              onChange={this.gifSearchTextChange}
+            />
+            {
+              this.state.gifSearchText
+                ? <GiphySearch searchText={this.state.gifSearchText} />
+                : null
+            }
           </div>
 
           <div className="field">
