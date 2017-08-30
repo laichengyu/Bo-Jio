@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import './CreateEventForm.css';
 import { Label, Button, Header, Form } from 'semantic-ui-react';
+import { SingleDatePicker } from 'react-dates';
 
 class CreateEventForm extends Component {
+  state = {
+    isFocused: false,
+    date: null
+  };
+
   render() {
     return (
       <div className="CreateEventForm">
@@ -18,17 +24,31 @@ class CreateEventForm extends Component {
             <input type="text" name="location" placeholder="Specify where it's held"></input>
           </div>
 
-          {/* Calendar and time script currently not working */}
           <div className="field">
             <div className="two fields">
               <div className="field">
                 <label>Date</label>
+                  <SingleDatePicker
+                    date={this.state.date}
+                    focused={this.state.isFocused}
+                    onDateChange={(newDate) => this.setState({
+                      date: newDate
+                    })}
+                    onFocusChange={() => {
+                      this.setState({
+                        isFocused: !this.state.isFocused
+                      });
+                    }}
+                    numberOfMonths= "1"
+                  />
+                {/*
                 <div className="ui calendar" id="example2">
                   <div className="ui input left icon">
                     <i className="calendar icon"></i>
-                    <input type="text" placeholder="Date"></input>
+                    <input type="text" placeholder="Date">{SingleDatePicker}</input>
                   </div>
                 </div>
+                */}
               </div>
 
               <div className="six wide field">
