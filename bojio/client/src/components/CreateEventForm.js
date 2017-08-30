@@ -9,7 +9,7 @@ class CreateEventForm extends Component {
         <Header as='h2' id="CreateEventForm-intro">Jio your friends now!</Header>
         <form className="ui form">
           <div className="field">
-            <label>Title</label>
+            <label>Event Title</label>
             <input type="text" name="event-title" placeholder="Give it a short catchy name"></input>
           </div>
 
@@ -31,12 +31,12 @@ class CreateEventForm extends Component {
                 </div>
               </div>
 
-              <div className="five wide field">
+              <div className="six wide field">
                 <label>Time</label>
                 <div className="ui calendar" id="example3">
                   <div className="ui input left icon">
                     <i className="time icon"></i>
-                    <input type="text" placeholder="Time"></input>
+                    <input type="time" name="time"></input>
                   </div>
                 </div>
               </div>
@@ -50,7 +50,7 @@ class CreateEventForm extends Component {
 
           <div className="field">
             <label>Description</label>
-            <Form.TextArea rows="4" className="description"
+            <Form.TextArea rows="4" className="CreateEventForm-description"
               placeholder="BYOB, Girlfriends not allowed, Late-comers treating. Set your rules here!">
             </Form.TextArea>
           </div>

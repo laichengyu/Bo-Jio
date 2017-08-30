@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 import EventList from './EventList';
 import './MainApp.css';
-import CreateEventForm from './CreateEventForm';
 
 class MainApp extends Component {
   render() {
