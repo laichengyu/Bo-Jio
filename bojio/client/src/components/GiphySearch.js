@@ -7,7 +7,8 @@ class GiphySearch extends Component {
   state = {
     isLoading: true,
     images: [],
-    selected: null
+    selected: null,
+    timeout: null
   };
 
   fetchGiphy() {
@@ -24,8 +25,18 @@ class GiphySearch extends Component {
       });
   }
 
+  update() {
+    const me = this;
+    clearTimeout(this.state.timeout);
+    this.setState({
+      timeout: setTimeout(function() {
+        me.fetchGiphy();
+      }, 500)
+    });
+  }
+
   componentDidMount() {
-    this.fetchGiphy();
+    this.update();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,8 +48,8 @@ class GiphySearch extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.isLoading) {
-      this.fetchGiphy();
+    if (this.props !== prevProps) {
+      this.update();
     }
   }
 

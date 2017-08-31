@@ -8,9 +8,16 @@
 
 .GiphySearch-images {
   height: 216px;
-  overflow: scroll;
-  overflow-y: hidden;
+  overflow: hidden;
   display: flex;
+}
+
+.GiphySearch-images:hover {
+  overflow-x: scroll;
+}
+
+.GiphySearch-image {
+  height: 200px;
 }
 
 .GiphySearch-image img {
