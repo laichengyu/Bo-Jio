@@ -63,7 +63,7 @@ class GiphySearch extends Component {
             src={image}
             label={
               (index === this.state.selected)
-                ? { corner: 'right', icon: 'checkmark', color: 'green' }
+                ? { attached: 'right', icon: 'checkmark', color: 'green', content: 'Selected' }
                 : null
             }
             onClick={
