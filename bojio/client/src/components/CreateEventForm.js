@@ -29,7 +29,8 @@ class CreateEventForm extends Component {
             key: category.id,
             icon: category.icon,
             text: category.name,
-            value: category.id
+            value: category.id,
+            defaultImage: category.defaultImage
           }
         }))
       .then(categories => {
@@ -75,7 +76,8 @@ class CreateEventForm extends Component {
       title: this.state.title,
       category: this.state.category,
       location: this.state.location,
-      imageUrl: this.state.imageUrl,
+      pictureUrl: this.state.imageUrl ||
+        (this.state.categories.filter(category => this.state.category === category.value)[0].defaultImage),
       description: this.state.description,
       inviteList: this.state.inviteList.map(e => e.value)
     };
@@ -103,7 +105,7 @@ class CreateEventForm extends Component {
 
           <div className="field required">
             <label>Category</label>
-            <Dropdown placeholder='Select Category' fluid selection options={this.state.categories}
+            <Dropdown placeholder='Select Category' fluid selection options={this.state.categories.map(category => {var c = {...category}; delete c.defaultImage; return c;})}
               onChange={(event, data) => {
                 this.setState({category: data.value});
               }}/>
@@ -178,6 +180,7 @@ class CreateEventForm extends Component {
               *Event will be created, and your friends will see it on their event feed!
             </Label>
             <Button className="ui primary button" onClick={this.submitForm} disabled={!this.canSubmit()}>Jio!</Button>
+            <Button className="ui red button" onClick={this.props.onSave}>Cancel</Button>
           </div>
         </form>
       </div>

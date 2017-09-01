@@ -22,7 +22,7 @@ class EventBlock extends Component {
             icon={this.props.category.icon}
             ribbon
           />
-          <img src={this.props.category.defaultImage} alt={this.props.category.name} />
+          <img src={this.props.pictureUrl} alt={this.props.category.name} />
 
           <EventCreator services={this.props.services} id={this.props.creator.facebookId} />
           <Facepile services={this.props.services} ids={[this.props.creator.facebookId,this.props.creator.facebookId,this.props.creator.facebookId, this.props.creator.facebookId, this.props.creator.facebookId]} />
