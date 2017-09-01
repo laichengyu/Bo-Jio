@@ -13,7 +13,7 @@ class Login extends Component {
           <a href={this._getLoginUrl()}>
             <img src={fbButton} className="fb-login-button" alt="login-button"/>
           </a>
-          <h1>Don't say bojio!</h1>
+          <h1>Never say bojio again!</h1>
         </div>
       </div>
     );
