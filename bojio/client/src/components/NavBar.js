@@ -88,7 +88,10 @@ class NavBar extends Component {
     );
 
     const myEventsIcon = <Popup
-      trigger={<Icon name='book' size='large' link />}
+      trigger={<Icon name='book'
+        size='large'
+        onClick={() => this.props.onMyEventsOpen()}
+        link />}
       content='My Events'
       position='bottom center'
       inverted
