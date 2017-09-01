@@ -38,6 +38,27 @@ class CreateEventForm extends Component {
           categories: categories
         });
       });
+
+    const me = this;
+    window.jQuery(this.refs.date).calendar({
+      monthFirst: false,
+      type: 'date',
+      onChange: function (date, text, mode) {
+        me.setState({
+          date: date.getTime() - 1000 * (date.getHours() * 3600 + date.getMinutes() * 60)
+        });
+      }
+    });
+
+    window.jQuery(this.refs.time).calendar({
+      ampm: false,
+      type: 'time',
+      onChange: function (date, text, mode) {
+        me.setState({
+          time: date.getHours() * 3600 + date.getMinutes() * 60
+        });
+      }
+    });
   }
 
   gifSearchTextChange = (event) => {
@@ -48,19 +69,17 @@ class CreateEventForm extends Component {
 
   submitForm = (event) => {
     event.preventDefault();
-    const hour = this.state.time.split(":")[0];
-    const minute = this.state.time.split(":")[1];
-    const timestamp = this.state.date.unix() + 3600 * parseInt(hour, 10) + 60 * parseInt(minute, 10);
+    const timestamp = this.state.date + this.state.time * 1000;
 
     const data = {
-      date: timestamp * 1000,
+      date: timestamp,
       title: this.state.title,
       category: this.state.category,
       location: this.state.location,
       imageUrl: this.state.imageUrl,
       description: this.state.description,
       inviteList: this.state.inviteList.map(e => e.value)
-    }
+    };
 
     this.props.services.event
       .create(data)
@@ -96,37 +115,20 @@ class CreateEventForm extends Component {
             <div className="two fields">
               <div className="field">
                 <label>Date</label>
-                  <SingleDatePicker
-                    date={this.state.date}
-                    focused={this.state.isFocused}
-                    onDateChange={(newDate) => this.setState({
-                      date: newDate
-                    })}
-                    onFocusChange={() => {
-                      this.setState({
-                        isFocused: !this.state.isFocused
-                      });
-                    }}
-                    numberOfMonths={1}
-                  />
-                {/*
-                <div className="ui calendar" id="example2">
-                  <div className="ui input left icon">
-                    <i className="calendar icon"></i>
-                    <input type="text" placeholder="Date">{SingleDatePicker}</input>
+                  <div className="ui calendar" ref="date">
+                    <div className="ui input left icon">
+                      <i className="calendar icon"></i>
+                      <input type="text" placeholder="Date" />
+                    </div>
                   </div>
-                </div>
-                */}
               </div>
 
-              <div className="six wide field">
+              <div className="field">
                 <label>Time</label>
-                <div className="ui calendar" id="example3">
+                <div className="ui calendar" ref="time">
                   <div className="ui input left icon">
                     <i className="time icon"></i>
-                    <input type="time" name="time" onChange={(event) => this.setState({
-                      time: event.target.value
-                    })}></input>
+                    <input type="text" placeholder="Time" />
                   </div>
                 </div>
               </div>
