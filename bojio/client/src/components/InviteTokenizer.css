@@ -1,0 +1,16 @@
+.InviteTokenizer-inputContainer {
+  margin-left: 5px;
+  width: auto !important;
+}
+
+.InviteTokenizer-tokenizer .ui.basic.label {
+  margin-bottom: 5px !important;
+}
+
+.InviteTokenizer-dropdown>.text {
+  font-size: 0;
+}
+
+.InviteTokenizer-dropdown .menu .item .text {
+  margin-right: 20px !important;
+}

@@ -77,7 +77,7 @@ class EventBlock extends Component {
     return !this.state.showDetails
       ? (
         <List divided horizontal>
-          <List.Item className="EventBlock-commentsCount" icon='comments' link onClick={toggle} content={
+          <List.Item className="EventBlock-commentsCount" icon='comments' onClick={toggle} content={
              <FacebookProvider appId={this.props.services.facebook.appId}>
                 <CommentsCount href={this._getUrl()} />
              </FacebookProvider>

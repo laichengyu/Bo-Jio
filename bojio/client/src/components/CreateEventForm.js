@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './CreateEventForm.css';
 import { Label, Button, Header, Form } from 'semantic-ui-react';
 import { SingleDatePicker } from 'react-dates';
+import InviteTokenizer from './InviteTokenizer';
 import GiphySearch from './GiphySearch';
 
 class CreateEventForm extends Component {
@@ -47,7 +48,7 @@ class CreateEventForm extends Component {
                         isFocused: !this.state.isFocused
                       });
                     }}
-                    numberOfMonths= "1"
+                    numberOfMonths={1}
                   />
                 {/*
                 <div className="ui calendar" id="example2">
@@ -80,7 +81,7 @@ class CreateEventForm extends Component {
               onChange={this.gifSearchTextChange}
             />
             {
-              this.state.gifSearchText
+              this.state.gifSearchText.length > 2
                 ? <GiphySearch searchText={this.state.gifSearchText} />
                 : null
             }
@@ -91,6 +92,11 @@ class CreateEventForm extends Component {
             <Form.TextArea rows="4" className="CreateEventForm-description"
               placeholder="BYOB, Girlfriends not allowed, Late-comers treating. Set your rules here!">
             </Form.TextArea>
+          </div>
+
+          <div className="field">
+            <label>Invite</label>
+            <InviteTokenizer />
           </div>
 
           <div className="CreateEventForm-submitButton">

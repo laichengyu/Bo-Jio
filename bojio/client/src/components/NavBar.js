@@ -50,7 +50,14 @@ class NavBar extends Component {
 
   _renderModal() {
     return (
-      <Modal size="small" dimmer='inverted' trigger={<Icon name='add to calendar' size='large' link />}>
+      <Modal
+        size="small"
+        closeOnEscape={false}
+        closeOnRootNodeClick={false}
+        dimmer='inverted'
+        trigger={<Icon name='add to calendar'
+        size='large'
+        link />}>
         <Modal.Content>
           <CreateEventForm />
         </Modal.Content>
