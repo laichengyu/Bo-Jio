@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 import EventList from './EventList';
 import './MainApp.css';
+import MyEvents from './MyEvents';
 
 class MainApp extends Component {
   render() {
