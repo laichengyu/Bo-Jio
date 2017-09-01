@@ -15,9 +15,10 @@ class MainApp extends Component {
         <NavBar services={this.props.services}
           onMyEventsOpen={() => this.setState({atHomePage: false})}
           returnToHomePage={() => this.setState({atHomePage: true})}
+          onEventRefresh={() => this.refs.eventList.refresh()}
           />
-        {this.state.atHomePage ? <EventList services={this.props.services} />
-                               : <MyEvents services={this.props.services} />}
+        {this.state.atHomePage ? <EventList services={this.props.services} ref="eventList" />
+                               : <MyEvents services={this.props.services} ref="eventList" />}
       </div>
     );
   }

@@ -58,7 +58,8 @@ class NavBar extends Component {
         dimmer='inverted'>
         <Modal.Content>
           <CreateEventForm services={this.props.services}
-            onSave={() => { this.setState({createEventFormOpen: false}); }}/>
+            onSave={() => { this.setState({createEventFormOpen: false}); }}
+            onEventRefresh={ this.props.onEventRefresh }/>
         </Modal.Content>
       </Modal>
     );

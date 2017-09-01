@@ -82,7 +82,12 @@ class CreateEventForm extends Component {
 
     this.props.services.event
       .create(data)
-      .then(() => {this.props.onSave()});
+      .then(() => {this.props.onSave()})
+      .then(() => {this.props.onEventRefresh()});
+  }
+
+  canSubmit() {
+    return this.state.title && this.state.category && this.state.location && this.state.date && this.state.time;
   }
 
   render() {
@@ -90,13 +95,13 @@ class CreateEventForm extends Component {
       <div className="CreateEventForm">
         <Header as='h2' id="CreateEventForm-intro">Jio your friends now!</Header>
         <form className="ui form">
-          <div className="field">
+          <div className="field required">
             <label>Event Title</label>
             <input type="text" name="event-title" placeholder="Give it a short catchy name"
               onChange={(event) => this.setState({title: event.target.value})}></input>
           </div>
 
-          <div className="field">
+          <div className="field required">
             <label>Category</label>
             <Dropdown placeholder='Select Category' fluid selection options={this.state.categories}
               onChange={(event, data) => {
@@ -104,7 +109,7 @@ class CreateEventForm extends Component {
               }}/>
           </div>
 
-          <div className="field">
+          <div className="field required">
             <label>Location</label>
             <input type="text" name="location" placeholder="Specify where it's held"
               onChange={(event) => this.setState({location: event.target.value})}></input>
@@ -112,22 +117,22 @@ class CreateEventForm extends Component {
 
           <div className="field">
             <div className="two fields">
-              <div className="field">
+              <div className="field required">
                 <label>Date</label>
                   <div className="ui calendar" ref="date">
                     <div className="ui input left icon">
                       <i className="calendar icon"></i>
-                      <input type="text" placeholder="Date" />
+                      <input type="text" placeholder="Date" readOnly />
                     </div>
                   </div>
               </div>
 
-              <div className="field">
+              <div className="field required">
                 <label>Time</label>
                 <div className="ui calendar" ref="time">
                   <div className="ui input left icon">
                     <i className="time icon"></i>
-                    <input type="text" placeholder="Time" />
+                    <input type="text" placeholder="Time" readOnly />
                   </div>
                 </div>
               </div>
@@ -172,7 +177,7 @@ class CreateEventForm extends Component {
             <Label className="right pointing label">
               *Event will be created, and your friends will see it on their event feed!
             </Label>
-            <Button className="ui primary button" onClick={this.submitForm}>Jio!</Button>
+            <Button className="ui primary button" onClick={this.submitForm} disabled={!this.canSubmit()}>Jio!</Button>
           </div>
         </form>
       </div>
