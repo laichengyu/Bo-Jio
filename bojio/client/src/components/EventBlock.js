@@ -25,7 +25,7 @@ class EventBlock extends Component {
           <img src={this.props.pictureUrl} alt={this.props.category.name} />
 
           <EventCreator services={this.props.services} id={this.props.creator.facebookId} />
-          <Facepile services={this.props.services} ids={[this.props.creator.facebookId,this.props.creator.facebookId,this.props.creator.facebookId, this.props.creator.facebookId, this.props.creator.facebookId]} />
+          <Facepile services={this.props.services} ids={this.props.participants.map(participant => participant.facebookId)} />
         </Item.Image>
 
         <Item.Content>
