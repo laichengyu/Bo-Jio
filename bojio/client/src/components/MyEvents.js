@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Label, Item, Icon } from 'semantic-ui-react';
+import { Item } from 'semantic-ui-react';
 import EventBlock from './EventBlock';
 import './MyEvents.css';
 
