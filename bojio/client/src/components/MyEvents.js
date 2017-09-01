@@ -16,8 +16,20 @@ class MyEvents extends Component {
     this.props.services.event
       .list()
       .then(events => {
+        events.reverse();
         this.setState({
           isLoading: false,
+          events: events
+        });
+      });
+  }
+
+  refresh() {
+    this.props.services.event
+      .list()
+      .then(events => {
+        events.reverse();
+        this.setState({
           events: events
         });
       });
