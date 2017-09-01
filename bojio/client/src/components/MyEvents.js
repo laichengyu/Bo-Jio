@@ -41,8 +41,15 @@ class MyEvents extends Component {
     return (
       <div className="MyEvents">
         <Menu pointing secondary>
-          <Menu.Item name='Hosted' active={activeItem === 'Hosted'} onClick={this.handleItemClick} />
-          <Menu.Item name='Joined' active={activeItem === 'Joined'} onClick={this.handleItemClick} />
+
+          <Menu.Item name='Hosted' active={activeItem === 'Hosted'} onClick={this.handleItemClick} >
+            <i className="user icon"></i>
+            Hosted
+          </Menu.Item>
+          <Menu.Item name='Joined' active={activeItem === 'Joined'} onClick={this.handleItemClick} >
+            <i className="users icon"></i>
+            Joined
+          </Menu.Item>
         </Menu>
         {/*
         <a className="ui red tag label">
