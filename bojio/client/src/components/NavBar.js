@@ -106,7 +106,7 @@ class NavBar extends Component {
     return (
       <Menu fixed='top' id='NavBar-menu' borderless>
         {this._renderModal()}
-        <Menu.Item name='home'>
+        <Menu.Item name='home' onClick={() => this.props.returnToHomePage()}>
           <Image width='70px' src={logo} />
         </Menu.Item>
 

@@ -12,7 +12,10 @@ class MainApp extends Component {
   render() {
     return (
       <div className="MainApp">
-        <NavBar services={this.props.services} onMyEventsOpen={() => this.setState({atHomePage: false})} />
+        <NavBar services={this.props.services}
+          onMyEventsOpen={() => this.setState({atHomePage: false})}
+          returnToHomePage={() => this.setState({atHomePage: true})}
+          />
         {this.state.atHomePage ? <EventList services={this.props.services} />
                                : <MyEvents services={this.props.services} />}
       </div>
