@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './CreateEventForm.css';
 import { Label, Button, Header, Form, Dropdown } from 'semantic-ui-react';
-import { SingleDatePicker } from 'react-dates';
 import InviteTokenizer from './InviteTokenizer';
 import GiphySearch from './GiphySearch';
 

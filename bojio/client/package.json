@@ -5,10 +5,8 @@
   "dependencies": {
     "dateformat": "^2.0.0",
     "jquery": "^3.2.1",
-    "moment": "^2.18.1",
     "react": "^15.6.1",
     "react-addons-shallow-compare": "^15.6.0",
-    "react-dates": "^12.5.1",
     "react-dom": "^15.6.1",
     "react-facebook": "^4.0.14",
     "react-input-autosize": "^1.1.4",
