@@ -146,7 +146,7 @@ class CreateEventForm extends Component {
             <input
               type="text"
               name="image"
-              placeholder="keywords?"
+              placeholder="Keywords?"
               onChange={this.gifSearchTextChange}
             />
             {

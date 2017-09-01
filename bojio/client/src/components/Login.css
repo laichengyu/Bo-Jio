@@ -1,6 +1,6 @@
 .Login {
   text-align: center;
-  background-image: url('../img/background4.jpg');
+  background-image: url('../img/background1.jpg');
   background-size: cover;
   height: 100vh;
   background-repeat:   no-repeat;
@@ -20,7 +20,7 @@
   box-shadow: 0 0 5px #888;
   border-radius: 4px;
   padding: 25px;
-  background-color: hsla(120, 100%, 0%, 0.5);
+  background-color: hsla(0,0%,0%, 0.3);
   position: absolute;
   margin: auto;
   /*overflow-y: hidden;*/

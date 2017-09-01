@@ -9,7 +9,7 @@ class Login extends Component {
       <div className="Login">
         <div className="Login-header">
           <img src={logo} className="Login-logo" alt="logo" />
-          <h2>The platform for all your casual outings</h2>
+          <h2><u>The</u> platform for all your casual outings</h2>
           <a href={this._getLoginUrl()}>
             <img src={fbButton} className="fb-login-button" alt="login-button"/>
           </a>
