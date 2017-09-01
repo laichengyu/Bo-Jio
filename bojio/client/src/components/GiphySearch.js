@@ -14,9 +14,13 @@ class GiphySearch extends Component {
   fetchGiphy() {
     fetch(`http://api.giphy.com/v1/gifs/search?q=${this.props.searchText}&api_key=${this.API_KEY}`)
       .then(res => res.json())
-      .then(data => data.data.map(entry =>
-        entry.images.fixed_height_downsampled.url
-      ))
+      .then(data => data.data.map(entry => {
+        return {
+          id: entry.id,
+          original: entry.images.original.url,
+          fixedHeight: entry.images.fixed_height_downsampled.url
+        };
+      }))
       .then(images => {
         this.setState({
           isLoading: false,
@@ -40,11 +44,13 @@ class GiphySearch extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      isLoading: true,
-      images: [],
-      selected: null
-    });
+    if (nextProps.searchText !== this.props.searchText) {
+      this.setState({
+        isLoading: true,
+        images: [],
+        selected: null
+      });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -59,8 +65,9 @@ class GiphySearch extends Component {
       {
         this.state.images.map((image, index) =>
           <Image
+            key={image.id}
             className="GiphySearch-image"
-            src={image}
+            src={image.fixedHeight}
             label={
               (index === this.state.selected)
                 ? { attached: 'right', icon: 'checkmark', color: 'green', content: 'Selected' }
@@ -71,6 +78,7 @@ class GiphySearch extends Component {
                 this.setState({
                   selected: index
                 });
+                this.props.onImageSelect(image.original);
               }
             } />
         )

@@ -11,11 +11,17 @@ router.post('/create',
       title: req.body.title,
       description: req.body.description,
       date: req.body.date,
-      location: req.body.location
+      location: req.body.location,
+      pictureUrl: req.body.pictureUrl
     }).then(function(event) {
       event.setCategory(req.body.category);
       event.setCreator(req.user.id);
       event.addParticipant(req.user.id);
+      if (req.body.inviteList) {
+        req.body.inviteList.forEach(inviteId => {
+          event.addParticipant(inviteId);
+        });
+      }
 
       res.json({
         status: 'OK',

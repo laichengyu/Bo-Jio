@@ -24,7 +24,6 @@ class InviteTokenizer extends Component {
           }
         })
       ).then(friends => {
-        console.log(friends);
         this.setState({
           options: friends
         });
@@ -40,13 +39,16 @@ class InviteTokenizer extends Component {
     const entry = existingTokens.length === 0
                     ? this.state.options.filter(option => value === option.value)
                     : [];
+    const newTokens = this.state.tokens.concat(entry);
 
     this.setState({
       inputValue: "",
-      tokens: this.state.tokens.concat(entry),
+      tokens: newTokens,
       counter: this.state.counter + 1,
       selected: null
     });
+
+    this.props.onInviteListChange(newTokens);
   }
 
   onChangeUser = (event, data) => {
@@ -68,9 +70,11 @@ class InviteTokenizer extends Component {
 
   onRemoveUser(value) {
     return () => {
+      const newTokens = this.state.tokens.filter(token => value !== token.value);
       this.setState({
-        tokens: this.state.tokens.filter(token => value !== token.value)
+        tokens: newTokens
       });
+      this.props.onInviteListChange(newTokens);
     }
   }
 

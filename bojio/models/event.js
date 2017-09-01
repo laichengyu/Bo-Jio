@@ -6,7 +6,8 @@ module.exports = function(sequelize, DataTypes) {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     date: DataTypes.DATE,
-    location: DataTypes.STRING
+    location: DataTypes.STRING,
+    pictureUrl: DataTypes.STRING
   });
 
   Event.prototype.fetch = function() {
@@ -15,7 +16,8 @@ module.exports = function(sequelize, DataTypes) {
       title: this.title,
       description: this.description,
       date: this.date.getTime(),
-      location: this.location
+      location: this.location,
+      pictureUrl: this.pictureUrl
     };
 
     return Promise.all([

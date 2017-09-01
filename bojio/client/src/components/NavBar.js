@@ -11,7 +11,8 @@ class NavBar extends Component {
     user: null,
     isLoading: true,
     categories: [this.ANY_CATEGORY_OPTION],
-    selectedCategory: this.ANY_CATEGORY_OPTION
+    selectedCategory: this.ANY_CATEGORY_OPTION,
+    createEventFormOpen: false
   }
 
   componentDidMount() {
@@ -52,14 +53,12 @@ class NavBar extends Component {
     return (
       <Modal
         size="small"
-        closeOnEscape={false}
         closeOnRootNodeClick={false}
-        dimmer='inverted'
-        trigger={<Icon name='add to calendar'
-        size='large'
-        link />}>
+        open={this.state.createEventFormOpen}
+        dimmer='inverted'>
         <Modal.Content>
-          <CreateEventForm services={this.props.services} />
+          <CreateEventForm services={this.props.services}
+            onSave={() => { this.setState({createEventFormOpen: false}); }}/>
         </Modal.Content>
       </Modal>
     );
@@ -76,7 +75,17 @@ class NavBar extends Component {
       position='bottom center'
       inverted
     />;*/
-    const addEventIcon = this._renderModal();
+    const addEventIcon = (<Popup
+      trigger={
+      <Icon name='add to calendar'
+        size='large'
+        onClick={() => this.setState({createEventFormOpen: true})}
+        link />}
+      content='Create an event'
+      position='bottom center'
+      inverted
+    />
+    );
 
     const myEventsIcon = <Popup
       trigger={<Icon name='book' size='large' link />}
@@ -93,6 +102,7 @@ class NavBar extends Component {
     />;
     return (
       <Menu fixed='top' id='NavBar-menu' borderless>
+        {this._renderModal()}
         <Menu.Item name='home'>
           <Image width='70px' src={logo} />
         </Menu.Item>
