@@ -59,7 +59,7 @@ class NavBar extends Component {
         size='large'
         link />}>
         <Modal.Content>
-          <CreateEventForm />
+          <CreateEventForm services={this.props.services} />
         </Modal.Content>
       </Modal>
     );

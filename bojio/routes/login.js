@@ -21,7 +21,9 @@ router.get('/',
       next();
     }
   },
-  passport.authenticate('facebook'));
+  passport.authenticate('facebook', {
+    scope: ['public_profile', 'user_friends']
+  }));
 
 router.get('/return',
   passport.authenticate('facebook', { successReturnToOrRedirect: '/api/login', failureRedirect: '/api/login' }));

@@ -96,7 +96,7 @@ class CreateEventForm extends Component {
 
           <div className="field">
             <label>Invite</label>
-            <InviteTokenizer />
+            <InviteTokenizer services={this.props.services} />
           </div>
 
           <div className="CreateEventForm-submitButton">

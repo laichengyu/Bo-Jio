@@ -7,57 +7,29 @@ class InviteTokenizer extends Component {
   state = {
     inputValue: "",
     tokens: [],
+    options: [],
     selected: null,
     counter: 0
   }
 
-  friendOptions = [
-   {
-     text: 'Jenny Hess2',
-     value: 'Jenny Hess2',
-     image: { avatar: true, src: 'https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' },
-   },
-   {
-     text: 'Jenny Hess3',
-     value: 'Jenny Hess3',
-     image: { avatar: true, src: 'https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' },
-   },
-   {
-     text: 'Jenny Hess4',
-     value: 'Jenny Hess4',
-     image: { avatar: true, src: 'https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' },
-   },
-   {
-     text: 'Jenny Hess5',
-     value: 'Jenny Hess5',
-     image: { avatar: true, src: 'https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' },
-   },
-   {
-     text: 'Jenny Hess6',
-     value: 'Jenny Hess6',
-     image: { avatar: true, src: 'https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' },
-   },
-   {
-     text: 'Jenny Hess7',
-     value: 'Jenny Hess7',
-     image: { avatar: true, src: 'https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' },
-   },
-   {
-     text: 'Jenny Hess8',
-     value: 'Jenny Hess8',
-     image: { avatar: true, src: 'https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' },
-   },
-   {
-     text: 'Jenny Hess9',
-     value: 'Jenny Hess9',
-     image: { avatar: true, src: 'https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' },
-   },
-   {
-     text: 'Jenny Hess10',
-     value: 'Jenny Hess10',
-     image: { avatar: true, src: 'https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg' },
-   }
-  ]
+  componentDidMount() {
+    this.props.services.facebook
+      .friendList()
+      .then(friends =>
+        friends.map((friend) => {
+          return {
+            text: friend.name,
+            value: friend.id,
+            image: { avatar: true, src: friend.pictureUrl }
+          }
+        })
+      ).then(friends => {
+        console.log(friends);
+        this.setState({
+          options: friends
+        });
+      });
+  }
 
   onContainerClick = () => {
     this._input.focus();
@@ -66,7 +38,7 @@ class InviteTokenizer extends Component {
   onSelectUser = (value) => {
     const existingTokens = this.state.tokens.filter(option => value === option.value);
     const entry = existingTokens.length === 0
-                    ? this.friendOptions.filter(option => value === option.value)
+                    ? this.state.options.filter(option => value === option.value)
                     : [];
 
     this.setState({
@@ -129,7 +101,12 @@ class InviteTokenizer extends Component {
     }
   }
 
+  matchOption = (option) => {
+    return (option.text.toLowerCase().indexOf(this.state.inputValue.toLowerCase()) !== -1);
+  }
+
   render() {
+    const matchingOptions = this.state.options.filter(this.matchOption);
     return (
       <Segment onClick={this.onContainerClick}>
         <span className="InviteTokenizer-tokenizer">
@@ -141,9 +118,8 @@ class InviteTokenizer extends Component {
             className="InviteTokenizer-dropdown"
             inline
             scrolling
-            upward
             icon={null}
-            options={this.friendOptions}
+            options={matchingOptions}
             open={(this.state.inputValue.length > 0)}
             onChange={this.onChangeUser}
             />
