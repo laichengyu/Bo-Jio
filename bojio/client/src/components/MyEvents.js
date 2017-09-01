@@ -40,7 +40,7 @@ class MyEvents extends Component {
 
     return (
       <div className="MyEvents">
-        <Menu pointing secondary>
+        <Menu pointing secondary className="MyEvents-tabs">
 
           <Menu.Item name='Hosted' active={activeItem === 'Hosted'} onClick={this.handleItemClick} >
             <i className="user icon"></i>

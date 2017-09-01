@@ -6,7 +6,7 @@ form {
 
 #CreateEventForm-intro {
   text-align: center;
-  font-family: 'Aclonica';
+  font-family: 'Gloria Hallelujah', cursive;
 }
 
 .CreateEventForm-description textarea {
@@ -17,4 +17,8 @@ form {
   align-items: center;
   display: flex;
   justify-content: flex-end;
+}
+
+.CreateEventForm-submitButton Button {
+  font-family: 'Gloria Hallelujah', cursive !important;
 }

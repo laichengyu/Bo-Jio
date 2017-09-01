@@ -1,5 +1,11 @@
 .Login {
   text-align: center;
+  background-image: url('../img/background4.jpg');
+  opacity: 1.0;
+  background-size: cover;
+  height: 100vh;
+  background-repeat:   no-repeat;
+  background-position: center center;
 }
 
 .Login-logo {
@@ -8,23 +14,39 @@
 }
 
 .Login-header {
-  height: 250px;
-  padding: 20px;
+  /*top: 10%;*/
+  width: 550px;
+  height: 425px;
+  border: 1px #e2e2e2;
+  box-shadow: 0 0 5px #888;
+  border-radius: 4px;
+  padding: 25px;
+  background-color: hsla(120, 100%, 0%, 0.5);
   position: absolute;
   margin: auto;
-  top: 0;
+  /*overflow-y: hidden;*/
   right: 0;
-  bottom: 0;
   left: 0;
+  top: 0;
+  bottom: 0;
 }
 
-.Login-header h2 {
-  color: grey;
-  font-style: italic;
-  font-family: 'Aclonica';
+.Login-header h2,
+.Login-header h1 {
+  font-family: 'Gloria Hallelujah', cursive;
+  padding: 20px;
+  font-weight: 400;
+  /*font-size: 30px;*/
+  margin: 8px 0 32px;
+  color: #999;
+  -webkit-margin-before: 0.83em;
+  -webkit-margin-after: 0.83em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
 }
 
 .fb-login-button {
   width: 250px;
   height: auto;
+  border-radius: 5px;
 }
