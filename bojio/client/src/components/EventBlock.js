@@ -21,7 +21,6 @@ class EventBlock extends Component {
   }
 
   onUpdate = (event) => {
-    console.log(event);
     this.setState({
       ...event
     });
