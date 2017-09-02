@@ -16,6 +16,7 @@ router.post('/create',
     }).then(function(event) {
       event.setCategory(req.body.category);
       event.setCreator(req.user.id);
+      event.addParticipant(req.user.id);
       res.json({
         status: 'OK',
         event: event
