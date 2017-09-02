@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Item, Loader } from 'semantic-ui-react';
+import { Header, Item } from 'semantic-ui-react';
 import EventBlock from './EventBlock';
 import InfiniteScroll from 'react-infinite-scroller';
 import './EventList.css';

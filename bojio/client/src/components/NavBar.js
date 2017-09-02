@@ -71,7 +71,7 @@ class NavBar extends Component {
         size="small"
         closeOnRootNodeClick={false}
         open={this.state.createEventFormOpen}
-        dimmer='inverted'>
+        >
         <Modal.Content>
           <CreateEventForm services={this.props.services}
             onSave={() => { this.setState({createEventFormOpen: false}); }}
