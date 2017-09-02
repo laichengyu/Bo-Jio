@@ -95,7 +95,7 @@ class CreateEventForm extends Component {
   render() {
     return (
       <div className="CreateEventForm">
-        <Header as='h2' id="CreateEventForm-intro">Jio your friends now!</Header>
+        <Header as='h2' id="CreateEventForm-intro">Create an Event</Header>
         <form className="ui form">
           <div className="field required">
             <label>Event Title</label>
