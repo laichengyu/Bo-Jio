@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Header, Item } from 'semantic-ui-react';
+import { Header, Item, Loader } from 'semantic-ui-react';
 import EventBlock from './EventBlock';
+import InfiniteScroll from 'react-infinite-scroller';
 import './EventList.css';
 
 class EventList extends Component {
@@ -10,7 +11,8 @@ class EventList extends Component {
     filter: {
       category: 'all',
       text: ''
-    }
+    },
+    pagination: 1
   };
 
   componentDidMount() {
@@ -62,16 +64,34 @@ class EventList extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return null;
+    }
+    
+    const events = this.getEvents();
+    const maxNum = 5 * this.state.pagination;
     return (
       <div className="EventList">
         <Header as='h1'>Upcoming Events</Header>
 
-        <Item.Group divided relaxed>
-        {
-          this.getEvents().map(
-            event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
-        }
-        </Item.Group>
+        <InfiniteScroll
+            pageStart={0}
+            loadMore={() => {
+              this.setState({
+                pagination: this.state.pagination + 1
+              });
+            }}
+            hasMore={events.length >= maxNum}
+            loader={null}
+        >
+          <Item.Group divided relaxed>
+          {
+            events.filter((_, index) => index < maxNum)
+            .map(
+              event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
+          }
+          </Item.Group>
+        </InfiniteScroll>
       </div>
     );
   }
