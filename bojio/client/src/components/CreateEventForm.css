@@ -4,12 +4,32 @@ form {
   padding-top: 20px;
 }
 
+.CreateEventForm-step {
+  display: flex !important;
+}
+
 .CreateEventForm-description textarea {
   font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
 }
 
-.CreateEventForm-submitButton {
+.CreateEventForm-buttons {
+  margin-top: 20px;
   align-items: center;
   display: flex;
   justify-content: flex-end;
+}
+
+.CreateEventForm-image:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.CreateEventForm-invite {
+  width: 80%;
+  margin: 30px auto;
+}
+
+.CreateEventForm-share > div {
+  display: flex !important;
+  justify-content: center;
 }

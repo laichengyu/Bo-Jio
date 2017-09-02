@@ -44,6 +44,22 @@ class Event {
       .then(result => result.json());
   }
 
+  setParticipants(eventId, participantIds) {
+    return fetch(`/api/event/${eventId}/set_participants`, {
+      credentials: 'same-origin',
+      cache: "no-store",
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+    },
+      body: JSON.stringify({
+        inviteList: participantIds
+      })
+    })
+      .then(result => result.json());
+  }
+
   create(params) {
     return fetch('/api/event/create', {
       credentials: 'same-origin',
@@ -55,7 +71,8 @@ class Event {
     },
       body: JSON.stringify(params)
     })
-      .then(res=>res.json());
+      .then(res=>res.json())
+      .then(result => result.event);
   }
 }
 

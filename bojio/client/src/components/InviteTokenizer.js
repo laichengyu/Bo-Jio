@@ -139,7 +139,7 @@ class InviteTokenizer extends Component {
             placeholder={
               this.state.tokens.length > 0
                 ? ""
-                : "Let's invite someone!"
+                : "Invite list"
             }
             />
         </span>

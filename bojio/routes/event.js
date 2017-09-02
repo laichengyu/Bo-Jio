@@ -16,8 +16,6 @@ router.post('/create',
     }).then(function(event) {
       event.setCategory(req.body.category);
       event.setCreator(req.user.id);
-      event.setParticipants([req.user.id, ...req.body.inviteList]);
-
       res.json({
         status: 'OK',
         event: event
@@ -137,6 +135,30 @@ router.post('/:event_id/join',
       .then(function(event) {
         if (event) {
           event.addParticipant(req.user.id)
+            .then(function() {
+              event.fetch()
+                .then(event => {
+                  res.json({
+                    status: 'OK',
+                    event: event
+                  });
+                });
+            });
+        } else {
+          res.json({
+            status: 'FAILED'
+          });
+        }
+      });
+  });
+
+router.post('/:event_id/set_participants',
+  login.ensureLoggedIn(),
+  function(req, res) {
+    models.Event.findById(req.params.event_id)
+      .then(function(event) {
+        if (event) {
+          event.setParticipants([req.user.id, ...req.body.inviteList])
             .then(function() {
               event.fetch()
                 .then(event => {
