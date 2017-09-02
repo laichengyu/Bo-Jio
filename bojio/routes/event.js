@@ -16,9 +16,7 @@ router.post('/create',
     }).then(function(event) {
       event.setCategory(req.body.category);
       event.setCreator(req.user.id);
-      if (req.body.inviteList) {
-        event.setParticipants([req.user.id, ...req.body.inviteList]);
-      }
+      event.setParticipants([req.user.id, ...req.body.inviteList]);
 
       res.json({
         status: 'OK',

@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
-import { Item, Icon, Label, List, Divider } from 'semantic-ui-react';
+import { Item, Label, List, Divider } from 'semantic-ui-react';
 import FacebookProvider, { Comments, CommentsCount, Like } from 'react-facebook';
 import EventCreator from './EventCreator';
 import Facepile from './Facepile';
+import EventStatusToken from './EventStatusToken';
 import './EventBlock.css';
 
 var dateFormat = require('dateformat');
 
 class EventBlock extends Component {
-  state = { showDetails: false };
+  state = {
+    ...this.getEventProps(),
+
+    showDetails: false
+  };
+
+  getEventProps() {
+    const {services, ...event} = this.props;
+    return event;
+  }
+
+  onUpdate = (event) => {
+    console.log(event);
+    this.setState({
+      ...event
+    });
+  }
 
   render() {
     return (
@@ -18,32 +35,32 @@ class EventBlock extends Component {
           <Label
             as='a'
             color='orange'
-            content={this.props.category.name}
-            icon={this.props.category.icon}
+            content={this.state.category.name}
+            icon={this.state.category.icon}
             ribbon
           />
-          <img src={this.props.pictureUrl} alt={this.props.category.name} />
+          <img src={this.state.pictureUrl} alt={this.state.category.name} />
 
-          <EventCreator services={this.props.services} id={this.props.creator.facebookId} />
-          <Facepile services={this.props.services} ids={this.props.participants.map(participant => participant.facebookId)} />
+          <EventCreator services={this.props.services} id={this.state.creator.facebookId} />
+          <Facepile services={this.props.services} ids={this.state.participants.map(participant => participant.facebookId)} />
         </Item.Image>
 
         <Item.Content>
           <Item.Header className="EventBlock-header">
-            {this.props.title}
+            {this.state.title}
             {this._renderJoinLabel()}
           </Item.Header>
           <Item.Meta>
             <List className="EventBlock-date" divided horizontal>
-                <List.Item icon='calendar' content={dateFormat(this.props.date, "ddd, d mmm yyyy")} />
-                <List.Item icon='time' content={dateFormat(this.props.date, "HH:MM")} />
+                <List.Item icon='calendar' content={dateFormat(this.state.date, "ddd, d mmm yyyy")} />
+                <List.Item icon='time' content={dateFormat(this.state.date, "HH:MM")} />
             </List>
             <List divided horizontal>
-                <List.Item icon='marker' content={this.props.location} />
+                <List.Item icon='marker' content={this.state.location} />
             </List>
           </Item.Meta>
           <Item.Description>
-            {this.props.description}
+            {this.state.description}
           </Item.Description>
           <Divider />
           <Item.Extra>
@@ -61,14 +78,22 @@ class EventBlock extends Component {
   }
 
   _getUrl() {
-    return `http://bojio.ap-southeast-1.elasticbeanstalk.com/events/${this.props.id}`;
+    return `http://bojio.ap-southeast-1.elasticbeanstalk.com/events/${this.state.id}`;
   }
 
   _renderJoinLabel() {
+    const participants = this.state.participants.map(participant => participant.facebookId);
+    const currentUserParticipant = participants.indexOf(this.props.services.facebook.currentUserId) !== -1;
+    const currentUserOwner = this.props.services.facebook.currentUserId ===  this.state.creator.facebookId;
+
     return (
-      <Label className="EventBlock-joinLabel" color="green" size="tiny">
-        <Icon name='checkmark' /> Joined
-      </Label>
+      <EventStatusToken
+        id={this.state.id}
+        isOwner={currentUserOwner}
+        isParticipant={currentUserParticipant}
+        services={this.props.services}
+        onChange={this.onUpdate}
+        />
     );
   }
 

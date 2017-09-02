@@ -1,0 +1,5 @@
+.EventStatusToken {
+  display: flex !important;
+  margin-left: auto !important;
+  cursor: pointer;
+}

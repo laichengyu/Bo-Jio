@@ -14,12 +14,12 @@ class Facepile extends Component {
             (id, index) => {
               if (index < this.MAX - 1 || (index === (this.MAX - 1) && this.MAX === this.props.ids.length)) {
                 return <Avatar
-                  key={`Facepile.${index}`}
+                  key={`Facepile.${id}`}
                   id={id}
                   services={this.props.services}
                 />;
               } else if (index === this.MAX - 1) {
-                return <Label key={`Facepile.${index}`} id="Facepile-label" color="teal" circular size="large">+{this.props.ids.length - this.MAX + 1}</Label>;
+                return <Label key="FacepileOverflow" id="Facepile-label" color="teal" circular size="large">+{this.props.ids.length - this.MAX + 1}</Label>;
               } else {
                 return null;
               }
