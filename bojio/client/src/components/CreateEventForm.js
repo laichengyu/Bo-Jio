@@ -129,7 +129,7 @@ class CreateEventForm extends Component {
   renderEssentials() {
     return (
       <form className="ui form">
-        <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null})}/>
+        <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null, gifSearchText: this.state.category})}/>
         <Divider />
         <div className="field required">
           <label>Event Title</label>
