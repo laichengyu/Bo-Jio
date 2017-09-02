@@ -16,11 +16,8 @@ router.post('/create',
     }).then(function(event) {
       event.setCategory(req.body.category);
       event.setCreator(req.user.id);
-      event.addParticipant(req.user.id);
       if (req.body.inviteList) {
-        req.body.inviteList.forEach(inviteId => {
-          event.addParticipant(inviteId);
-        });
+        event.setParticipants([req.user.id, ...req.body.inviteList]);
       }
 
       res.json({
@@ -96,6 +93,109 @@ router.get('/:event_id/info',
           res.json({
             status: 'OK',
             event: event
+          });
+        } else {
+          res.json({
+            status: 'FAILED'
+          });
+        }
+      });
+  });
+
+router.post('/:event_id/join',
+  login.ensureLoggedIn(),
+  function(req, res) {
+    models.Event.findById(req.params.event_id)
+      .then(function(event) {
+        if (event) {
+          event.addParticipant(req.user.id)
+            .then(function() {
+              event.fetch()
+                .then(event => {
+                  res.json({
+                    status: 'OK',
+                    event: event
+                  });
+                });
+            });
+        } else {
+          res.json({
+            status: 'FAILED'
+          });
+        }
+      });
+  });
+
+router.post('/:event_id/leave',
+  login.ensureLoggedIn(),
+  function(req, res) {
+    models.Event.findById(req.params.event_id)
+      .then(function(event) {
+        if (event) {
+          event.removeParticipant(req.user.id)
+            .then(function() {
+              event.fetch()
+                .then(event => {
+                  res.json({
+                    status: 'OK',
+                    event: event
+                  });
+                });
+            });
+        } else {
+          res.json({
+            status: 'FAILED'
+          });
+        }
+      });
+  });
+
+router.post('/:event_id/edit',
+  login.ensureLoggedIn(),
+  function(req, res) {
+    models.Event.findById(req.params.event_id)
+      .then(function(event) {
+        if (event) {
+          event.update({
+            title: req.body.title,
+            description: req.body.description,
+            date: req.body.date,
+            location: req.body.location,
+            pictureUrl: req.body.pictureUrl,
+          }).then(function(event) {
+            event.setCategory(req.body.category);
+            if (req.body.inviteList) {
+              event.setParticipants([req.user.id, ...req.body.inviteList]);
+            }
+
+            res.json({
+              status: 'OK',
+              event: event
+            });
+          });
+        } else {
+          res.json({
+            status: 'FAILED'
+          });
+        }
+      });
+  });
+
+router.post('/:event_id/remove',
+  login.ensureLoggedIn(),
+  function(req, res) {
+    models.Event.findById(req.params.event_id)
+      .then(function(event) {
+        if (event) {
+          models.Event.destroy({
+            where: {
+              id: req.params.event_id
+            }
+          }).then(function() {
+            res.json({
+              status: 'OK',
+              event: event
+            });
           });
         } else {
           res.json({
