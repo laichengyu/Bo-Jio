@@ -8,6 +8,10 @@ class MyEvents extends Component {
     isLoading: true,
     events: [],
     activeItem: 'Hosted',
+    filter: {
+      category: 'all',
+      text: ''
+    }
   };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -41,6 +45,31 @@ class MyEvents extends Component {
       });
   }
 
+  filter = (filter) => {
+    this.setState({
+      filter: {
+        ...this.state.filter,
+        ...filter
+      }
+    });
+  };
+
+  getEvents() {
+    var filteredEvents = this.state.events;
+    if (this.state.filter.category !== 'all') {
+      filteredEvents = filteredEvents.filter(event =>
+        (event.category.id === this.state.filter.category)
+      );
+    }
+
+    if (this.state.filter.text.length > 0) {
+      filteredEvents = filteredEvents.filter(event =>
+        (event.title.toLowerCase().indexOf(this.state.filter.text.toLowerCase()) !== -1)
+      );
+    }
+    return filteredEvents;
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.activeItem !== this.state.activeItem) {
       this.refresh();
@@ -58,7 +87,7 @@ class MyEvents extends Component {
       return (
         <Item.Group divided relaxed>
         {
-          this.state.events.map(
+          this.getEvents().map(
             event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
         }
         </Item.Group>

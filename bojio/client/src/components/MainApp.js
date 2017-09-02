@@ -9,13 +9,20 @@ class MainApp extends Component {
     atHomePage: true,
   }
 
+  componentWillUpdate() {
+    this.refs.navBar.resetSearch();
+  }
+
   render() {
     return (
       <div className="MainApp">
-        <NavBar services={this.props.services}
+        <NavBar
+          ref="navBar"
+          services={this.props.services}
           onMyEventsOpen={() => this.setState({atHomePage: false})}
           returnToHomePage={() => this.setState({atHomePage: true})}
           onEventRefresh={() => this.refs.eventList.refresh()}
+          onEventFilter={filter => this.refs.eventList.filter(filter)}
           />
         {this.state.atHomePage ? <EventList services={this.props.services} ref="eventList" />
                                : <MyEvents services={this.props.services} ref="eventList" />}

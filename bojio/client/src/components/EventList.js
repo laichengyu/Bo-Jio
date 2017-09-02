@@ -6,7 +6,11 @@ import './EventList.css';
 class EventList extends Component {
   state = {
     isLoading: true,
-    events: []
+    events: [],
+    filter: {
+      category: 'all',
+      text: ''
+    }
   };
 
   componentDidMount() {
@@ -32,6 +36,31 @@ class EventList extends Component {
       });
   }
 
+  filter = (filter) => {
+    this.setState({
+      filter: {
+        ...this.state.filter,
+        ...filter
+      }
+    });
+  };
+
+  getEvents() {
+    var filteredEvents = this.state.events;
+    if (this.state.filter.category !== 'all') {
+      filteredEvents = filteredEvents.filter(event =>
+        (event.category.id === this.state.filter.category)
+      );
+    }
+
+    if (this.state.filter.text.length > 0) {
+      filteredEvents = filteredEvents.filter(event =>
+        (event.title.toLowerCase().indexOf(this.state.filter.text.toLowerCase()) !== -1)
+      );
+    }
+    return filteredEvents;
+  }
+
   render() {
     return (
       <div className="EventList">
@@ -39,7 +68,7 @@ class EventList extends Component {
 
         <Item.Group divided relaxed>
         {
-          this.state.events.map(
+          this.getEvents().map(
             event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
         }
         </Item.Group>

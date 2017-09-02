@@ -12,6 +12,7 @@ class NavBar extends Component {
     isLoading: true,
     categories: [this.ANY_CATEGORY_OPTION],
     selectedCategory: this.ANY_CATEGORY_OPTION,
+    searchText: "",
     createEventFormOpen: false
   }
 
@@ -42,11 +43,26 @@ class NavBar extends Component {
       });
   }
 
+  resetSearch = () => {
+    this.setState({
+      selectedCategory: this.ANY_CATEGORY_OPTION,
+      searchText: ""
+    });
+  }
+
   onSelectCategory = (event, data) => {
     const matchingCategory = this.state.categories.filter(category => (category.value === data.value))[0];
     this.setState({
       selectedCategory: matchingCategory
     });
+    this.props.onEventFilter({ category: data.value });
+  }
+
+  onSearchTextChange = (event, data) => {
+    this.setState({
+      searchText: data.value
+    });
+    this.props.onEventFilter({ text: data.value });
   }
 
   _renderModal() {
@@ -134,9 +150,11 @@ class NavBar extends Component {
                   value={this.state.selectedCategory.value}
                   onChange={this.onSelectCategory}
                   />}
+              onChange={this.onSearchTextChange}
               actionPosition='left'
               placeholder='Search...'
               size='large'
+              value={this.state.searchText}
             />
         </Menu.Item>
 
