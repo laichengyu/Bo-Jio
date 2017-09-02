@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Item } from 'semantic-ui-react';
+import { Header, Item, Icon, Dropdown, Loader, Dimmer, Segment } from 'semantic-ui-react';
 import EventBlock from './EventBlock';
 import InfiniteScroll from 'react-infinite-scroller';
 import './EventList.css';
@@ -12,14 +12,35 @@ class EventList extends Component {
       category: 'all',
       text: ''
     },
+    displayMode: 'upcoming',
     pagination: 1
   };
 
+  displayOptions = [
+    {
+      key: 'upcoming',
+      text: 'Upcoming Events',
+      value: 'upcoming',
+      content: 'Upcoming Events'
+    },
+    {
+      key: 'recent',
+      text: 'Recent Events',
+      value: 'recent',
+      content: 'Recent Events',
+    },
+    {
+      key: 'past',
+      text: 'Past Events',
+      value: 'past',
+      content: 'Past Events',
+    },
+  ]
+
   componentDidMount() {
     this.props.services.event
-      .list()
+      .list(this.state.displayMode)
       .then(events => {
-        events.reverse();
         this.setState({
           isLoading: false,
           events: events
@@ -29,10 +50,10 @@ class EventList extends Component {
 
   refresh() {
     this.props.services.event
-      .list()
+      .list(this.state.displayMode)
       .then(events => {
-        events.reverse();
         this.setState({
+          isLoading: false,
           events: events
         });
       });
@@ -46,6 +67,21 @@ class EventList extends Component {
       }
     });
   };
+
+  onDisplayChange = (event, data) => {
+    if (this.state.displayMode !== data.value) {
+      this.setState({
+        isLoading: true,
+        displayMode: data.value
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.displayMode !== this.state.displayMode) {
+      this.refresh();
+    }
+  }
 
   getEvents() {
     var filteredEvents = this.state.events;
@@ -63,18 +99,22 @@ class EventList extends Component {
     return filteredEvents;
   }
 
-  render() {
-    if (this.state.isLoading) {
-      return null;
-    }
-    
+  renderLoader() {
+    return (
+      <Segment className="EventList-loader">
+        <Dimmer active inverted>
+          <Loader size="massive"/>
+        </Dimmer>
+      </Segment>
+    );
+  }
+
+  renderEvents() {
     const events = this.getEvents();
     const maxNum = 5 * this.state.pagination;
-    return (
-      <div className="EventList">
-        <Header as='h1'>Upcoming Events</Header>
 
-        <InfiniteScroll
+    return (
+      <InfiniteScroll
             pageStart={0}
             loadMore={() => {
               this.setState({
@@ -84,14 +124,34 @@ class EventList extends Component {
             hasMore={events.length >= maxNum}
             loader={null}
         >
-          <Item.Group divided relaxed>
-          {
-            events.filter((_, index) => index < maxNum)
-            .map(
-              event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
-          }
-          </Item.Group>
-        </InfiniteScroll>
+        <Item.Group divided relaxed>
+        {
+          events.filter((_, index) => index < maxNum)
+          .map(
+            event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
+        }
+        </Item.Group>
+      </InfiniteScroll>
+    );
+  }
+
+  render() {
+    return (
+      <div className="EventList">
+        <Header as='h1' className="EventList-header">
+          Events Feed
+          <Header as='h4'>
+            <Header.Content>
+              <Dropdown
+                inline
+                options={this.displayOptions}
+                value={this.state.displayMode}
+                onChange={this.onDisplayChange} />
+            </Header.Content>
+          </Header>
+        </Header>
+
+        {this.state.isLoading ? this.renderLoader() : this.renderEvents()}
       </div>
     );
   }

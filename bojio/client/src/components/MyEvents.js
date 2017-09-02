@@ -27,7 +27,6 @@ class MyEvents extends Component {
   componentDidMount() {
     this.getEventList()
       .then(events => {
-        events.reverse();
         this.setState({
           isLoading: false,
           events: events
@@ -38,7 +37,6 @@ class MyEvents extends Component {
   refresh() {
     this.getEventList()
       .then(events => {
-        events.reverse();
         this.setState({
           events: events
         });

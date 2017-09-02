@@ -1,6 +1,6 @@
 class Event {
-  list() {
-    return fetch('/api/event/list', {
+  list(mode) {
+    return fetch(`/api/event/list?display=${mode}`, {
       credentials: 'same-origin',
       cache: "no-store"
     })

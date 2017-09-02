@@ -30,7 +30,37 @@ router.post('/create',
 router.get('/list',
   login.ensureLoggedIn(),
   function(req, res) {
-    models.Event.findAll({})
+    var events;
+    var displayMode = req.query.display || 'upcoming';
+
+    if (displayMode === 'upcoming') {
+      events = models.Event.findAll({
+        where: {
+          date: {
+            $gt: new Date()
+          }
+        },
+        order: models.sequelize.literal('date ASC')
+      });
+    } else if (displayMode === 'recent') {
+      events = models.Event.findAll({
+        order: models.sequelize.literal('createdAt DESC')
+      });
+    } else if (displayMode === 'past') {
+      events = models.Event.findAll({
+        where: {
+          date: {
+            $lt: new Date()
+          }
+        },
+        order: models.sequelize.literal('date DESC')
+      });
+    } else {
+      res.json({
+        status: 'FAILED'
+      });
+    }
+    events
       .then(function(events) {
 
       Promise
