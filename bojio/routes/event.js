@@ -71,7 +71,7 @@ router.get('/created',
 router.get('/joined',
   login.ensureLoggedIn(),
   function(req, res) {
-    models.User.findById("1852623078088890")
+    models.User.findById(req.user.id)
       .then(function(user) {
         user.getEvents()
           .then(function(events) {

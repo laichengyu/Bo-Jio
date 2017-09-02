@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Item, Header } from 'semantic-ui-react';
+import { Menu, Item, Header, Image } from 'semantic-ui-react';
 import EventBlock from './EventBlock';
 import './MyEvents.css';
 
@@ -47,8 +47,31 @@ class MyEvents extends Component {
     }
   }
 
+  renderContent() {
+    if (this.state.events.length === 0) {
+      return <Image
+        src="https://media.giphy.com/media/VvNblYZGFj2Ny/giphy.gif"
+        size="huge"
+        centered
+        />
+    } else {
+      return (
+        <Item.Group divided relaxed>
+        {
+          this.state.events.map(
+            event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
+        }
+        </Item.Group>
+      );
+    }
+  }
+
   render() {
     const { activeItem } = this.state;
+
+    if (this.state.isLoading) {
+      return null;
+    }
 
     return (
       <div className="MyEvents">
@@ -64,24 +87,8 @@ class MyEvents extends Component {
             Joined
           </Menu.Item>
         </Menu>
-        {/*
-        <a className="ui red tag label">
-          <i className="user icon"></i>
-          Hosted
-        </a>
-        <a className="ui green tag label">
-          <i className="users icon"></i>
-          Joined
-        </a>
-        */}
 
-        <Item.Group divided relaxed>
-          {/* Needs to be changed to My Hosted/Joined Events*/}
-        {
-          this.state.events.map(
-            event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
-        }
-        </Item.Group>
+        {this.renderContent()}
       </div>
     );
   }
