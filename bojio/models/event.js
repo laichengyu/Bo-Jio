@@ -33,12 +33,5 @@ module.exports = function(sequelize, DataTypes) {
     ]).then(() => result);
   }
 
-  var User = require('./user')(sequelize, DataTypes);
-  var Category = require('./category')(sequelize, DataTypes);
-
-  Event.belongsTo(Category);
-  Event.belongsTo(User, { as: 'creator' });
-  Event.belongsToMany(User, { as: 'participants', through: 'Participation' });
-
   return Event;
 };

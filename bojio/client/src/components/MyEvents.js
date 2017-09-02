@@ -12,9 +12,16 @@ class MyEvents extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
+  getEventList() {
+    if (this.state.activeItem === 'Hosted') {
+      return this.props.services.event.created();
+    } else {
+      return this.props.services.event.joined();
+    }
+  }
+
   componentDidMount() {
-    this.props.services.event
-      .list()
+    this.getEventList()
       .then(events => {
         events.reverse();
         this.setState({
@@ -25,14 +32,19 @@ class MyEvents extends Component {
   }
 
   refresh() {
-    this.props.services.event
-      .list()
+    this.getEventList()
       .then(events => {
         events.reverse();
         this.setState({
           events: events
         });
       });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.activeItem !== this.state.activeItem) {
+      this.refresh();
+    }
   }
 
   render() {

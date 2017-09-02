@@ -8,6 +8,24 @@ class Event {
       .then(result => result.events);
   }
 
+  joined() {
+    return fetch('/api/event/joined', {
+      credentials: 'same-origin',
+      cache: "no-store"
+    })
+      .then(result => result.json())
+      .then(result => result.events);
+  }
+
+  created() {
+    return fetch('/api/event/created', {
+      credentials: 'same-origin',
+      cache: "no-store"
+    })
+      .then(result => result.json())
+      .then(result => result.events);
+  }
+
   create(params) {
     return fetch('/api/event/create', {
       credentials: 'same-origin',

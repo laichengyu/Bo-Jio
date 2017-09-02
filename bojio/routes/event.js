@@ -47,6 +47,46 @@ router.get('/list',
     });
   });
 
+router.get('/created',
+  login.ensureLoggedIn(),
+  function(req, res) {
+    models.Event.findAll({
+      where: {
+        CreatorFacebookId: req.user.id
+      }
+    })
+      .then(function(events) {
+
+      Promise
+        .all(events.map(event => event.fetch()))
+        .then(results => {
+          res.json({
+            status: 'OK',
+            events: results
+          });
+        });
+    });
+  });
+
+router.get('/joined',
+  login.ensureLoggedIn(),
+  function(req, res) {
+    models.User.findById("1852623078088890")
+      .then(function(user) {
+        user.getEvents()
+          .then(function(events) {
+            Promise
+              .all(events.map(event => event.fetch()))
+              .then(results => {
+                res.json({
+                  status: 'OK',
+                  events: results
+                });
+              });
+          });
+      });
+  });
+
 router.get('/:event_id/info',
   login.ensureLoggedIn(),
   function(req, res) {

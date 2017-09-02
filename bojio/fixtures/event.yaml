@@ -7,6 +7,7 @@ fixtures:
       location: Home
       CategoryId: movie
       creatorFacebookId: 1852623078088890
+      pictureUrl: https://media.giphy.com/media/pUeXcg80cO8I8/giphy.gif
   - model: Event
     data:
       title: Soccer match with other kids
@@ -15,6 +16,7 @@ fixtures:
       location: Clementi soccer field
       CategoryId: sports
       creatorFacebookId: 1852623078088890
+      pictureUrl: https://media.giphy.com/media/T0E5Kmtiz5uXS/giphy.gif
   - model: Event
     data:
       title: Catch up with me!
@@ -23,6 +25,7 @@ fixtures:
       location: Starbucks (really)
       CategoryId: coffee
       creatorFacebookId: 1852623078088890
+      pictureUrl: https://media.giphy.com/media/6NlmBQLhWy2QM/giphy.gif
   - model: Event
     data:
       title: Super long title long title long title long title long title long title!
@@ -31,3 +34,4 @@ fixtures:
       location: Starbucksbucks bucksbucks bucksbucksbucks
       CategoryId: others
       creatorFacebookId: 1852623078088890
+      pictureUrl: https://media.giphy.com/media/rIJo9BAnfXaBG/giphy.gif

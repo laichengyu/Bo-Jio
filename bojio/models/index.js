@@ -23,6 +23,11 @@ fs
     db[model.name] = model;
   });
 
+db['Event'].belongsTo(db['Category']);
+db['Event'].belongsTo(db['User'], { as: 'creator' });
+db['Event'].belongsToMany(db['User'], { as: 'participants', through: 'Participation' });
+db['User'].belongsToMany(db['Event'], { through: 'Participation' });
+
 Object.keys(db).forEach(function(modelName) {
   if ("associate" in db[modelName]) {
     db[modelName].associate(db);
