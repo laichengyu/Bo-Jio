@@ -6,3 +6,16 @@
   overflow:auto;
   margin: auto;
 }
+
+.EventList-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px !important;
+}
+
+.EventList-loader {
+  height: 200px;
+  box-shadow: none !important;
+  border: none !important;
+}
