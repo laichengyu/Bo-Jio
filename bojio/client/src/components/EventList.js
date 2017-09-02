@@ -35,7 +35,7 @@ class EventList extends Component {
   render() {
     return (
       <div className="EventList">
-        <Header as='h2' id="EventList-intro">Check out what your friends are up to!</Header>
+        <Header as='h1'>Upcoming Events</Header>
 
         <Item.Group divided relaxed>
         {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Item } from 'semantic-ui-react';
+import { Menu, Item, Header } from 'semantic-ui-react';
 import EventBlock from './EventBlock';
 import './MyEvents.css';
 
@@ -41,6 +41,7 @@ class MyEvents extends Component {
     return (
       <div className="MyEvents">
         <Menu pointing secondary className="MyEvents-tabs">
+          <Header as='h1' className="MyEvents-header">My Events</Header>
 
           <Menu.Item name='Hosted' active={activeItem === 'Hosted'} onClick={this.handleItemClick} >
             <i className="user icon"></i>
