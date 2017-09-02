@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './CreateEventForm.css';
-import { Label, Button, Header, Form, Dropdown, Step, Icon, Image, Divider } from 'semantic-ui-react';
+import { Label, Button, Header, Form, Dropdown, Step, Icon, Image, Divider, Modal } from 'semantic-ui-react';
 import FacebookProvider, { Like } from 'react-facebook';
+import giphyImage from '../img/giphy.gif';
 import InviteTokenizer from './InviteTokenizer';
 import GiphySearch from './GiphySearch';
 
@@ -12,6 +13,8 @@ class CreateEventForm extends Component {
     categories: [],
     stage: 0,
     createdEventId: null,
+    giphySearchOpen: false,
+    giphyImage: null,
 
     date: null,
     title: null,
@@ -66,11 +69,16 @@ class CreateEventForm extends Component {
         }
       });
     }
+
+    if (this.state.giphySearchOpen && !prevState.giphySearchOpen) {
+      this.refs.giphySearchInput.focus();
+    }
   }
 
   gifSearchTextChange = (event) => {
     this.setState({
-      gifSearchText: event.target.value
+      gifSearchText: event.target.value,
+      giphyImage: null
     });
   }
 
@@ -121,7 +129,7 @@ class CreateEventForm extends Component {
   renderEssentials() {
     return (
       <form className="ui form">
-        <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded'/>
+        <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null})}/>
         <Divider />
         <div className="field required">
           <label>Event Title</label>
@@ -228,6 +236,71 @@ class CreateEventForm extends Component {
     }
   };
 
+  giphyField() {
+    return (
+      <div className="CreateEventForm-giphyFormBlock">
+        <Header as='h2'>Giphy Search</Header>
+        <form className="ui form CreateEventForm-giphyForm">
+          <div className="CreateEventForm-giphyBlock">
+            <input
+              ref="giphySearchInput"
+              type="text"
+              name="image"
+              placeholder="Keywords?"
+              onChange={this.gifSearchTextChange}
+            />
+            <Image src={giphyImage} />
+          </div>
+          {
+            this.state.gifSearchText.length > 2
+              ? <GiphySearch
+                  searchText={this.state.gifSearchText}
+                  onImageSelect={imageUrl => this.setState({giphyImage: imageUrl})}
+                  />
+              : null
+          }
+          <div className="CreateEventForm-giphyButtons">
+            <Button
+            floated="right"
+              className="ui primary button"
+              onClick={() => {
+                this.setState({
+                  imageUrl: this.state.giphyImage,
+                  gifSearchText: "",
+                  giphySearchOpen: false
+                });
+              }}
+              disabled={this.state.giphyImage === null}
+            >Save</Button>
+            <Button
+            floated="right"
+              className="ui red button"
+              onClick={() => {
+                this.setState({
+                  giphySearchOpen: false,
+                  gifSearchText: "",
+                });
+              }}
+              >Cancel</Button>
+            </div>
+        </form>
+      </div>
+    );
+  }
+
+  renderGiphyModal() {
+    return (
+      <Modal
+        size="tiny"
+        open={this.state.giphySearchOpen}
+        >
+        <Modal.Content>
+          {this.giphyField()}
+        </Modal.Content>
+      </Modal>
+    );
+  }
+
   buttonText() {
     if (this.state.stage === 2) {
       if (this.state.inviteList.length > 0) {
@@ -254,25 +327,10 @@ class CreateEventForm extends Component {
         {this.state.stage === 0 ? this.renderCategorySelect() : null}
         {this.state.stage === 1 ? this.renderEssentials() : null}
         {this.state.stage === 2 ? this.renderComplete() : null}
+        {this.renderGiphyModal()}
 
         {/*
-        <div className="field">
-          <label>Giphy</label>
-          <input
-            type="text"
-            name="image"
-            placeholder="Keywords?"
-            onChange={this.gifSearchTextChange}
-          />
-          {
-            this.state.gifSearchText.length > 2
-              ? <GiphySearch
-                  searchText={this.state.gifSearchText}
-                  onImageSelect={imageUrl => this.setState({imageUrl: imageUrl})}
-                  />
-              : null
-          }
-        </div>
+        
 
         <div className="field">
           <label>Invite</label>

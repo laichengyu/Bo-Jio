@@ -19,6 +19,11 @@ form {
   justify-content: flex-end;
 }
 
+.CreateEventForm-giphyButtons {
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
 .CreateEventForm-image:hover {
   cursor: pointer;
   opacity: 0.5;
@@ -32,4 +37,12 @@ form {
 .CreateEventForm-share > div {
   display: flex !important;
   justify-content: center;
+}
+
+.CreateEventForm-giphyBlock {
+  display: flex;
+}
+
+.CreateEventForm-giphyForm {
+  padding-top: 0px !important;
 }
