@@ -92,6 +92,7 @@ class EventStatusToken extends Component {
             editMode={true}
             onSave={() => { this.setState({ editEventFormOpen: false }); }}
             onEventChange={ this.props.onChange }
+            onEventDelete={ this.props.onDelete }
             eventData={this.props.data}/>
         </Modal.Content>
       </Modal>

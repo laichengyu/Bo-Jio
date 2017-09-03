@@ -12,7 +12,8 @@ class EventBlock extends Component {
   state = {
     ...this.getEventProps(),
 
-    showDetails: false
+    showDetails: false,
+    deleted: false
   };
 
   getEventProps() {
@@ -27,6 +28,9 @@ class EventBlock extends Component {
   }
 
   render() {
+    if (this.state.deleted) {
+      return null;
+    }
     return (
       <Item className="EventBlock">
         <Item.Image
@@ -92,6 +96,7 @@ class EventBlock extends Component {
         isParticipant={currentUserParticipant}
         services={this.props.services}
         onChange={this.onUpdate}
+        onDelete={() => this.setState({deleted: true})}
         data={{
           createdEventId: this.state.id,
           title: this.state.title,

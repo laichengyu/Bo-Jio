@@ -44,6 +44,15 @@ class Event {
       .then(result => result.json());
   }
 
+  delete(eventId) {
+    return fetch(`/api/event/${eventId}/remove`, {
+      credentials: 'same-origin',
+      cache: "no-store",
+      method: 'post'
+    })
+      .then(result => result.json());
+  }
+
   setParticipants(eventId, participantIds) {
     return fetch(`/api/event/${eventId}/set_participants`, {
       credentials: 'same-origin',
