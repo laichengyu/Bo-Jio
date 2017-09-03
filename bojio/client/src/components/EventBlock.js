@@ -70,7 +70,7 @@ class EventBlock extends Component {
             <div className="EventBlock-toolBar">
               {this._renderCommentCount()}
               <FacebookProvider appId={this.props.services.facebook.appId}>
-                <Like href={this._getUrl()} layout="button_count" size="large" />
+                <Like href={this._getUrl()} layout="button_count" size="large" share />
               </FacebookProvider>
             </div>
           </Item.Extra>

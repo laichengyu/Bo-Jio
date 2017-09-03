@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './CreateEventForm.css';
-import { Label, Button, Header, Form, Dropdown, Step, Icon, Image, Divider, Modal } from 'semantic-ui-react';
+import { Button, Header, Form, Dropdown, Step, Icon, Image, Divider, Modal } from 'semantic-ui-react';
 import FacebookProvider, { Like } from 'react-facebook';
 import giphyImage from '../img/giphy.gif';
 import InviteTokenizer from './InviteTokenizer';
@@ -350,12 +350,14 @@ class CreateEventForm extends Component {
           <div className="CreateEventForm-giphyBlock">
             <input
               ref="giphySearchInput"
+              className="CreateEventForm-giphySearchInput"
               type="text"
               name="image"
               placeholder="Keywords?"
               onChange={this.gifSearchTextChange}
             />
-            <Image src={giphyImage} />
+            <Image src={giphyImage}
+              className="CreateEventForm-giphySearchImage"/>
           </div>
           {
             this.state.gifSearchText.length > 2
