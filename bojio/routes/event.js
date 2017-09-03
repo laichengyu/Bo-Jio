@@ -215,9 +215,6 @@ router.post('/:event_id/edit',
             pictureUrl: req.body.pictureUrl,
           }).then(function(event) {
             event.setCategory(req.body.category);
-            if (req.body.inviteList) {
-              event.setParticipants([req.user.id, ...req.body.inviteList]);
-            }
 
             res.json({
               status: 'OK',

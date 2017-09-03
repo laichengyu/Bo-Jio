@@ -12,10 +12,10 @@ class CreateEventForm extends Component {
     gifSearchText: "",
     categories: [],
     stage: 0,
-    createdEventId: null,
     giphySearchOpen: false,
     giphyImage: null,
 
+    createdEventId: null,
     date: null,
     title: null,
     location: null,
@@ -23,7 +23,9 @@ class CreateEventForm extends Component {
     imageUrl: null,
     description: null,
     inviteList: [],
-    category: null
+    category: null,
+
+    ...(this.props.editMode ? this.props.eventData : {})
   };
 
   componentDidMount() {
@@ -44,35 +46,45 @@ class CreateEventForm extends Component {
           categories: categories
         });
       });
+    if (this.props.editMode) {
+      this.setupCalendar();
+      const date = new Date(this.state.dateDate);
+      window.jQuery(this.refs.date).calendar('set date', date);
+      window.jQuery(this.refs.time).calendar('set date', date);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.stage === 1 && prevState.stage !== 1) {
-      const me = this;
-      window.jQuery(this.refs.date).calendar({
-        monthFirst: false,
-        type: 'date',
-        onChange: function (date, text, mode) {
-          me.setState({
-            date: date.getTime() - 1000 * (date.getHours() * 3600 + date.getMinutes() * 60)
-          });
-        }
-      });
-
-      window.jQuery(this.refs.time).calendar({
-        ampm: false,
-        type: 'time',
-        onChange: function (date, text, mode) {
-          me.setState({
-            time: date.getHours() * 3600 + date.getMinutes() * 60
-          });
-        }
-      });
+    if (!this.props.editMode && this.state.stage === 1 && prevState.stage !== 1) {
+      this.setupCalendar();
     }
 
     if (this.state.giphySearchOpen && !prevState.giphySearchOpen) {
       this.refs.giphySearchInput.focus();
     }
+  }
+
+  setupCalendar() {
+    const me = this;
+    window.jQuery(this.refs.date).calendar({
+      monthFirst: false,
+      type: 'date',
+      onChange: function (date, text, mode) {
+        me.setState({
+          date: date.getTime() - 1000 * (date.getHours() * 3600 + date.getMinutes() * 60)
+        });
+      }
+    });
+
+    window.jQuery(this.refs.time).calendar({
+      ampm: false,
+      type: 'time',
+      onChange: function (date, text, mode) {
+        me.setState({
+          time: date.getHours() * 3600 + date.getMinutes() * 60
+        });
+      }
+    });
   }
 
   gifSearchTextChange = (event) => {
@@ -91,16 +103,26 @@ class CreateEventForm extends Component {
       category: this.state.category,
       location: this.state.location,
       pictureUrl: this.state.imageUrl,
-      description: this.state.description,
-      inviteList: this.state.inviteList.map(e => e.value)
+      description: this.state.description
     };
 
-    this.props.services.event
-      .create(data)
-      .then(event => this.setState({ createdEventId: event.id }));
+    const eventCall = this.props.editMode
+      ? this.props.services.event.edit(this.state.createdEventId, data)
+      : this.props.services.event.create(data)
+
+    return eventCall
+      .then(event => {
+        if (!this.props.editMode) {
+          this.setState({ createdEventId: event.id });
+        }
+        return event;
+      });
   }
 
   canNext() {
+    if (this.props.editMode) {
+      return this.state.category && this.state.title && this.state.category && this.state.location && this.state.date && this.state.time;
+    }
     if (this.state.stage === 0) {
       return this.state.category !== null;
     } else if (this.state.stage === 1) {
@@ -115,10 +137,10 @@ class CreateEventForm extends Component {
       <form className="ui form">
         <div className="field required">
           <Dropdown placeholder='Select Category' fluid selection options={this.state.categories.map(category => {var c = {...category}; delete c.defaultImage; return c;})}
+            value={this.state.category}
             onChange={(event, data) => {
               this.setState({
-                category: data.value,
-                imageUrl: this.state.categories.filter(category => data.value === category.value)[0].defaultImage
+                category: data.value
               });
             }}/>
         </div>
@@ -134,6 +156,7 @@ class CreateEventForm extends Component {
         <div className="field required">
           <label>Event Title</label>
           <input type="text" name="event-title" placeholder="Give it a short catchy name"
+            value={this.state.title}
             onChange={(event) => this.setState({title: event.target.value})}></input>
         </div>
 
@@ -164,12 +187,82 @@ class CreateEventForm extends Component {
         <div className="field required">
           <label>Location</label>
           <input type="text" name="location" placeholder="Specify where it's held"
+            value={this.state.location}
             onChange={(event) => this.setState({location: event.target.value})}></input>
         </div>
 
         <div className="field">
           <label>Description</label>
-          <Form.TextArea rows="4" className="CreateEventForm-description"
+          <Form.TextArea rows="3" className="CreateEventForm-description"
+            value={this.state.description}
+            placeholder="BYOB, Girlfriends not allowed, Late-comers treating. Set your rules here!"
+            onChange={(event) => this.setState({description: event.target.value})}
+            >
+          </Form.TextArea>
+        </div>
+      </form>
+    );
+  }
+
+  renderEditMode() {
+    return (
+      <form className="ui form">
+        <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null, gifSearchText: this.state.category})}/>
+        <Divider hidden />
+
+        <div className="field required">
+          <label>Category</label>
+          <Dropdown placeholder='Select' fluid selection options={this.state.categories.map(category => {var c = {...category}; delete c.defaultImage; return c;})}
+            value={this.state.category}
+            onChange={(event, data) => {
+              this.setState({
+                category: data.value
+              });
+            }}/>
+        </div>
+
+        <div className="field required">
+          <label>Event Title</label>
+          <input type="text" name="event-title" placeholder="Give it a short catchy name"
+            value={this.state.title}
+            onChange={(event) => this.setState({title: event.target.value})}></input>
+        </div>
+
+        <div className="field">
+          <div className="two fields">
+            <div className="field required">
+              <label>Date</label>
+                <div className="ui calendar" ref="date">
+                  <div className="ui input left icon">
+                    <i className="calendar icon"></i>
+                    <input type="text" placeholder="Date" readOnly />
+                  </div>
+                </div>
+            </div>
+
+            <div className="field required">
+              <label>Time</label>
+              <div className="ui calendar" ref="time">
+                <div className="ui input left icon">
+                  <i className="time icon"></i>
+                  <input type="text" placeholder="Time" readOnly />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="field required">
+          <label>Location</label>
+          <input type="text" name="location" placeholder="Specify where it's held"
+            value={this.state.location}
+            onChange={(event) => this.setState({location: event.target.value})}></input>
+        </div>
+
+        <div className="field">
+          <label>Description</label>
+          <Form.TextArea rows="3" className="CreateEventForm-description"
+            value={this.state.description}
             placeholder="BYOB, Girlfriends not allowed, Late-comers treating. Set your rules here!"
             onChange={(event) => this.setState({description: event.target.value})}
             >
@@ -219,6 +312,18 @@ class CreateEventForm extends Component {
       stage: this.state.stage + 1
     });
 
+    if (this.state.stage === 0) {
+      if (!this.props.editMode) {
+        this.setState({
+          imageUrl: this.state.categories.filter(category => this.state.category === category.value)[0].defaultImage
+        });
+      } else {
+        this.submitForm().then(event => {
+            this.props.onEventChange(event);
+            this.props.onSave();
+          });
+      }
+    }
     if (this.state.stage === 1) {
       this.submitForm();
     }
@@ -308,25 +413,41 @@ class CreateEventForm extends Component {
       } else {
         return 'Done!';
       }
-    } else {
+    } else if (!this.props.editMode) {
       return 'Next';
+    } else {
+      return 'Done!';
     }
   }
 
   render() {
     return (
       <div className="CreateEventForm">
-        <Header as='h2' id="CreateEventForm-intro">Create an Event</Header>
-        <Step.Group className="CreateEventForm-step">
-          <Step active={this.state.stage === 0} disabled={this.state.stage < 0} icon='sitemap' title='Categorize' description='Select a category'/>
+        {!this.props.editMode
+          ? (
+              <Header as='h2' id="CreateEventForm-intro">Create an Event</Header>
+            )
+          : (
+              <Header as='h2' id="CreateEventForm-intro">Manage Event</Header>
+            )}
+        {!this.props.editMode
+          ? (
+              <Step.Group className="CreateEventForm-step">
+                <Step active={this.state.stage === 0} disabled={this.state.stage < 0} icon='sitemap' title='Categorize' description='Select a category'/>
 
-          <Step active={this.state.stage === 1} disabled={this.state.stage < 1} icon='wordpress forms' title='Details' description='Fill in basic information' />
+                <Step active={this.state.stage === 1} disabled={this.state.stage < 1} icon='wordpress forms' title='Details' description='Fill in basic information' />
 
-          <Step active={this.state.stage === 2} disabled={this.state.stage < 2} icon='share' title='Share' description='Share and invite friends'/>
-        </Step.Group>
-        {this.state.stage === 0 ? this.renderCategorySelect() : null}
-        {this.state.stage === 1 ? this.renderEssentials() : null}
-        {this.state.stage === 2 ? this.renderComplete() : null}
+                <Step active={this.state.stage === 2} disabled={this.state.stage < 2} icon='share' title='Share' description='Share and invite friends'/>
+              </Step.Group>
+            )
+          : null}
+        
+
+        {(!this.props.editMode && this.state.stage === 0) ? this.renderCategorySelect() : null}
+        {(!this.props.editMode && this.state.stage === 1) ? this.renderEssentials() : null}
+        {(!this.props.editMode && this.state.stage === 2) ? this.renderComplete() : null}
+        {this.props.editMode ? this.renderEditMode() : null}
+          
         {this.renderGiphyModal()}
 
         {/*

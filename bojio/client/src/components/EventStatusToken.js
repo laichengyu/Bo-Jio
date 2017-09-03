@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Label, Icon } from 'semantic-ui-react';
+import { Label, Icon, Modal } from 'semantic-ui-react';
+import CreateEventForm from './CreateEventForm';
 import './EventStatusToken.css';
 
 class EventStatusToken extends Component {
@@ -12,7 +13,8 @@ class EventStatusToken extends Component {
             ? 'joined'
             : 'join'
         ),
-    onHover: false
+    onHover: false,
+    editEventFormOpen: false
   }
 
   status = {
@@ -72,8 +74,28 @@ class EventStatusToken extends Component {
         currentStatus: 'join'
       });
     } else if (this.state.currentStatus === 'edit') {
-      // TODO
+      this.setState({
+        editEventFormOpen: true
+      });
     }
+  }
+
+  _renderModal() {
+    return (
+      <Modal
+        size="small"
+        closeOnRootNodeClick={false}
+        open={this.state.editEventFormOpen}
+        >
+        <Modal.Content>
+          <CreateEventForm services={this.props.services}
+            editMode={true}
+            onSave={() => { this.setState({ editEventFormOpen: false }); }}
+            onEventChange={ this.props.onChange }
+            eventData={this.props.data}/>
+        </Modal.Content>
+      </Modal>
+    );
   }
 
   render() {
@@ -87,6 +109,7 @@ class EventStatusToken extends Component {
         onMouseEnter={this.onMouseEnter}
         onMouseOut={this.onMouseOut}>
         <Icon name={config.icon} /> {config.text}
+        {this._renderModal()}
       </Label>
     );
   }

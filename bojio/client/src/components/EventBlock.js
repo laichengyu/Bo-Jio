@@ -92,6 +92,15 @@ class EventBlock extends Component {
         isParticipant={currentUserParticipant}
         services={this.props.services}
         onChange={this.onUpdate}
+        data={{
+          createdEventId: this.state.id,
+          title: this.state.title,
+          location: this.state.location,
+          dateDate: this.state.date,
+          description: this.state.description,
+          category: this.state.category.id,
+          imageUrl: this.state.pictureUrl
+        }}
         />
     );
   }
