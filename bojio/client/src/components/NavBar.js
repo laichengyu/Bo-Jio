@@ -83,7 +83,7 @@ class NavBar extends Component {
 
   render() {
     const userToken = !this.state.isLoading
-      ? <Header as='h5' image={<Image shape='circular' src={this.state.user.pictureUrl} />} content={this.state.user.firstName} />
+      ? <Image shape='circular' src={this.state.user.pictureUrl} width="35px" />
       : <Loader active inline='centered'size='small' />;
 
     /*const addEventIcon = <Popup
@@ -96,7 +96,6 @@ class NavBar extends Component {
       trigger={
       <Icon name='add to calendar'
         size='large'
-        onClick={() => this.setState({createEventFormOpen: true})}
         link />}
       content='Create an event'
       position='bottom center'
@@ -107,7 +106,6 @@ class NavBar extends Component {
     const myEventsIcon = <Popup
       trigger={<Icon name='book'
         size='large'
-        onClick={() => this.props.onMyEventsOpen()}
         link />}
       content='My Events'
       position='bottom center'
@@ -136,7 +134,6 @@ class NavBar extends Component {
                   button
                   floating
                   icon={this.state.selectedCategory.searchIcon}
-                  labeled
                   header={
                     <Dropdown.Header icon='list layout' content='Filter by category' />
                   }
@@ -159,20 +156,31 @@ class NavBar extends Component {
         </Menu.Item>
 
         <Menu.Menu position='right'>
-          <Menu.Item icon>
+          <Menu.Item link onClick={() => this.props.returnToHomePage()} className="NavBar-homeButton">
+            Home
+          </Menu.Item>
+
+          <Menu.Item icon link onClick={() => this.setState({createEventFormOpen: true})}>
             {addEventIcon}
           </Menu.Item>
 
-          <Menu.Item icon>
+          <Menu.Item icon link onClick={() => this.props.onMyEventsOpen()}>
             {myEventsIcon}
           </Menu.Item>
 
-          <Menu.Item>
-            {userToken}
-          </Menu.Item>
-
-          <Menu.Item icon>
-            {signOutIcon}
+          <Menu.Item link>
+            {<Dropdown
+                className="NavBar-userDropdown"
+                trigger={userToken}
+                icon={null}
+                options={[
+                  {
+                    key: 'user',
+                    text: <span>Signed in as <strong>{!this.state.isLoading ? this.state.user.name : ""}</strong></span>,
+                    disabled: true,
+                  },
+                  { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: this.logOut },
+                ]} />}
           </Menu.Item>
         </Menu.Menu>
       </Menu>
@@ -186,6 +194,10 @@ class NavBar extends Component {
     } else {
       return 'http://localhost:8081/api/logout';
     }
+  }
+
+  logOut = () => {
+    window.location = this._getLogoutUrl();
   }
 }
 

@@ -9,3 +9,19 @@
   margin-left: auto;
   width: 50%;
 }
+
+#NavBar-search .text[role=alert] {
+  display: none;
+}
+
+.NavBar-homeButton {
+  font-weight: 600 !important;
+}
+
+.NavBar-userDropdown .header {
+  margin-bottom: 0px !important;
+}
+
+.NavBar-userDropdown .menu {
+  margin-top: 5px !important;
+}
