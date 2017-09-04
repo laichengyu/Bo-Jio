@@ -177,6 +177,34 @@ router.post('/:event_id/set_participants',
       });
   });
 
+router.post('/:event_id/add_participants',
+  login.ensureLoggedIn(),
+  function(req, res) {
+    models.Event.findById(req.params.event_id)
+      .then(function(event) {
+        if (event) {
+          event.getParticipants()
+            .then(function(participants) {
+              const existingIds = participants.map(p => p.facebookId);
+              event.setParticipants([...existingIds, ...req.body.inviteList])
+                .then(() => {
+                  event.fetch()
+                    .then(event => {
+                      res.json({
+                        status: 'OK',
+                        event: event
+                      });
+                    });
+                  });
+            });
+        } else {
+          res.json({
+            status: 'FAILED'
+          });
+        }
+      });
+  });
+
 router.post('/:event_id/leave',
   login.ensureLoggedIn(),
   function(req, res) {

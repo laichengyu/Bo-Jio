@@ -11,3 +11,12 @@
 #Facepile-label {
   margin-left: -2px;
 }
+
+#Facepile-label:hover {
+  cursor: pointer;
+  background-color: #F4873E !important;
+}
+
+.Facepile-modalButtons {
+  padding-bottom: 40px;
+}

@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Event = sequelize.define("Event", {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     date: DataTypes.DATE,

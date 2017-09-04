@@ -66,7 +66,25 @@ class Event {
         inviteList: participantIds
       })
     })
-      .then(result => result.json());
+      .then(result => result.json())
+      .then(result => result.event);
+  }
+
+  addParticipants(eventId, participantIds) {
+    return fetch(`/api/event/${eventId}/add_participants`, {
+      credentials: 'same-origin',
+      cache: "no-store",
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+    },
+      body: JSON.stringify({
+        inviteList: participantIds
+      })
+    })
+      .then(result => result.json())
+      .then(result => result.event);
   }
 
   edit(eventId, params) {
