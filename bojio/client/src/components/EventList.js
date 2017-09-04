@@ -138,18 +138,16 @@ class EventList extends Component {
   render() {
     return (
       <div className="EventList">
-        <Header as='h1' className="EventList-header">
-          Events Feed
-          <Header as='h4'>
-            <Header.Content>
+        <div className="EventList-headerBlock">
+          <Header as='h1' className="EventList-header">
+            Events Feed
+          </Header>
               <Dropdown
                 inline
                 options={this.displayOptions}
                 value={this.state.displayMode}
                 onChange={this.onDisplayChange} />
-            </Header.Content>
-          </Header>
-        </Header>
+        </div>
 
         {this.state.isLoading ? this.renderLoader() : this.renderEvents()}
       </div>

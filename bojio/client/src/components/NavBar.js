@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../img/logo.png';
-import { Loader, Header, Image, Menu, Icon, Input, Dropdown, Popup, Modal } from 'semantic-ui-react'
+import { Loader, Image, Menu, Icon, Input, Dropdown, Popup, Modal } from 'semantic-ui-react'
 import CreateEventForm from './CreateEventForm';
 import './NavBar.css';
 
@@ -112,19 +112,12 @@ class NavBar extends Component {
       inverted
     />;
 
-    const signOutIcon = <Popup
-      trigger={<a href={this._getLogoutUrl()}><Icon name='sign out' size='large' link /></a>}
-      content='Sign Out'
-      position='bottom center'
-      inverted
-    />;
     return (
       <Menu fixed='top' id='NavBar-menu' borderless>
         {this._renderModal()}
         <Menu.Item name='home' onClick={() => this.props.returnToHomePage()}>
           <Image width='70px' src={logo} />
         </Menu.Item>
-
 
         <Menu.Item id='NavBar-search' name='search-bar' fitted>
             <Input
