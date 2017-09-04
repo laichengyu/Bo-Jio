@@ -86,12 +86,6 @@ class NavBar extends Component {
       ? <Image shape='circular' src={this.state.user.pictureUrl} width="35px" />
       : <Loader active inline='centered'size='small' />;
 
-    /*const addEventIcon = <Popup
-      trigger={<Icon name='add to calendar' size='large' link />}
-      content='Create an event'
-      position='bottom center'
-      inverted
-    />;*/
     const addEventIcon = (<Popup
       trigger={
       <Icon name='add to calendar'

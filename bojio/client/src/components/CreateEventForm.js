@@ -481,16 +481,6 @@ class CreateEventForm extends Component {
           
         {this.renderGiphyModal()}
 
-        {/*
-        
-
-        <div className="field">
-          <label>Invite</label>
-          <InviteTokenizer
-            services={this.props.services}
-            onInviteListChange={inviteList => this.setState({inviteList: inviteList})}/>
-        </div>*/}
-
         <div className="CreateEventForm-buttons">
           {
             this.state.stage < 2
