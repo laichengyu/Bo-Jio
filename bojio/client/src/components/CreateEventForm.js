@@ -297,7 +297,7 @@ class CreateEventForm extends Component {
             </div>
           )
           : null}
-        
+
         <div className="CreateEventForm-invite">
           <Header as='h4'>Invite your friends to the event!</Header>
           <InviteTokenizer
@@ -434,7 +434,7 @@ class CreateEventForm extends Component {
 
   renderDeleteButton() {
     return (
-      <Modal trigger={<Button className="ui red button" onClick={() => this.setState({confirmDeleteOpen: true})}>Delete</Button>} basic size='small' open={this.state.confirmDeleteOpen}>
+      <Modal trigger={<Button className="ui red button" id="deleteButton" onClick={() => this.setState({confirmDeleteOpen: true})}>Delete Event</Button>} basic size='small' open={this.state.confirmDeleteOpen}>
         <Header icon='archive' content='Delete event' />
         <Modal.Content>
           <p>This event will be permanently deleted</p>
@@ -472,28 +472,27 @@ class CreateEventForm extends Component {
               </Step.Group>
             )
           : null}
-        
+
 
         {(!this.props.editMode && this.state.stage === 0) ? this.renderCategorySelect() : null}
         {(!this.props.editMode && this.state.stage === 1) ? this.renderEssentials() : null}
         {(!this.props.editMode && this.state.stage === 2) ? this.renderComplete() : null}
         {this.props.editMode ? this.renderEditMode() : null}
-          
+
         {this.renderGiphyModal()}
 
         <div className="CreateEventForm-buttons">
-          {
-            this.state.stage < 2
-              ? <Button className="ui orange button" onClick={this.props.onSave}>Cancel</Button>
-              : null
-          }
           {
             this.props.editMode
               ? this.renderDeleteButton()
               : null
           }
+          {
+            this.state.stage < 2
+              ? <Button className="ui orange button" onClick={this.props.onSave}>Cancel</Button>
+              : null
+          }
           <Button className="ui primary button" onClick={this.nextStage} disabled={!this.canNext()}>{this.buttonText()}</Button>
-          
         </div>
       </div>
     );

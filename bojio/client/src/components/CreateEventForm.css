@@ -19,6 +19,10 @@ form {
   justify-content: flex-end;
 }
 
+#deleteButton {
+  margin-right: auto;
+}
+
 .CreateEventForm-giphyButtons {
   padding-bottom: 40px;
 }
