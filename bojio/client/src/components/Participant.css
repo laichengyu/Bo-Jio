@@ -1,0 +1,8 @@
+.Participant {
+  display: flex !important; 
+  align-items: center !important;
+}
+
+.Participant-header {
+  font-weight: initial !important;
+}

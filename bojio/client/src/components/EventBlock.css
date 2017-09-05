@@ -31,3 +31,27 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.EventBlock-fullParticipants {
+  display: flex;
+  justify-content: space-between;
+}
+
+.EventBlock-participantList {
+  margin-top: 17px;
+  flex: 1 1 auto;
+}
+
+.EventBlock-participantListOnly {
+  margin-top: 10px !important;
+  max-height: 150px;
+  overflow: hidden;
+}
+
+.EventBlock-participantListOnly:hover {
+  overflow-y: auto;
+}
+
+#EventBlock-imageBlock {
+  max-height: initial !important;
+}
