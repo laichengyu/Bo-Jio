@@ -4,16 +4,23 @@ import './EventCreator.css';
 
 class EventCreator extends Component {
   state = { creatorName: null }
+  mounted = true
 
   componentDidMount() {
     this.props.services
       .facebook
       .userInfo(this.props.id)
       .then(user => {
-        this.setState({
-          creatorName: user.firstName
-        })
+        if (this.mounted) {
+          this.setState({
+            creatorName: user.firstName
+          });
+        }
       });
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   render() {
