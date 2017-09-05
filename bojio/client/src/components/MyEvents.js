@@ -59,12 +59,10 @@ class MyEvents extends Component {
   refresh() {
     this.getEventList()
       .then(events => {
-        if (this.isMounted()) {
-          this.setState({
-            isLoading: false,
-            events: events
-          });
-        }
+        this.setState({
+          isLoading: false,
+          events: events
+        });
       });
   }
 

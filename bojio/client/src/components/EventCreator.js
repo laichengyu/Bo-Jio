@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Avatar from './Avatar';
-import { Label } from 'semantic-ui-react';
 import './EventCreator.css';
 
 class EventCreator extends Component {

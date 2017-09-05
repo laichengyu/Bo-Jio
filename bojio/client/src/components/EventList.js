@@ -52,12 +52,10 @@ class EventList extends Component {
     this.props.services.event
       .list(this.state.displayMode)
       .then(events => {
-        if (this.isMounted()) {
-          this.setState({
-            isLoading: false,
-            events: events
-          });
-        }
+        this.setState({
+          isLoading: false,
+          events: events
+        });
       });
   }
 
