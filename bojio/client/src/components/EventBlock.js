@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Item, Label, List, Divider, Header } from 'semantic-ui-react';
+import { Item, Label, List, Divider, Header, Icon } from 'semantic-ui-react';
 import FacebookProvider, { Comments, CommentsCount, Like } from 'react-facebook';
 import EventCreator from './EventCreator';
 import Facepile from './Facepile';
@@ -70,6 +70,10 @@ class EventBlock extends Component {
           <Item.Extra>
             <div className="EventBlock-toolBar">
               {this._renderCommentCount()}
+              <span className="EventBlock-toggler" onClick={() => this.setState({ showDetails: !this.state.showDetails })}>
+                {!this.state.showDetails ? "Click for more details" : "Hide details"}
+                <Icon className="EventBlock-detailsIcon" name={this.state.showDetails ? "chevron up" : "chevron down"} />
+              </span>
               <FacebookProvider appId={this.props.services.facebook.appId}>
                 <Like href={this._getUrl()} layout="button_count" size="large" share />
               </FacebookProvider>
@@ -142,17 +146,14 @@ class EventBlock extends Component {
 
   _renderCommentCount() {
     const toggle = () => this.setState({ showDetails: !this.state.showDetails });
-    return !this.state.showDetails
-      ? (
-        <List divided horizontal>
-          <List.Item className="EventBlock-commentsCount" icon='comments' onClick={toggle} content={
-             <FacebookProvider appId={this.props.services.facebook.appId}>
-                <CommentsCount href={this._getUrl()} />
-             </FacebookProvider>
-          } />
-        </List>
-      )
-      : <span className="EventBlock-hideComments" onClick={toggle}>Hide comments</span>;
+    return (
+        <span className={"EventBlock-commentsCount" + (this.state.showDetails ? " EventBlock-commentsCount--hidden" : "")} onClick={toggle}>
+          <Icon name="facebook official" />
+           <FacebookProvider appId={this.props.services.facebook.appId}>
+              <CommentsCount href={this._getUrl()} />
+           </FacebookProvider> comments
+        </span>
+    );
   }
 
   _maybeRenderDetails() {

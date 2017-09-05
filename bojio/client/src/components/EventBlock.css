@@ -2,6 +2,18 @@
   cursor: pointer;
 }
 
+.EventBlock-commentsCount--hidden {
+  visibility: hidden;
+}
+
+.EventBlock-toggler {
+  cursor: pointer;
+}
+
+.EventBlock-commentsCount div {
+  display: inline-block !important;
+}
+
 .EventBlock-hideComments {
   cursor: pointer;
 }
@@ -54,4 +66,8 @@
 
 #EventBlock-imageBlock {
   max-height: initial !important;
+}
+
+.EventBlock-detailsIcon {
+  margin-left: 3px !important;
 }
