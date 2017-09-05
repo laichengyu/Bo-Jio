@@ -13,7 +13,7 @@ class EventBlock extends Component {
   state = {
     ...this.getEventProps(),
 
-    showDetails: false,
+    showDetails: (this.props.showDetails === undefined) ? false : this.props.showDetails,
     deleted: false
   };
 
@@ -44,7 +44,7 @@ class EventBlock extends Component {
             icon={this.state.category.icon}
             ribbon
           />
-          <img src={this.state.pictureUrl} alt={this.state.category.name} />
+          <img id="EventBlock-image" src={this.state.pictureUrl} alt={this.state.category.name} />
 
           {this.state.showDetails ? this._renderFullParticipants() : this._renderParticipants()}
         </Item.Image>
@@ -149,9 +149,15 @@ class EventBlock extends Component {
     return (
         <span className={"EventBlock-commentsCount" + (this.state.showDetails ? " EventBlock-commentsCount--hidden" : "")} onClick={toggle}>
           <Icon name="facebook official" />
-           <FacebookProvider appId={this.props.services.facebook.appId}>
-              <CommentsCount href={this._getUrl()} />
-           </FacebookProvider> comments
+          {
+            !this.state.showDetails
+              ? <FacebookProvider appId={this.props.services.facebook.appId}>
+                  <CommentsCount href={this._getUrl()} />
+               </FacebookProvider>
+              : null
+          }
+          {" "}
+            comments
         </span>
     );
   }

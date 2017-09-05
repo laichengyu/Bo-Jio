@@ -68,6 +68,10 @@
   max-height: initial !important;
 }
 
+#EventBlock-image {
+  width: 300px !important;
+}
+
 .EventBlock-detailsIcon {
   margin-left: 3px !important;
 }
