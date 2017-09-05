@@ -7,6 +7,19 @@
   margin: auto;
 }
 
+.MyEvents-headerBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .MyEvents-header {
-  margin-right: 20px !important;
+  display: inline-block;
+  margin-bottom: 0px !important;
+}
+
+.MyEvents-tabs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px !important;
 }

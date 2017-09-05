@@ -17,7 +17,8 @@ module.exports = function(sequelize, DataTypes) {
       description: this.description,
       date: this.date.getTime(),
       location: this.location,
-      pictureUrl: this.pictureUrl
+      pictureUrl: this.pictureUrl,
+      createdAt: this.createdAt
     };
 
     return Promise.all([
@@ -29,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
       }),
       this.getParticipants().then((participants) => {
         result.participants = participants.map(participant => participant.rawValues());
-      })
+      }),
     ]).then(() => result);
   }
 

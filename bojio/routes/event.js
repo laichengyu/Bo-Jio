@@ -74,11 +74,42 @@ router.get('/list',
 router.get('/created',
   login.ensureLoggedIn(),
   function(req, res) {
-    models.Event.findAll({
-      where: {
-        CreatorFacebookId: req.user.id
-      }
-    })
+    var events;
+    var displayMode = req.query.display || 'upcoming';
+
+    if (displayMode === 'upcoming') {
+      events = models.Event.findAll({
+        where: {
+          CreatorFacebookId: req.user.id,
+          date: {
+            $gt: new Date()
+          }
+        },
+        order: models.sequelize.literal('date ASC')
+      });
+    } else if (displayMode === 'recent') {
+      events = models.Event.findAll({
+        where: {
+          CreatorFacebookId: req.user.id
+        },
+        order: models.sequelize.literal('createdAt DESC')
+      });
+    } else if (displayMode === 'past') {
+      events = models.Event.findAll({
+        where: {
+          CreatorFacebookId: req.user.id,
+          date: {
+            $lt: new Date()
+          }
+        },
+        order: models.sequelize.literal('date DESC')
+      });
+    } else {
+      res.json({
+        status: 'FAILED'
+      });
+    }
+    events
       .then(function(events) {
 
       Promise
@@ -99,12 +130,45 @@ router.get('/joined',
       .then(function(user) {
         user.getEvents()
           .then(function(events) {
-            Promise
-              .all(events.map(event => event.fetch()))
-              .then(results => {
-                res.json({
-                  status: 'OK',
-                  events: results
+            var displayMode = req.query.display || 'upcoming';
+
+            if (displayMode === 'upcoming') {
+              events = models.Event.findAll({
+                where: {
+                  date: {
+                    $gt: new Date()
+                  }
+                },
+                order: models.sequelize.literal('date ASC')
+              });
+            } else if (displayMode === 'recent') {
+              events = models.Event.findAll({
+                order: models.sequelize.literal('createdAt DESC')
+              });
+            } else if (displayMode === 'past') {
+              events = models.Event.findAll({
+                where: {
+                  date: {
+                    $lt: new Date()
+                  }
+                },
+                order: models.sequelize.literal('date DESC')
+              });
+            } else {
+              res.json({
+                status: 'FAILED'
+              });
+            }
+            events
+              .then(function(events) {
+
+              Promise
+                .all(events.map(event => event.fetch()))
+                .then(results => {
+                  res.json({
+                    status: 'OK',
+                    events: results
+                  });
                 });
               });
           });
@@ -242,12 +306,13 @@ router.post('/:event_id/edit',
             location: req.body.location,
             pictureUrl: req.body.pictureUrl,
           }).then(function(event) {
-            event.setCategory(req.body.category);
-
-            res.json({
-              status: 'OK',
-              event: event
-            });
+            event.setCategory(req.body.category)
+              .then(function() {
+                res.json({
+                  status: 'OK',
+                  event: event
+                });
+              })
           });
         } else {
           res.json({

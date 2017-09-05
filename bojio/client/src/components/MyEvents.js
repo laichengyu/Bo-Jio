@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Item, Header, Image } from 'semantic-ui-react';
+import { Menu, Item, Header, Image, Dropdown, Segment, Dimmer, Loader } from 'semantic-ui-react';
 import EventBlock from './EventBlock';
 import './MyEvents.css';
 
@@ -11,16 +11,38 @@ class MyEvents extends Component {
     filter: {
       category: 'all',
       text: ''
-    }
+    },
+    displayMode: 'upcoming',
   };
+
+  displayOptions = [
+    {
+      key: 'upcoming',
+      text: 'Upcoming Events',
+      value: 'upcoming',
+      content: 'Upcoming Events'
+    },
+    {
+      key: 'recent',
+      text: 'Recent Events',
+      value: 'recent',
+      content: 'Recent Events',
+    },
+    {
+      key: 'past',
+      text: 'Past Events',
+      value: 'past',
+      content: 'Past Events',
+    },
+  ]
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   getEventList() {
     if (this.state.activeItem === 'Hosted') {
-      return this.props.services.event.created();
+      return this.props.services.event.created(this.state.displayMode);
     } else {
-      return this.props.services.event.joined();
+      return this.props.services.event.joined(this.state.displayMode);
     }
   }
 
@@ -38,6 +60,7 @@ class MyEvents extends Component {
     this.getEventList()
       .then(events => {
         this.setState({
+          isLoading: false,
           events: events
         });
       });
@@ -51,6 +74,21 @@ class MyEvents extends Component {
       }
     });
   };
+
+  onDisplayChange = (event, data) => {
+    if (this.state.displayMode !== data.value) {
+      this.setState({
+        isLoading: true,
+        displayMode: data.value
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.displayMode !== this.state.displayMode) {
+      this.refresh();
+    }
+  }
 
   getEvents() {
     var filteredEvents = this.state.events;
@@ -68,10 +106,14 @@ class MyEvents extends Component {
     return filteredEvents;
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.activeItem !== this.state.activeItem) {
-      this.refresh();
-    }
+  renderLoader() {
+    return (
+      <Segment className="EventList-loader">
+        <Dimmer active inverted>
+          <Loader size="massive"/>
+        </Dimmer>
+      </Segment>
+    );
   }
 
   renderContent() {
@@ -96,15 +138,20 @@ class MyEvents extends Component {
   render() {
     const { activeItem } = this.state;
 
-    if (this.state.isLoading) {
-      return null;
-    }
-
     return (
       <div className="MyEvents">
-        <Menu pointing secondary className="MyEvents-tabs">
-          <Header as='h1' className="MyEvents-header">My Events</Header>
+        <div className="MyEvents-headerBlock">
+          <Header as='h1' className="MyEvents-header">
+            My Events
+          </Header>
+            <Dropdown
+              inline
+              options={this.displayOptions}
+              value={this.state.displayMode}
+              onChange={this.onDisplayChange} />
+        </div>
 
+        <Menu pointing secondary className="MyEvents-tabs">
           <Menu.Item name='Hosted' active={activeItem === 'Hosted'} onClick={this.handleItemClick} >
             <i className="user icon"></i>
             Hosted
@@ -115,7 +162,7 @@ class MyEvents extends Component {
           </Menu.Item>
         </Menu>
 
-        {this.renderContent()}
+        {this.state.isLoading ? this.renderLoader() : this.renderContent()}
       </div>
     );
   }

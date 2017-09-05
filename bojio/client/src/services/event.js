@@ -8,8 +8,8 @@ class Event {
       .then(result => result.events);
   }
 
-  joined() {
-    return fetch('/api/event/joined', {
+  joined(mode) {
+    return fetch(`/api/event/joined?display=${mode}`, {
       credentials: 'same-origin',
       cache: "no-store"
     })
@@ -17,8 +17,8 @@ class Event {
       .then(result => result.events);
   }
 
-  created() {
-    return fetch('/api/event/created', {
+  created(mode) {
+    return fetch(`/api/event/created?display=${mode}`, {
       credentials: 'same-origin',
       cache: "no-store"
     })
