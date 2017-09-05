@@ -59,10 +59,12 @@ class MyEvents extends Component {
   refresh() {
     this.getEventList()
       .then(events => {
-        this.setState({
-          isLoading: false,
-          events: events
-        });
+        if (this.isMounted()) {
+          this.setState({
+            isLoading: false,
+            events: events
+          });
+        }
       });
   }
 
@@ -108,7 +110,7 @@ class MyEvents extends Component {
 
   renderLoader() {
     return (
-      <Segment className="EventList-loader">
+      <Segment className="MyEvents-loader">
         <Dimmer active inverted>
           <Loader size="massive"/>
         </Dimmer>
@@ -128,7 +130,7 @@ class MyEvents extends Component {
         <Item.Group divided relaxed>
         {
           this.getEvents().map(
-            event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
+            event => <EventBlock key={`MyEvents.${event.id}`} services={this.props.services} {...event} />)
         }
         </Item.Group>
       );
