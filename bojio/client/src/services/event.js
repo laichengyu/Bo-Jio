@@ -29,7 +29,6 @@ class Event {
   join(eventId) {
     return fetch(`/api/event/${eventId}/join`, {
       credentials: 'same-origin',
-      cache: "no-store",
       method: 'post'
     })
       .then(result => result.json());
@@ -38,7 +37,6 @@ class Event {
   leave(eventId) {
     return fetch(`/api/event/${eventId}/leave`, {
       credentials: 'same-origin',
-      cache: "no-store",
       method: 'post'
     })
       .then(result => result.json());
@@ -47,7 +45,6 @@ class Event {
   delete(eventId) {
     return fetch(`/api/event/${eventId}/remove`, {
       credentials: 'same-origin',
-      cache: "no-store",
       method: 'post'
     })
       .then(result => result.json());
@@ -56,7 +53,6 @@ class Event {
   setParticipants(eventId, participantIds) {
     return fetch(`/api/event/${eventId}/set_participants`, {
       credentials: 'same-origin',
-      cache: "no-store",
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -73,7 +69,6 @@ class Event {
   addParticipants(eventId, participantIds) {
     return fetch(`/api/event/${eventId}/add_participants`, {
       credentials: 'same-origin',
-      cache: "no-store",
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -90,7 +85,6 @@ class Event {
   edit(eventId, params) {
     return fetch(`/api/event/${eventId}/edit`, {
       credentials: 'same-origin',
-      cache: "no-store",
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -105,7 +99,6 @@ class Event {
   create(params) {
     return fetch('/api/event/create', {
       credentials: 'same-origin',
-      cache: "no-store",
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
