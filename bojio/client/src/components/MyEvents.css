@@ -23,3 +23,9 @@
   align-items: center;
   margin-bottom: 30px !important;
 }
+
+.MyEvents-loader {
+  height: 200px;
+  box-shadow: none !important;
+  border: none !important;
+}
