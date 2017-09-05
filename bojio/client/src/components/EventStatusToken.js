@@ -29,7 +29,7 @@ class EventStatusToken extends Component {
       text: 'Join'
     },
     edit: {
-      color: 'teal',
+      color: 'yellow',
       icon: 'edit',
       text: 'Manage'
     },

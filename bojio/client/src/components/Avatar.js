@@ -16,15 +16,23 @@ class Avatar extends Component {
         this.setState({
           isLoading: false,
           image: user.pictureUrl,
-          name: user.firstName
+          name: user.name
         })
       });
+  }
+
+  image() {
+    if (this.props.width) {
+      return <Image src={this.state.image} width={this.props.width} shape="circular" />;
+    } else {
+      return <Image avatar src={this.state.image} />;
+    }
   }
 
   render() {
     return <span className="Avatar ">
       <Popup
-        trigger={<Image avatar src={this.state.image} />}
+        trigger={this.image()}
         content={this.state.name}
         position='bottom center'
       />

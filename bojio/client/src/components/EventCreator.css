@@ -1,4 +1,13 @@
 .EventCreator {
   margin-top: 10px;
-  float: right;
+}
+
+.EventCreator-block {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.EventCreator-text {
+  text-align: right;
+  margin-right: 7px !important;
 }

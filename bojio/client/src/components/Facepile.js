@@ -84,7 +84,7 @@ class Facepile extends Component {
         <Label
           key="Facepile.Overflow"
           id="Facepile-label"
-          color="orange"
+          color="yellow"
           circular
           size="large"
           onClick={this.onAddButtonClick}>

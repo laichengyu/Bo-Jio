@@ -130,7 +130,7 @@ class NavBar extends Component {
                       delete newCategory.searchIcon;
                       return newCategory
                     })}
-                  className='icon teal'
+                  className='icon yellow'
                   value={this.state.selectedCategory.value}
                   onChange={this.onSelectCategory}
                   />}

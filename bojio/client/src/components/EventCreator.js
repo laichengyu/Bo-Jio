@@ -19,14 +19,17 @@ class EventCreator extends Component {
 
   render() {
     return (
-      <div className="EventCreator">
-        {
-          this.state.creatorName
-            ? <Label pointing='right' color="teal">{this.state.creatorName} is hosting!</Label>
-            : null
-        }
-        <Avatar services={this.props.services} id={this.props.id} />
-      </div>
+      <span className="EventCreator">
+        <div className="ui horizontal list">
+          <div className="item EventCreator-block">
+            <span className="content EventCreator-text">
+              <div className="ui sub header">Hosted by</div>
+              {this.state.creatorName}
+            </span>
+            <Avatar services={this.props.services} id={this.props.id} width="35px"/>
+          </div>
+        </div>
+      </span>
     );
   }
 }

@@ -25,3 +25,9 @@
   display: flex !important;
   align-items: center !important;
 }
+
+.EventBlock-participants {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
