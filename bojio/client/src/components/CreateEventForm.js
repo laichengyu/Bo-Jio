@@ -299,7 +299,7 @@ class CreateEventForm extends Component {
           : null}
 
         <div className="CreateEventForm-invite">
-          <Header as='h4'>Invite your friends to the event!</Header>
+          <Header as='h4'>Friends already attending:</Header>
           <InviteTokenizer
             services={this.props.services}
             onInviteListChange={inviteList => this.setState({inviteList: inviteList})}/>

@@ -25,7 +25,7 @@ class Facepile extends Component {
         open={this.state.inviteModalOpen}
         >
         <Modal.Content>
-          <Header as='h2'>Invite Friends</Header>
+          <Header as='h2'>More friends coming?</Header>
           <InviteTokenizer
             services={this.props.services}
             onInviteListChange={inviteList => this.setState({inviteList: inviteList})}/>
@@ -45,7 +45,7 @@ class Facepile extends Component {
                     });
                   });
               }}
-            >Send Invites</Button>
+            >Add</Button>
             <Button
               floated="right"
               className="ui red button"
