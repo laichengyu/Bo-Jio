@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './CreateEventForm.css';
-import { Button, Header, Form, Dropdown, Step, Icon, Image, Divider, Modal } from 'semantic-ui-react';
+import { Button, Header, Form, Dropdown, Step, Icon, Image, Divider, Modal, Label } from 'semantic-ui-react';
 import FacebookProvider, { Like } from 'react-facebook';
 import giphyImage from '../img/giphy.gif';
 import InviteTokenizer from './InviteTokenizer';
@@ -152,7 +152,11 @@ class CreateEventForm extends Component {
   renderEssentials() {
     return (
       <form className="ui form">
-        <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null, gifSearchText: this.state.category})}/>
+        <div className="field required" id="CreateEventForm-imageBlock">
+          <label>Event Image</label>
+          <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null, gifSearchText: this.state.category})}/>
+          <Label className="ui pointing label">Choose a hilarious GIF!</Label>
+        </div>
         <Divider hidden />
         <div className="field required">
           <label>Event Title</label>
@@ -208,7 +212,11 @@ class CreateEventForm extends Component {
   renderEditMode() {
     return (
       <form className="ui form">
-        <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null, gifSearchText: this.state.category})}/>
+        <div className="field required" id="CreateEventForm-imageBlock">
+          <label>Event Image</label>
+          <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null, gifSearchText: this.state.category})}/>
+          <Label className="ui pointing label">Choose a hilarious GIF!</Label>
+        </div>
         <Divider hidden />
 
         <div className="field required">
