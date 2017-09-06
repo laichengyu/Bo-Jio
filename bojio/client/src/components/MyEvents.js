@@ -8,11 +8,7 @@ class MyEvents extends Component {
     isLoading: true,
     events: [],
     activeItem: 'Hosted',
-    filter: {
-      category: 'all',
-      text: ''
-    },
-    displayMode: 'upcoming',
+    displayMode: 'upcoming'
   };
 
   displayOptions = [
@@ -45,6 +41,12 @@ class MyEvents extends Component {
       return this.props.services.event.joined(this.state.displayMode);
     }
   }
+  
+  componentWillReceiveProps(nextProps) {
+    if (this.props.latestEventId !== nextProps.latestEventId) {
+      this.refresh();
+    }
+  }
 
   componentDidMount() {
     this.getEventList()
@@ -66,15 +68,6 @@ class MyEvents extends Component {
       });
   }
 
-  filter = (filter) => {
-    this.setState({
-      filter: {
-        ...this.state.filter,
-        ...filter
-      }
-    });
-  };
-
   onDisplayChange = (event, data) => {
     if (this.state.displayMode !== data.value) {
       this.setState({
@@ -92,15 +85,15 @@ class MyEvents extends Component {
 
   getEvents() {
     var filteredEvents = this.state.events;
-    if (this.state.filter.category !== 'all') {
+    if (this.props.filter.category !== 'all') {
       filteredEvents = filteredEvents.filter(event =>
-        (event.category.id === this.state.filter.category)
+        (event.category.id === this.props.filter.category)
       );
     }
 
-    if (this.state.filter.text.length > 0) {
+    if (this.props.filter.text.length > 0) {
       filteredEvents = filteredEvents.filter(event =>
-        (event.title.toLowerCase().indexOf(this.state.filter.text.toLowerCase()) !== -1)
+        (event.title.toLowerCase().indexOf(this.props.filter.text.toLowerCase()) !== -1)
       );
     }
     return filteredEvents;

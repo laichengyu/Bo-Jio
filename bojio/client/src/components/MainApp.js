@@ -3,30 +3,56 @@ import NavBar from './NavBar';
 import EventList from './EventList';
 import './MainApp.css';
 import MyEvents from './MyEvents';
+import { BrowserRouter, Route } from 'react-router-dom'
 
 class MainApp extends Component {
   state = {
-    atHomePage: true,
-  }
+    filter: {
+      category: 'all',
+      text: ''
+    },
+    latestEventId: null
+  };
 
-  componentWillUpdate() {
-    this.refs.navBar.resetSearch();
-  }
+  onEventFilter = (filter) => {
+    this.setState({
+      filter: {
+        ...this.state.filter,
+        ...filter
+      }
+    });
+  };
 
   render() {
     return (
-      <div className="MainApp">
-        <NavBar
-          ref="navBar"
-          services={this.props.services}
-          onMyEventsOpen={() => this.setState({atHomePage: false})}
-          returnToHomePage={() => this.setState({atHomePage: true})}
-          onEventRefresh={() => this.refs.eventList.refresh()}
-          onEventFilter={filter => this.refs.eventList.filter(filter)}
-          />
-        {this.state.atHomePage ? <EventList services={this.props.services} ref="eventList" />
-                               : <MyEvents services={this.props.services} ref="eventList" />}
-      </div>
+      <BrowserRouter>
+        <div className="MainApp">
+          <NavBar
+            services={this.props.services}
+            onEventAdd={eventId => this.setState({ latestEventId: eventId })}
+            onEventFilter={this.onEventFilter}
+            />
+          <Route
+            exact
+            path="/"
+            render={() => {
+              return <EventList
+                services={this.props.services}
+                filter={this.state.filter}
+                latestEventId={this.state.latestEventId} />
+            }} />
+          <Route
+            exact
+            path="/myevents"
+            render={() => {
+              return <MyEvents
+                services={this.props.services}
+                filter={this.state.filter}
+                refs="eventList"
+                latestEventId={this.state.latestEventId} />
+            }} />
+        </div>
+      </BrowserRouter>
     );
   }
 }

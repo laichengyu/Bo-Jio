@@ -332,11 +332,11 @@ class CreateEventForm extends Component {
       if (this.state.inviteList.length > 0) {
         this.props.services.event.setParticipants(this.state.createdEventId, this.state.inviteList.map(e => e.value))
           .then(() => {
-            this.props.onEventRefresh();
+            this.props.onEventAdd(this.state.createdEventId);
             this.props.onSave();
           });
       } else {
-        this.props.onEventRefresh();
+        this.props.onEventAdd(this.state.createdEventId);
         this.props.onSave();
       }
     }
