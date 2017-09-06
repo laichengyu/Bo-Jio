@@ -11,12 +11,17 @@ router.get('/',
         where: {
           facebookId: req.user.id
         }
+      }).then(user => {
+        user[0].update({
+          active: true
+        }).then(() => {
+          if (env === "production") {
+            res.redirect('/');
+          } else {
+            res.redirect('http://localhost:3000');
+          }
+        });
       });
-      if (env === "production") {
-        res.redirect('/');
-      } else {
-        res.redirect('http://localhost:3000');
-      }
     } else {
       next();
     }

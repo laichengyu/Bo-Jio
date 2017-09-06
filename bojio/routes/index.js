@@ -1,3 +1,4 @@
+var models  = require('../models');
 var express = require('express');
 var router = express.Router();
 var env       = process.env.NODE_ENV || "development";
@@ -35,17 +36,25 @@ router.get('/logout',
 
 router.post('/deauthorize',
   function(req, res) {
-    console.log("ALOHA!");
-    console.log(req.body);
     var signedRequest = FB.parseSignedRequest(req.body.signed_request, facebookConfig.CLIENT_SECRET);
     if (signedRequest) {
-        var accessToken = signedRequest.oauth_token;
         var userId = signedRequest.user_id;
-        var userCountry = signedRequest.user.country;
-        res.json({
-          signedRequest: signedRequest,
-          status: 'OK'
-        });
+        models.User.findById(userId)
+          .then(function(user) {
+            if (user) {
+              user.update({
+                active: false
+              }).then(() => {
+                res.json({
+                  status: 'OK'
+                });
+              });
+            } else {
+              res.json({
+                status: 'FAILED'
+              });
+            }
+          });
     } else {
       res.json({
         status: 'FAILED'

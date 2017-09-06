@@ -26,10 +26,12 @@ module.exports = function(sequelize, DataTypes) {
         result.category = category.rawValues();
       }),
       this.getCreator().then((creator) => {
-        result.creator = creator.rawValues();
+        result.creator = creator.isActive() ? creator.rawValues() : null;
       }),
       this.getParticipants().then((participants) => {
-        result.participants = participants.map(participant => participant.rawValues());
+        result.participants = participants
+          .filter(participant => participant.isActive())
+          .map(participant => participant.rawValues());
       }),
     ]).then(() => result);
   }
