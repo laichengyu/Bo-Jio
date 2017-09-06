@@ -1,51 +1,58 @@
 .Login {
-  text-align: center;
-  background-image: url('../img/background1.jpg');
+  background-image: url('https://static.pexels.com/photos/325521/pexels-photo-325521.jpeg');
   background-size: cover;
   height: 100vh;
   background-repeat:   no-repeat;
   background-position: center center;
+  display: flex;
+  align-items: center;
 }
 
 .Login-logo {
-  /*animation: Login-logo-spin infinite 20s linear;*/
-  height: 100px;
+  height: 60px;
+  margin: auto 10px !important;
+}
+
+.Login-slogan {
+  font-family: 'Comfortaa', cursive !important;
+  display: inline-block;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.Login-sloganBlock {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.Login-sloganBlock2 {
+  display: flex;
+  align-items: center;
+}
+
+.Login-tagline {
+  font-family: 'Comfortaa', cursive !important;
+  font-weight: 800 !important;
 }
 
 .Login-header {
-  /*top: 10%;*/
-  width: 550px;
-  height: 425px;
   border: 1px #e2e2e2;
   box-shadow: 0 0 5px #888;
   border-radius: 4px;
+  background-color: hsla(0,0%,100%, 0.5);
+  width: 600px;
   padding: 25px;
-  background-color: hsla(0,0%,0%, 0.3);
-  position: absolute;
-  margin: auto;
-  /*overflow-y: hidden;*/
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-}
-
-.Login-header h2,
-.Login-header h1 {
-  font-family: 'Gloria Hallelujah', cursive;
-  padding: 20px;
-  font-weight: 400;
-  /*font-size: 30px;*/
-  margin: 8px 0 32px;
-  color: #999;
-  -webkit-margin-before: 0.83em;
-  -webkit-margin-after: 0.83em;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
+  margin: 0 auto;
+  margin-bottom: 15%;
 }
 
 .fb-login-button {
   width: 250px;
   height: auto;
   border-radius: 5px;
+}
+
+.Login-fbButtonAnchor {
+  height: 40px;
 }

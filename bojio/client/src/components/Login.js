@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../img/logo.png';
 import fbButton from '../img/fb-button.png';
+import { Header } from 'semantic-ui-react';
 import './Login.css';
 
 class Login extends Component {
@@ -8,12 +9,18 @@ class Login extends Component {
     return (
       <div className="Login">
         <div className="Login-header">
-          <img src={logo} className="Login-logo" alt="logo" />
-          <h2><u>The</u> platform for all your casual outings</h2>
-          <a href={this._getLoginUrl()}>
-            <img src={fbButton} className="fb-login-button" alt="login-button"/>
-          </a>
-          <h1>Never say bojio again!</h1>
+          <Header as='h1' className="Login-tagline">A platform for all your casual outings</Header>
+          <div className="Login-sloganBlock">
+            <div className="Login-sloganBlock2">
+              <Header as='h2' className="Login-slogan">
+                Don't say
+              </Header>
+              <img src={logo} className="Login-logo" alt="logo" />
+            </div>
+            <a href={this._getLoginUrl()} className="Login-fbButtonAnchor">
+              <img src={fbButton} className="fb-login-button" alt="login-button"/>
+            </a>
+          </div>
         </div>
       </div>
     );
