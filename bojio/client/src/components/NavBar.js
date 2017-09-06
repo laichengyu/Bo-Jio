@@ -17,6 +17,12 @@ class NavBar extends Component {
     createEventFormOpen: false
   }
 
+  Logo = withRouter(({ history }) => (
+    <Menu.Item name='home' onClick={ () => history.push('/') }>
+      <Image width='70px' src={logo} />
+    </Menu.Item>
+  ));
+
   componentDidMount() {
     this.props.services.facebook
       .userInfo()
@@ -91,12 +97,6 @@ class NavBar extends Component {
     />
     );
 
-    const Logo = withRouter(({ history }) => (
-      <Menu.Item name='home' onClick={ () => history.push('/') }>
-        <Image width='70px' src={logo} />
-      </Menu.Item>
-    ));
-
     const HomeButton = withRouter(({ history }) => (
       <Menu.Item link onClick={() => history.push('/') } className="NavBar-homeButton">
         Home
@@ -150,7 +150,7 @@ class NavBar extends Component {
     return (
       <Menu fixed='top' id='NavBar-menu' borderless>
         {this._renderModal()}
-        <Logo />
+        <this.Logo />
 
         {this.props.searchable ? searchBar : null}
 

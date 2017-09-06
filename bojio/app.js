@@ -82,7 +82,11 @@ if (env === 'production') {
 app.use('/api', require('./routes'));
 
 app.use(function(req, res, next) {
-  res.json({ status: "Not Found" });
+  if (env === 'production') {
+    res.sendFile(path.join(__dirname, 'client/build/index.html'));
+  } else {
+    res.json({ status: "Not Found" });
+  }
 });
 
 module.exports = app;
