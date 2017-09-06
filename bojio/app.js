@@ -81,6 +81,33 @@ if (env === 'production') {
 
 app.use('/api', require('./routes'));
 
+app.get('/event/:event_id', function(req, res, next) {
+  var userAgent = req.headers['user-agent'];
+  if (userAgent.startsWith('facebookexternalhit/1.1') ||
+     userAgent === 'Facebot') {
+    require('./models').Event.findById(req.params.event_id)
+      .then(function(event) {
+        if (event) {
+          res.send(`
+<html>
+  <head>
+    <meta property="fb:app_id" content="${facebookConfig.CLIENT_ID}">
+    <meta property="og:url" content="http://bojio.ap-southeast-1.elasticbeanstalk.com/event/${req.params.event_id}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="${event.title}">
+    <meta property="og:description" content="${event.description}">
+    <meta property="og:image" content="${event.pictureUrl}">
+  </head>
+</html>`);
+        } else {
+          next();
+        }
+      });
+  } else {
+    next();
+  }
+});
+
 app.use(function(req, res, next) {
   if (env === 'production') {
     res.sendFile(path.join(__dirname, 'client/build/index.html'));
