@@ -32,7 +32,9 @@ class MyEvents extends Component {
     },
   ]
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name, isLoading: true });
+  };
 
   getEventList() {
     if (this.state.activeItem === 'Hosted') {
@@ -78,7 +80,8 @@ class MyEvents extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.displayMode !== this.state.displayMode) {
+    if (prevState.displayMode !== this.state.displayMode
+        || prevState.activeItem !== this.state.activeItem) {
       this.refresh();
     }
   }
