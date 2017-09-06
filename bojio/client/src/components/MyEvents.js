@@ -20,9 +20,9 @@ class MyEvents extends Component {
     },
     {
       key: 'recent',
-      text: 'Recent Events',
+      text: 'Recently Created',
       value: 'recent',
-      content: 'Recent Events',
+      content: 'Recently Created',
     },
     {
       key: 'past',
@@ -41,7 +41,7 @@ class MyEvents extends Component {
       return this.props.services.event.joined(this.state.displayMode);
     }
   }
-  
+
   componentWillReceiveProps(nextProps) {
     if (this.props.latestEventId !== nextProps.latestEventId) {
       this.refresh();

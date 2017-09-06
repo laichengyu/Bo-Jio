@@ -21,9 +21,9 @@ class EventList extends Component {
     },
     {
       key: 'recent',
-      text: 'Recent Events',
+      text: 'Recently Created',
       value: 'recent',
-      content: 'Recent Events',
+      content: 'Recently Created',
     },
     {
       key: 'past',
