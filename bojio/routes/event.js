@@ -16,7 +16,6 @@ router.post('/create',
     }).then(function(event) {
       event.setCategory(req.body.category);
       event.setCreator(req.user.id);
-      event.addParticipant(req.user.id);
       res.json({
         status: 'OK',
         event: event
@@ -129,46 +128,38 @@ router.get('/joined',
     models.User.findById(req.user.id)
       .then(function(user) {
         user.getEvents()
-          .then(function(events) {
+          .then(function(e) {
+            var events;
             var displayMode = req.query.display || 'upcoming';
 
             if (displayMode === 'upcoming') {
-              events = models.Event.findAll({
-                where: {
-                  date: {
-                    $gt: new Date()
-                  }
-                },
-                order: models.sequelize.literal('date ASC')
-              });
+              events = e.filter(event => (
+                event.date >= new Date()))
+                .sort((a, b) => {
+                  return a.date - b.date;
+                });
             } else if (displayMode === 'recent') {
-              events = models.Event.findAll({
-                order: models.sequelize.literal('createdAt DESC')
+              events = e.sort((a, b) => {
+                  return b.createdAt - a.createdAt;
               });
             } else if (displayMode === 'past') {
-              events = models.Event.findAll({
-                where: {
-                  date: {
-                    $lt: new Date()
-                  }
-                },
-                order: models.sequelize.literal('date DESC')
-              });
+              events = e.filter(event => (
+                event.date < new Date()))
+                .sort((a, b) => {
+                  return b.date - a.date;
+                });
             } else {
               res.json({
                 status: 'FAILED'
               });
             }
-            events
-              .then(function(events) {
 
-              Promise
-                .all(events.map(event => event.fetch()))
-                .then(results => {
-                  res.json({
-                    status: 'OK',
-                    events: results
-                  });
+            Promise
+              .all(events.map(event => event.fetch()))
+              .then(results => {
+                res.json({
+                  status: 'OK',
+                  events: results
                 });
               });
           });
@@ -226,7 +217,7 @@ router.post('/:event_id/set_participants',
     models.Event.findById(req.params.event_id)
       .then(function(event) {
         if (event) {
-          event.setParticipants([req.user.id, ...req.body.inviteList])
+          event.setParticipants([...req.body.inviteList])
             .then(function() {
               event.fetch()
                 .then(event => {
