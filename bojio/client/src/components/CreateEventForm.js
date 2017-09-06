@@ -345,7 +345,7 @@ class CreateEventForm extends Component {
   giphyField() {
     return (
       <div className="CreateEventForm-giphyFormBlock">
-        <Header as='h2'>Giphy Search</Header>
+        <Header as='h2'>Event Image</Header>
         <form className="ui form CreateEventForm-giphyForm">
           <div className="CreateEventForm-giphyBlock">
             <input
@@ -353,7 +353,7 @@ class CreateEventForm extends Component {
               className="CreateEventForm-giphySearchInput"
               type="text"
               name="image"
-              placeholder="Keywords?"
+              placeholder="Party, Sports, Drinks..."
               onChange={this.gifSearchTextChange}
             />
             <Image src={giphyImage}
