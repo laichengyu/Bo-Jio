@@ -92,7 +92,7 @@ app.get('/event/:event_id', function(req, res, next) {
 <html>
   <head>
     <meta property="fb:app_id" content="${facebookConfig.CLIENT_ID}">
-    <meta property="og:url" content="http://bojio.ap-southeast-1.elasticbeanstalk.com/event/${req.params.event_id}">
+    <meta property="og:url" content="https://bojio.pw/event/${req.params.event_id}">
     <meta property="og:type" content="website">
     <meta property="og:title" content="${event.title}">
     <meta property="og:description" content="${event.description}">

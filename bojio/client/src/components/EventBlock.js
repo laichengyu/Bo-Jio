@@ -115,7 +115,7 @@ class EventBlock extends Component {
   }
 
   _getUrl() {
-    return `http://bojio.ap-southeast-1.elasticbeanstalk.com/event/${this.state.id}`;
+    return `https://bojio.pw/event/${this.state.id}`;
   }
 
   _renderJoinLabel() {
