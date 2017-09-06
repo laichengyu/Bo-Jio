@@ -3,7 +3,6 @@ import Services from '../services';
 import Login from './Login';
 import MainApp from './MainApp';
 import { Dimmer, Loader } from 'semantic-ui-react'
-import { BrowserRouter, Route } from 'react-router-dom'
 
 class App extends Component {
   state = { user: null, isLoading: true, services: null }
@@ -49,11 +48,7 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <BrowserRouter>
-        {this.renderContent()}
-      </BrowserRouter>
-    );
+    return this.renderContent();
   }
 }
 

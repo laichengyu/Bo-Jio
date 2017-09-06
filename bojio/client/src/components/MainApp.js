@@ -24,19 +24,21 @@ class MainApp extends Component {
       />
   });
 
-  EventListRouter = withRouter(props => (
-    <EventList
+  EventListRouter = withRouter(props => {
+    this.props.services.ga.pageview(props.location.pathname);
+    return <EventList
       services={this.props.services}
       filter={this.state.filter}
       latestEventId={this.state.latestEventId} />
-  ));
+  });
 
-  MyEventsRouter = withRouter(props => (
-    <MyEvents
+  MyEventsRouter = withRouter(props => {
+    this.props.services.ga.pageview(props.location.pathname);
+    return <MyEvents
       services={this.props.services}
       filter={this.state.filter}
       latestEventId={this.state.latestEventId} />
-  ));
+  });
 
   onEventFilter = (filter) => {
     this.setState({
@@ -72,6 +74,7 @@ class MainApp extends Component {
           <Route
             path="/event/:id"
             render={props => {
+              this.props.services.ga.pageview(props.location.pathname);
               return <SingleEvent
                 services={this.props.services}
                 id={props.match.params.id}
