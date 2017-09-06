@@ -4,7 +4,7 @@ import EventList from './EventList';
 import './MainApp.css';
 import MyEvents from './MyEvents';
 import SingleEvent from './SingleEvent';
-import { BrowserRouter, Route, withRouter, DefaultRoute } from 'react-router-dom'
+import { BrowserRouter, Route, withRouter } from 'react-router-dom'
 
 class MainApp extends Component {
   state = {
@@ -15,6 +15,29 @@ class MainApp extends Component {
     latestEventId: null
   };
 
+  NavBarRoute = withRouter(props => {
+    return <NavBar
+      services={this.props.services}
+      onEventAdd={this.onEventAdd}
+      onEventFilter={this.onEventFilter}
+      searchable={props.location.pathname.startsWith('/event') ? false : true}
+      />
+  });
+
+  EventListRouter = withRouter(props => (
+    <EventList
+      services={this.props.services}
+      filter={this.state.filter}
+      latestEventId={this.state.latestEventId} />
+  ));
+
+  MyEventsRouter = withRouter(props => (
+    <MyEvents
+      services={this.props.services}
+      filter={this.state.filter}
+      latestEventId={this.state.latestEventId} />
+  ));
+
   onEventFilter = (filter) => {
     this.setState({
       filter: {
@@ -24,41 +47,27 @@ class MainApp extends Component {
     });
   };
 
-  render() {
-    const NavBarRoute = withRouter(props => {
-      return <NavBar
-        services={this.props.services}
-        onEventAdd={eventId => this.setState({ latestEventId: eventId })}
-        onEventFilter={this.onEventFilter}
-        searchable={props.location.pathname.startsWith('/event') ? false : true}
-        />
-    });
+  onEventAdd = (eventId) => {
+    this.setState({ latestEventId: eventId });
+  }
 
+  render() {
     return (
       <BrowserRouter>
         <div className="MainApp">
-          <Route
+          <Route key="Route"
             path="/"
-            component={NavBarRoute} />
+            component={this.NavBarRoute} />
           
           <Route
             exact
             path="/"
-            render={() => {
-              return <EventList
-                services={this.props.services}
-                filter={this.state.filter}
-                latestEventId={this.state.latestEventId} />
-            }} />
+            component={this.EventListRouter} />
+
           <Route
             exact
             path="/myevents"
-            render={() => {
-              return <MyEvents
-                services={this.props.services}
-                filter={this.state.filter}
-                latestEventId={this.state.latestEventId} />
-            }} />
+            component={this.MyEventsRouter} />
 
           <Route
             path="/event/:id"
