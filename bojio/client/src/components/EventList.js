@@ -8,10 +8,6 @@ class EventList extends Component {
   state = {
     isLoading: true,
     events: [],
-    filter: {
-      category: 'all',
-      text: ''
-    },
     displayMode: 'upcoming',
     pagination: 1
   };
@@ -59,21 +55,18 @@ class EventList extends Component {
       });
   }
 
-  filter = (filter) => {
-    this.setState({
-      filter: {
-        ...this.state.filter,
-        ...filter
-      }
-    });
-  };
-
   onDisplayChange = (event, data) => {
     if (this.state.displayMode !== data.value) {
       this.setState({
         isLoading: true,
         displayMode: data.value
       });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.latestEventId !== nextProps.latestEventId) {
+      this.refresh();
     }
   }
 
@@ -85,15 +78,15 @@ class EventList extends Component {
 
   getEvents() {
     var filteredEvents = this.state.events;
-    if (this.state.filter.category !== 'all') {
+    if (this.props.filter.category !== 'all') {
       filteredEvents = filteredEvents.filter(event =>
-        (event.category.id === this.state.filter.category)
+        (event.category.id === this.props.filter.category)
       );
     }
 
-    if (this.state.filter.text.length > 0) {
+    if (this.props.filter.text.length > 0) {
       filteredEvents = filteredEvents.filter(event =>
-        (event.title.toLowerCase().indexOf(this.state.filter.text.toLowerCase()) !== -1)
+        (event.title.toLowerCase().indexOf(this.props.filter.text.toLowerCase()) !== -1)
       );
     }
     return filteredEvents;

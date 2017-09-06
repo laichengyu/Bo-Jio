@@ -274,7 +274,7 @@ class CreateEventForm extends Component {
   }
 
   _getUrl() {
-    return `http://bojio.ap-southeast-1.elasticbeanstalk.com/events/${this.state.createdEventId}`;
+    return `http://bojio.ap-southeast-1.elasticbeanstalk.com/event/${this.state.createdEventId}`;
   }
 
   renderComplete() {
@@ -332,11 +332,11 @@ class CreateEventForm extends Component {
       if (this.state.inviteList.length > 0) {
         this.props.services.event.setParticipants(this.state.createdEventId, this.state.inviteList.map(e => e.value))
           .then(() => {
-            this.props.onEventRefresh();
+            this.props.onEventAdd(this.state.createdEventId);
             this.props.onSave();
           });
       } else {
-        this.props.onEventRefresh();
+        this.props.onEventAdd(this.state.createdEventId);
         this.props.onSave();
       }
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from '../img/logo.png';
 import { Loader, Image, Menu, Icon, Input, Dropdown, Popup, Modal } from 'semantic-ui-react'
 import CreateEventForm from './CreateEventForm';
+import { withRouter } from 'react-router-dom'
 import './NavBar.css';
 
 class NavBar extends Component {
@@ -15,6 +16,12 @@ class NavBar extends Component {
     searchText: "",
     createEventFormOpen: false
   }
+
+  Logo = withRouter(({ history }) => (
+    <Menu.Item name='home' onClick={ () => history.push('/') }>
+      <Image width='70px' src={logo} />
+    </Menu.Item>
+  ));
 
   componentDidMount() {
     this.props.services.facebook
@@ -43,13 +50,6 @@ class NavBar extends Component {
       });
   }
 
-  resetSearch = () => {
-    this.setState({
-      selectedCategory: this.ANY_CATEGORY_OPTION,
-      searchText: ""
-    });
-  }
-
   onSelectCategory = (event, data) => {
     const matchingCategory = this.state.categories.filter(category => (category.value === data.value))[0];
     this.setState({
@@ -75,7 +75,7 @@ class NavBar extends Component {
         <Modal.Content>
           <CreateEventForm services={this.props.services}
             onSave={() => { this.setState({createEventFormOpen: false}); }}
-            onEventRefresh={ this.props.onEventRefresh }/>
+            onEventAdd={ this.props.onEventAdd }/>
         </Modal.Content>
       </Modal>
     );
@@ -97,63 +97,74 @@ class NavBar extends Component {
     />
     );
 
-    const myEventsIcon = <Popup
-      trigger={<Icon name='book'
-        size='large'
-        link />}
-      content='My Events'
-      position='bottom center'
-      inverted
-    />;
+    const HomeButton = withRouter(({ history }) => (
+      <Menu.Item link onClick={() => history.push('/') } className="NavBar-homeButton">
+        Home
+      </Menu.Item>
+    ));
+
+    const MyEventsIcon = withRouter(({ history }) => (
+      <Menu.Item icon link onClick={() => { history.push('/myevents') }}>
+        <Popup
+          trigger={<Icon name='book'
+            size='large'
+            link />}
+          content='My Events'
+          position='bottom center'
+          inverted
+        />
+      </Menu.Item>
+    ));
+
+    const searchBar = (
+      <Menu.Item id='NavBar-search' name='search-bar' fitted>
+        <Input
+          fluid
+          action={
+            <Dropdown
+              button
+              floating
+              icon={this.state.selectedCategory.searchIcon}
+              header={
+                <Dropdown.Header icon='list layout' content='Filter by category' />
+              }
+              options={this.state.categories.map(
+                category => {
+                  var newCategory = {...category};
+                  delete newCategory.searchIcon;
+                  return newCategory
+                })}
+              className='icon yellow'
+              value={this.state.selectedCategory.value}
+              onChange={this.onSelectCategory}
+              />}
+          onChange={this.onSearchTextChange}
+          actionPosition='left'
+          placeholder='Search...'
+          size='large'
+          value={this.state.searchText}
+        />
+      </Menu.Item>
+    );
 
     return (
       <Menu fixed='top' id='NavBar-menu' borderless>
         {this._renderModal()}
-        <Menu.Item name='home' onClick={() => this.props.returnToHomePage()}>
-          <Image width='70px' src={logo} />
-        </Menu.Item>
+        <this.Logo />
 
-        <Menu.Item id='NavBar-search' name='search-bar' fitted>
-            <Input
-              fluid
-              action={
-                <Dropdown
-                  button
-                  floating
-                  icon={this.state.selectedCategory.searchIcon}
-                  header={
-                    <Dropdown.Header icon='list layout' content='Filter by category' />
-                  }
-                  options={this.state.categories.map(
-                    category => {
-                      var newCategory = {...category};
-                      delete newCategory.searchIcon;
-                      return newCategory
-                    })}
-                  className='icon yellow'
-                  value={this.state.selectedCategory.value}
-                  onChange={this.onSelectCategory}
-                  />}
-              onChange={this.onSearchTextChange}
-              actionPosition='left'
-              placeholder='Search...'
-              size='large'
-              value={this.state.searchText}
-            />
-        </Menu.Item>
+        {this.props.searchable ? searchBar : null}
 
         <Menu.Menu position='right'>
-          <Menu.Item link onClick={() => this.props.returnToHomePage()} className="NavBar-homeButton">
-            Home
-          </Menu.Item>
+          <HomeButton />
 
+          {this.props.searchable
+              ?
           <Menu.Item icon link onClick={() => this.setState({createEventFormOpen: true})}>
             {addEventIcon}
           </Menu.Item>
+              : null}
 
-          <Menu.Item icon link onClick={() => this.props.onMyEventsOpen()}>
-            {myEventsIcon}
-          </Menu.Item>
+          <MyEventsIcon />
 
           <Menu.Item link>
             {<Dropdown

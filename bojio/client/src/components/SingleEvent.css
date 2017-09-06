@@ -1,0 +1,14 @@
+.SingleEvent {
+  width: 50%;
+  height: 100%;
+  display: table;
+  min-height: 100%;
+  overflow:auto;
+  margin: auto;
+}
+
+.SingleEvent-loader {
+  height: 200px;
+  box-shadow: none !important;
+  border: none !important;
+}

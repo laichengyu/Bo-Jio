@@ -2,6 +2,18 @@
   cursor: pointer;
 }
 
+.EventBlock-commentsCount--hidden {
+  visibility: hidden;
+}
+
+.EventBlock-toggler {
+  cursor: pointer;
+}
+
+.EventBlock-commentsCount div {
+  display: inline-block !important;
+}
+
 .EventBlock-hideComments {
   cursor: pointer;
 }
@@ -30,4 +42,36 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.EventBlock-fullParticipants {
+  display: flex;
+  justify-content: space-between;
+}
+
+.EventBlock-participantList {
+  margin-top: 17px;
+  flex: 1 1 auto;
+}
+
+.EventBlock-participantListOnly {
+  margin-top: 10px !important;
+  max-height: 150px;
+  overflow: hidden;
+}
+
+.EventBlock-participantListOnly:hover {
+  overflow-y: auto;
+}
+
+#EventBlock-imageBlock {
+  max-height: initial !important;
+}
+
+#EventBlock-image {
+  width: 300px !important;
+}
+
+.EventBlock-detailsIcon {
+  margin-left: 3px !important;
 }

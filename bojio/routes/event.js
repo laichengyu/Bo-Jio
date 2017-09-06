@@ -181,10 +181,13 @@ router.get('/:event_id/info',
     models.Event.findById(req.params.event_id)
       .then(function(event) {
         if (event) {
-          res.json({
-            status: 'OK',
-            event: event
-          });
+          event.fetch()
+            .then(event => {
+              res.json({
+                status: 'OK',
+                event: event
+              });
+            });
         } else {
           res.json({
             status: 'FAILED'

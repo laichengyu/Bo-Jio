@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Item, Label, List, Divider } from 'semantic-ui-react';
+import { Item, Label, List, Divider, Header, Icon } from 'semantic-ui-react';
 import FacebookProvider, { Comments, CommentsCount, Like } from 'react-facebook';
 import EventCreator from './EventCreator';
 import Facepile from './Facepile';
+import Participant from './Participant';
 import EventStatusToken from './EventStatusToken';
 import './EventBlock.css';
 
@@ -12,7 +13,7 @@ class EventBlock extends Component {
   state = {
     ...this.getEventProps(),
 
-    showDetails: false,
+    showDetails: (this.props.showDetails === undefined) ? false : this.props.showDetails,
     deleted: false
   };
 
@@ -34,6 +35,7 @@ class EventBlock extends Component {
     return (
       <Item className="EventBlock">
         <Item.Image
+          id="EventBlock-imageBlock"
           size='medium'>
           <Label
             as='a'
@@ -42,16 +44,9 @@ class EventBlock extends Component {
             icon={this.state.category.icon}
             ribbon
           />
-          <img src={this.state.pictureUrl} alt={this.state.category.name} />
+          <img id="EventBlock-image" src={this.state.pictureUrl} alt={this.state.category.name} />
 
-          <div className="EventBlock-participants">
-            <Facepile
-              eventId={this.props.id}
-              services={this.props.services}
-              ids={this.state.participants.map(participant => participant.facebookId)}
-              onChange={this.onUpdate}/>
-            <EventCreator services={this.props.services} id={this.state.creator.facebookId} />
-          </div>
+          {this.state.showDetails ? this._renderFullParticipants() : this._renderParticipants()}
         </Item.Image>
 
         <Item.Content>
@@ -75,6 +70,10 @@ class EventBlock extends Component {
           <Item.Extra>
             <div className="EventBlock-toolBar">
               {this._renderCommentCount()}
+              <span className="EventBlock-toggler" onClick={() => this.setState({ showDetails: !this.state.showDetails })}>
+                {!this.state.showDetails ? "Click for more details" : "Hide details"}
+                <Icon className="EventBlock-detailsIcon" name={this.state.showDetails ? "chevron up" : "chevron down"} />
+              </span>
               <FacebookProvider appId={this.props.services.facebook.appId}>
                 <Like href={this._getUrl()} layout="button_count" size="large" share />
               </FacebookProvider>
@@ -86,8 +85,37 @@ class EventBlock extends Component {
     )
   }
 
+  _renderFullParticipants() {
+    const header = `Participants (${this.state.participants.length})`
+    return (
+      <div className="EventBlock-fullParticipants">
+        <div className="EventBlock-participantList">
+          <Header sub content={header} />
+          <List className="EventBlock-participantListOnly" verticalAlign='middle'>
+            {this.state.participants.map(
+              participant => <Participant key={`Participant.${participant.facebookId}`} id={participant.facebookId} services={this.props.services} />)}
+          </List>
+        </div>
+        <EventCreator services={this.props.services} id={this.state.creator.facebookId} />
+      </div>
+    );
+  }
+
+  _renderParticipants() {
+    return (
+      <div className="EventBlock-participants">
+        <Facepile
+          eventId={this.props.id}
+          services={this.props.services}
+          ids={this.state.participants.map(participant => participant.facebookId)}
+          onChange={this.onUpdate}/>
+        <EventCreator services={this.props.services} id={this.state.creator.facebookId} />
+      </div>
+    );
+  }
+
   _getUrl() {
-    return `http://bojio.ap-southeast-1.elasticbeanstalk.com/events/${this.state.id}`;
+    return `http://bojio.ap-southeast-1.elasticbeanstalk.com/event/${this.state.id}`;
   }
 
   _renderJoinLabel() {
@@ -118,17 +146,20 @@ class EventBlock extends Component {
 
   _renderCommentCount() {
     const toggle = () => this.setState({ showDetails: !this.state.showDetails });
-    return !this.state.showDetails
-      ? (
-        <List divided horizontal>
-          <List.Item className="EventBlock-commentsCount" icon='comments' onClick={toggle} content={
-             <FacebookProvider appId={this.props.services.facebook.appId}>
-                <CommentsCount href={this._getUrl()} />
-             </FacebookProvider>
-          } />
-        </List>
-      )
-      : <span className="EventBlock-hideComments" onClick={toggle}>Hide comments</span>;
+    return (
+        <span className={"EventBlock-commentsCount" + (this.state.showDetails ? " EventBlock-commentsCount--hidden" : "")} onClick={toggle}>
+          <Icon name="facebook official" />
+          {
+            !this.state.showDetails
+              ? <FacebookProvider appId={this.props.services.facebook.appId}>
+                  <CommentsCount href={this._getUrl()} />
+               </FacebookProvider>
+              : null
+          }
+          {" "}
+            comments
+        </span>
+    );
   }
 
   _maybeRenderDetails() {
