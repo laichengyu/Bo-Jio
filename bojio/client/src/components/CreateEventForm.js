@@ -274,7 +274,7 @@ class CreateEventForm extends Component {
   }
 
   _getUrl() {
-    return `http://bojio.ap-southeast-1.elasticbeanstalk.com/events/${this.state.createdEventId}`;
+    return `http://bojio.ap-southeast-1.elasticbeanstalk.com/event/${this.state.createdEventId}`;
   }
 
   renderComplete() {

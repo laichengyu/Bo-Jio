@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from '../img/logo.png';
 import { Loader, Image, Menu, Icon, Input, Dropdown, Popup, Modal } from 'semantic-ui-react'
 import CreateEventForm from './CreateEventForm';
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import './NavBar.css';
 
 class NavBar extends Component {
@@ -116,46 +116,53 @@ class NavBar extends Component {
       </Menu.Item>
     ));
 
+    const searchBar = (
+      <Menu.Item id='NavBar-search' name='search-bar' fitted>
+        <Input
+          fluid
+          action={
+            <Dropdown
+              button
+              floating
+              icon={this.state.selectedCategory.searchIcon}
+              header={
+                <Dropdown.Header icon='list layout' content='Filter by category' />
+              }
+              options={this.state.categories.map(
+                category => {
+                  var newCategory = {...category};
+                  delete newCategory.searchIcon;
+                  return newCategory
+                })}
+              className='icon yellow'
+              value={this.state.selectedCategory.value}
+              onChange={this.onSelectCategory}
+              />}
+          onChange={this.onSearchTextChange}
+          actionPosition='left'
+          placeholder='Search...'
+          size='large'
+          value={this.state.searchText}
+        />
+      </Menu.Item>
+    );
+
     return (
       <Menu fixed='top' id='NavBar-menu' borderless>
         {this._renderModal()}
         <Logo />
 
-        <Menu.Item id='NavBar-search' name='search-bar' fitted>
-            <Input
-              fluid
-              action={
-                <Dropdown
-                  button
-                  floating
-                  icon={this.state.selectedCategory.searchIcon}
-                  header={
-                    <Dropdown.Header icon='list layout' content='Filter by category' />
-                  }
-                  options={this.state.categories.map(
-                    category => {
-                      var newCategory = {...category};
-                      delete newCategory.searchIcon;
-                      return newCategory
-                    })}
-                  className='icon yellow'
-                  value={this.state.selectedCategory.value}
-                  onChange={this.onSelectCategory}
-                  />}
-              onChange={this.onSearchTextChange}
-              actionPosition='left'
-              placeholder='Search...'
-              size='large'
-              value={this.state.searchText}
-            />
-        </Menu.Item>
+        {this.props.searchable ? searchBar : null}
 
         <Menu.Menu position='right'>
           <HomeButton />
 
+          {this.props.searchable
+              ?
           <Menu.Item icon link onClick={() => this.setState({createEventFormOpen: true})}>
             {addEventIcon}
           </Menu.Item>
+              : null}
 
           <MyEventsIcon />
 

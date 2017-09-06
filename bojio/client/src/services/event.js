@@ -1,4 +1,13 @@
 class Event {
+  info(eventId) {
+    return fetch(`/api/event/${eventId}/info`, {
+      credentials: 'same-origin',
+      cache: "no-store"
+    })
+      .then(result => result.json())
+      .then(result => result.event);
+  }
+
   list(mode) {
     return fetch(`/api/event/list?display=${mode}`, {
       credentials: 'same-origin',

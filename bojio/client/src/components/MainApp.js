@@ -3,7 +3,8 @@ import NavBar from './NavBar';
 import EventList from './EventList';
 import './MainApp.css';
 import MyEvents from './MyEvents';
-import { BrowserRouter, Route } from 'react-router-dom'
+import SingleEvent from './SingleEvent';
+import { BrowserRouter, Route, withRouter } from 'react-router-dom'
 
 class MainApp extends Component {
   state = {
@@ -24,14 +25,31 @@ class MainApp extends Component {
   };
 
   render() {
+    const NavBarRoute = withRouter(props => {
+      console.log(props.match.params);
+      return <NavBar
+        services={this.props.services}
+        onEventAdd={eventId => this.setState({ latestEventId: eventId })}
+        onEventFilter={this.onEventFilter}
+        searchable={props.match.params.id ? false : true}
+        />
+      });
+
     return (
       <BrowserRouter>
         <div className="MainApp">
-          <NavBar
-            services={this.props.services}
-            onEventAdd={eventId => this.setState({ latestEventId: eventId })}
-            onEventFilter={this.onEventFilter}
-            />
+          <Route
+            path="/event/:id"
+            component={NavBarRoute} />
+          <Route
+            exact
+            path="/"
+            component={NavBarRoute} />
+          <Route
+            exact
+            path="/myevents"
+            component={NavBarRoute} />
+          
           <Route
             exact
             path="/"
@@ -48,8 +66,16 @@ class MainApp extends Component {
               return <MyEvents
                 services={this.props.services}
                 filter={this.state.filter}
-                refs="eventList"
                 latestEventId={this.state.latestEventId} />
+            }} />
+
+          <Route
+            path="/event/:id"
+            render={props => {
+              return <SingleEvent
+                services={this.props.services}
+                id={props.match.params.id}
+              />
             }} />
         </div>
       </BrowserRouter>
