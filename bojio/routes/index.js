@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var env       = process.env.NODE_ENV || "development";
 var facebookConfig = require(require('path').join(__dirname, '..', 'config', 'facebook.json'))[env];
+var FB = require('fb');
 
 router.get('/', function(req, res, next) {
   res.json({ status: "Success" });
@@ -29,6 +30,26 @@ router.get('/logout',
       res.redirect('/');
     } else {
       res.redirect('http://localhost:3000');
+    }
+  });
+
+router.post('/deauthorize',
+  function(req, res) {
+    console.log("ALOHA!");
+    console.log(req.body);
+    var signedRequest = FB.parseSignedRequest(req.body.signed_request, facebookConfig.CLIENT_SECRET);
+    if (signedRequest) {
+        var accessToken = signedRequest.oauth_token;
+        var userId = signedRequest.user_id;
+        var userCountry = signedRequest.user.country;
+        res.json({
+          signedRequest: signedRequest,
+          status: 'OK'
+        });
+    } else {
+      res.json({
+        status: 'FAILED'
+      });
     }
   });
 
