@@ -68,6 +68,7 @@ class CreateEventForm extends Component {
   setupCalendar() {
     const me = this;
     window.jQuery(this.refs.date).calendar({
+      minDate: new Date(),
       monthFirst: false,
       type: 'date',
       onChange: function (date, text, mode) {
