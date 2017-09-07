@@ -1,0 +1,10 @@
+.NotificationModal {
+  position: absolute !important;
+  margin-top: 137px !important;
+  max-width: initial !important;
+  z-index: 11 !important;
+}
+
+.NotificationModal--hidden {
+  visibility: hidden;
+}

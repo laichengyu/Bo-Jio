@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from '../img/logo.png';
-import { Loader, Image, Menu, Icon, Input, Dropdown, Popup, Modal } from 'semantic-ui-react'
+import { Loader, Image, Menu, Icon, Input, Dropdown, Popup, Modal, Label } from 'semantic-ui-react'
 import CreateEventForm from './CreateEventForm';
+import NotificationModal from './NotificationModal';
 import { withRouter } from 'react-router-dom'
 import './NavBar.css';
 
@@ -98,6 +99,26 @@ class NavBar extends Component {
     />
     );
 
+    const notificationIcon = (<Popup
+      trigger={
+      true
+        ? <Icon
+            name='bell outline'
+            size='large'
+            link />
+        : <Label
+            className="NavBar-notificationNumber"
+            color='yellow'
+            circular
+            content={22}
+            size="medium" />
+      }
+      content='Notifications'
+      position='bottom center'
+      inverted
+    />
+    );
+
     const HomeButton = withRouter(({ history }) => (
       <Menu.Item link onClick={() => history.push('/') } className="NavBar-homeButton">
         Home
@@ -167,6 +188,11 @@ class NavBar extends Component {
               : null}
 
           <MyEventsIcon />
+
+          <Menu.Item icon link>
+            {notificationIcon}
+            <NotificationModal open={false} />
+          </Menu.Item>
 
           <Menu.Item link>
             {<Dropdown
