@@ -2,3 +2,7 @@
   margin-top: 100px;
   margin-bottom: 100px;
 }
+
+.joyride-tooltip__close {
+  display: none !important;
+}

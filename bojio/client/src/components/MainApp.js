@@ -16,14 +16,51 @@ class MainApp extends Component {
     latestEventId: null,
     isReady: false,
     isRunning: false,
+    joyrideOverlay: true,
+    joyrideType: 'continuous',
+    stepIndex: 0,
+    selector: '',
     steps: [
       {
-        title: 'Trigger Action',
-        text: 'It can be `click` (default) or `hover` <i>(reverts to click on touch devices</i>.',
+        title: 'Create an Event',
+        text: 'Click here to start jio-ing!',
         selector: '.NavBar-addEventIcon',
-        position: 'left',
+        position: 'bottom',
         type: 'click',
+        isFixed: true
       },
+      {
+        title: 'Your Events',
+        text: 'View all the events you\'ve hosted or joined here',
+        selector: '.NavBar-myEventsIcon',
+        position: 'bottom',
+        type: 'click',
+        isFixed: true
+      },
+      {
+        title: 'Search Filter',
+        text: 'Select the category for events you wish to see!',
+        selector: '#NavBar-search > div > div',
+        position: 'right',
+        type: 'click',
+        isFixed: true
+      },
+      {
+        title: 'Change Your View',
+        text: 'Check out what\'s upcoming, latest events and past events',
+        selector: '#root > div > div.EventList > div.EventList-headerBlock > div',
+        position: 'bottom',
+        type: 'click',
+        isFixed: true
+      },
+      {
+        title: 'Manage Your Events',
+        text: 'Here\'s where you edit, join or leave events',
+        selector: '.EventStatusToken',
+        position: 'top-left',
+        type: 'click',
+        isFixed: true
+      }
     ]
   };
 
@@ -62,6 +99,20 @@ class MainApp extends Component {
     }, 1000);
   }
 
+  handleJoyrideCallback = (result) => {
+    const { joyride } = this.props;
+
+    if (result.type === 'step:before') {
+      // Keep internal state in sync with joyride
+      this.setState({ stepIndex: result.index });
+    }
+
+    if (result.type === 'finished' && this.state.isRunning) {
+      // Need to set our running state to false, so we can restart if we click start again.
+      this.setState({ isRunning: false });
+    }
+  }
+
   onEventFilter = (filter) => {
     this.setState({
       filter: {
@@ -76,7 +127,15 @@ class MainApp extends Component {
   }
 
   render() {
-    const { steps, isReady, isRunning } = this.state;
+    const {
+      isReady,
+      isRunning,
+      joyrideOverlay,
+      joyrideType,
+      selector,
+      stepIndex,
+      steps,
+    } = this.state;
 
     return (
       <BrowserRouter>
@@ -84,11 +143,28 @@ class MainApp extends Component {
           {
             isReady ?
               <Joyride
-                ref="joyride"
+                ref={c => (this.joyride = c)}
                 steps={steps}
                 debug={true}
                 run={isRunning}
-                callback={this.callback}
+                callback={this.handleJoyrideCallback}
+                showSkipButton={true}
+                showStepsProgress={true}
+                stepIndex={stepIndex}
+                showOverlay={joyrideOverlay}
+                showBackButton={true}
+                keyboardNavigation={true}
+                type={joyrideType}
+                scrollToSteps={false}
+                disableOverlay={true}
+                autoStart={true}
+                locale={{
+                  back: (<span>Back</span>),
+                  close: (<span>Close</span>),
+                  last: (<span>Last</span>),
+                  next: (<span>Next</span>),
+                  skip: (<span>Skip</span>),
+                }}
                 />
               : null
           }

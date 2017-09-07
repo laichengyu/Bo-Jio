@@ -108,6 +108,7 @@ class NavBar extends Component {
       <Menu.Item icon link onClick={() => { history.push('/myevents') }}>
         <Popup
           trigger={<Icon name='book'
+            className="NavBar-myEventsIcon"
             size='large'
             link />}
           content='My Events'
@@ -122,23 +123,23 @@ class NavBar extends Component {
         <Input
           fluid
           action={
-            <Dropdown
-              button
-              floating
-              icon={this.state.selectedCategory.searchIcon}
-              header={
-                <Dropdown.Header icon='list layout' content='Filter by category' />
-              }
-              options={this.state.categories.map(
-                category => {
-                  var newCategory = {...category};
-                  delete newCategory.searchIcon;
-                  return newCategory
-                })}
-              className='icon yellow'
-              value={this.state.selectedCategory.value}
-              onChange={this.onSelectCategory}
-              />}
+              <Dropdown
+                button
+                floating
+                icon={this.state.selectedCategory.searchIcon}
+                header={
+                  <Dropdown.Header icon='list layout' content='Filter by category' />
+                }
+                options={this.state.categories.map(
+                  category => {
+                    var newCategory = {...category};
+                    delete newCategory.searchIcon;
+                    return newCategory
+                  })}
+                className='icon yellow'
+                value={this.state.selectedCategory.value}
+                onChange={this.onSelectCategory}
+                />}
           onChange={this.onSearchTextChange}
           actionPosition='left'
           placeholder='Search...'
