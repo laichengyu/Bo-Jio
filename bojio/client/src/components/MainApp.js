@@ -19,7 +19,7 @@ class MainApp extends Component {
     joyrideOverlay: true,
     joyrideType: 'continuous',
     stepIndex: 0,
-    selector: '',
+    isFirstTimeUser: this.props.isFirstTimeUser,
     steps: [
       {
         title: 'Create an Event',
@@ -100,7 +100,6 @@ class MainApp extends Component {
   }
 
   handleJoyrideCallback = (result) => {
-    const { joyride } = this.props;
 
     if (result.type === 'step:before') {
       // Keep internal state in sync with joyride
@@ -109,7 +108,8 @@ class MainApp extends Component {
 
     if (result.type === 'finished' && this.state.isRunning) {
       // Need to set our running state to false, so we can restart if we click start again.
-      this.setState({ isRunning: false });
+      this.setState({ isRunning: false, isFirstTimeUser: false });
+      this.props.services.user.onboarded();
     }
   }
 
@@ -132,7 +132,6 @@ class MainApp extends Component {
       isRunning,
       joyrideOverlay,
       joyrideType,
-      selector,
       stepIndex,
       steps,
     } = this.state;
@@ -141,11 +140,11 @@ class MainApp extends Component {
       <BrowserRouter>
         <div className="MainApp">
           {
-            isReady ?
+            (isReady && this.state.isFirstTimeUser) ?
               <Joyride
                 ref={c => (this.joyride = c)}
                 steps={steps}
-                debug={true}
+                debug={false}
                 run={isRunning}
                 callback={this.handleJoyrideCallback}
                 showSkipButton={true}

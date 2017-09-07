@@ -12,10 +12,14 @@ router.get('/', function(req, res, next) {
 router.get('/status',
   function(req, res) {
     if (req.user) {
-      res.json({
-        status: 'OK',
-        user: req.user,
-        appId: facebookConfig.CLIENT_ID
+      models.User.findById(req.user.id)
+        .then(function(user) {
+          res.json({
+            status: 'OK',
+            user: req.user,
+            appId: facebookConfig.CLIENT_ID,
+            isFirstTimeUser: user.firstTimeUser(),
+        })
       });
     } else {
       res.json({
@@ -61,6 +65,26 @@ router.post('/deauthorize',
       });
     }
   });
+
+router.post('/onboarded',
+  function(req, res) {
+    models.User.findById(req.user.id)
+      .then(function(user) {
+        if (user) {
+          user.update({
+            isFirstTimeUser: false
+          }).then(() => {
+            res.json({
+              status: 'OK'
+            });
+          });
+        } else {
+          res.json({
+            status: 'FAILED'
+          });
+        }
+      });
+  })
 
 router.use('/login', require('./login'));
 router.use('/event', require('./event'));

@@ -5,7 +5,7 @@ import MainApp from './MainApp';
 import { Dimmer, Loader } from 'semantic-ui-react'
 
 class App extends Component {
-  state = { user: null, isLoading: true, services: null }
+  state = { user: null, isLoading: true, services: null, isFirstTimeUser: null }
 
   componentDidMount() {
     fetch('/api/status', { credentials: 'same-origin', cache: "no-store" })
@@ -25,7 +25,8 @@ class App extends Component {
             this.setState({
               services: services,
               user: user,
-              isLoading: false
+              isLoading: false,
+              isFirstTimeUser: data.isFirstTimeUser,
             });
           });
       });
@@ -41,7 +42,7 @@ class App extends Component {
     }
 
     if (this.state.services) {
-      return <MainApp services={this.state.services} />
+      return <MainApp services={this.state.services} isFirstTimeUser={this.state.isFirstTimeUser}/>
     } else {
       return <Login />
     }
