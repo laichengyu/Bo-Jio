@@ -1,7 +1,9 @@
+var models  = require('../models');
 var express = require('express');
 var router = express.Router();
 var env       = process.env.NODE_ENV || "development";
 var facebookConfig = require(require('path').join(__dirname, '..', 'config', 'facebook.json'))[env];
+var FB = require('fb');
 
 router.get('/', function(req, res, next) {
   res.json({ status: "Success" });
@@ -29,6 +31,34 @@ router.get('/logout',
       res.redirect('/');
     } else {
       res.redirect('http://localhost:3000');
+    }
+  });
+
+router.post('/deauthorize',
+  function(req, res) {
+    var signedRequest = FB.parseSignedRequest(req.body.signed_request, facebookConfig.CLIENT_SECRET);
+    if (signedRequest) {
+        var userId = signedRequest.user_id;
+        models.User.findById(userId)
+          .then(function(user) {
+            if (user) {
+              user.update({
+                active: false
+              }).then(() => {
+                res.json({
+                  status: 'OK'
+                });
+              });
+            } else {
+              res.json({
+                status: 'FAILED'
+              });
+            }
+          });
+    } else {
+      res.json({
+        status: 'FAILED'
+      });
     }
   });
 

@@ -20,7 +20,7 @@ var Strategy = require('passport-facebook').Strategy;
 passport.use(new Strategy({
     clientID: facebookConfig.CLIENT_ID,
     clientSecret: facebookConfig.CLIENT_SECRET,
-    callbackURL: '/api/login/return'
+    callbackURL: env === 'production' ? 'https://bojio.pw/api/login/return' : '/api/login/return'
   },
   function(accessToken, refreshToken, profile, cb) {
     // In this example, the user's Facebook profile is supplied as the user
@@ -92,7 +92,7 @@ app.get('/event/:event_id', function(req, res, next) {
 <html>
   <head>
     <meta property="fb:app_id" content="${facebookConfig.CLIENT_ID}">
-    <meta property="og:url" content="http://bojio.ap-southeast-1.elasticbeanstalk.com/event/${req.params.event_id}">
+    <meta property="og:url" content="https://bojio.pw/event/${req.params.event_id}">
     <meta property="og:type" content="website">
     <meta property="og:title" content="${event.title}">
     <meta property="og:description" content="${event.description}">

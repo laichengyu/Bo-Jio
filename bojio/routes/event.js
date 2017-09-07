@@ -64,7 +64,7 @@ router.get('/list',
         .then(results => {
           res.json({
             status: 'OK',
-            events: results
+            events: results.filter(event => event.creator !== null)
           });
         });
     });
@@ -116,7 +116,7 @@ router.get('/created',
         .then(results => {
           res.json({
             status: 'OK',
-            events: results
+            events: results.filter(event => event.creator !== null)
           });
         });
     });
@@ -159,7 +159,7 @@ router.get('/joined',
               .then(results => {
                 res.json({
                   status: 'OK',
-                  events: results
+                  events: results.filter(event => event.creator !== null)
                 });
               });
           });
@@ -168,16 +168,20 @@ router.get('/joined',
 
 router.get('/:event_id/info',
   login.ensureLoggedIn(),
-  function(req, res) {
+  function(req, res, next) {
     models.Event.findById(req.params.event_id)
       .then(function(event) {
         if (event) {
           event.fetch()
             .then(event => {
-              res.json({
-                status: 'OK',
-                event: event
-              });
+              if (event.creator) {
+                res.json({
+                  status: 'OK',
+                  event: event
+                });
+              } else {
+                next();
+              }
             });
         } else {
           res.json({
