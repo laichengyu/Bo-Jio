@@ -9,14 +9,14 @@ class Login extends Component {
     return (
       <div className="Login">
         <div className="Login-header">
+          <div className="Login-sloganBlock2">
+            <Header as='h1' className="Login-slogan">
+              Don't say
+            </Header>
+            <img src={logo} className="Login-logo" alt="logo" />
+          </div>
           <Header as='h1' className="Login-tagline">A platform for all your casual outings</Header>
           <div className="Login-sloganBlock">
-            <div className="Login-sloganBlock2">
-              <Header as='h2' className="Login-slogan">
-                Don't say
-              </Header>
-              <img src={logo} className="Login-logo" alt="logo" />
-            </div>
             <a href={this._getLoginUrl()} className="Login-fbButtonAnchor">
               <img src={fbButton} className="fb-login-button" alt="login-button"/>
             </a>

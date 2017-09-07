@@ -22,18 +22,21 @@
 
 .Login-sloganBlock {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10.571px;
 }
 
 .Login-sloganBlock2 {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .Login-tagline {
   font-family: 'Comfortaa', cursive !important;
   font-weight: 800 !important;
+  text-align: center;
 }
 
 .Login-header {
