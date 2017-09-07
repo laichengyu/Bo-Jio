@@ -155,7 +155,7 @@ class CreateEventForm extends Component {
         <div className="field required" id="CreateEventForm-imageBlock">
           <label>Event Image</label>
           <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null, gifSearchText: this.state.category})}/>
-          <Label className="ui pointing label">Choose a hilarious GIF!</Label>
+          <Label className="ui yellow basic pointing label">Choose a hilarious GIF!</Label>
         </div>
         <Divider hidden />
         <div className="field required">
@@ -215,7 +215,7 @@ class CreateEventForm extends Component {
         <div className="field required" id="CreateEventForm-imageBlock">
           <label>Event Image</label>
           <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null, gifSearchText: this.state.category})}/>
-          <Label className="ui pointing label">Choose a hilarious GIF!</Label>
+          <Label className="ui yellow basic pointing label">Choose a hilarious GIF!</Label>
         </div>
         <Divider hidden />
 
@@ -497,7 +497,7 @@ class CreateEventForm extends Component {
           }
           {
             this.state.stage < 2
-              ? <Button className="ui orange button" onClick={this.props.onSave}>Cancel</Button>
+              ? <Button className="ui yellow button" onClick={this.props.onSave}>Cancel</Button>
               : null
           }
           <Button className="ui primary button" onClick={this.nextStage} disabled={!this.canNext()}>{this.buttonText()}</Button>
