@@ -155,7 +155,7 @@ class CreateEventForm extends Component {
         <div className="field required" id="CreateEventForm-imageBlock">
           <label>Event Image</label>
           <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null, gifSearchText: this.state.category})}/>
-          <Label className="ui yellow basic pointing label">Choose a hilarious GIF!</Label>
+          <Label className="ui yellow basic pointing label">Click to choose a hilarious GIF!</Label>
         </div>
         <Divider hidden />
         <div className="field required">
@@ -215,7 +215,7 @@ class CreateEventForm extends Component {
         <div className="field required" id="CreateEventForm-imageBlock">
           <label>Event Image</label>
           <Image title="Change Picture" className="CreateEventForm-image" src={this.state.imageUrl} height="150" centered shape='rounded' onClick={() => this.setState({giphySearchOpen: true, giphyImage: null, gifSearchText: this.state.category})}/>
-          <Label className="ui yellow basic pointing label">Choose a hilarious GIF!</Label>
+          <Label className="ui yellow basic pointing label">Click to choose a hilarious GIF!</Label>
         </div>
         <Divider hidden />
 

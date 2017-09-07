@@ -89,6 +89,7 @@ class NavBar extends Component {
     const addEventIcon = (<Popup
       trigger={
       <Icon name='add to calendar'
+        className="NavBar-addEventIcon"
         size='large'
         link />}
       content='Create an event'

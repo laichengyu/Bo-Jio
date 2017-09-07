@@ -4,7 +4,8 @@ import EventList from './EventList';
 import './MainApp.css';
 import MyEvents from './MyEvents';
 import SingleEvent from './SingleEvent';
-import { BrowserRouter, Route, withRouter } from 'react-router-dom'
+import { BrowserRouter, Route, withRouter } from 'react-router-dom';
+import Joyride from 'react-joyride';
 
 class MainApp extends Component {
   state = {
@@ -12,7 +13,18 @@ class MainApp extends Component {
       category: 'all',
       text: ''
     },
-    latestEventId: null
+    latestEventId: null,
+    isReady: false,
+    isRunning: false,
+    steps: [
+      {
+        title: 'Trigger Action',
+        text: 'It can be `click` (default) or `hover` <i>(reverts to click on touch devices</i>.',
+        selector: '.NavBar-addEventIcon',
+        position: 'left',
+        type: 'click',
+      },
+    ]
   };
 
   NavBarRoute = withRouter(props => {
@@ -21,6 +33,7 @@ class MainApp extends Component {
       onEventAdd={this.onEventAdd}
       onEventFilter={this.onEventFilter}
       searchable={props.location.pathname.startsWith('/event') ? false : true}
+      joyride={this.joyride}
       />
   });
 
@@ -40,6 +53,15 @@ class MainApp extends Component {
       latestEventId={this.state.latestEventId} />
   });
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        isReady: true,
+        isRunning: true,
+      });
+    }, 1000);
+  }
+
   onEventFilter = (filter) => {
     this.setState({
       filter: {
@@ -54,13 +76,26 @@ class MainApp extends Component {
   }
 
   render() {
+    const { steps, isReady, isRunning } = this.state;
+
     return (
       <BrowserRouter>
         <div className="MainApp">
+          {
+            isReady ?
+              <Joyride
+                ref="joyride"
+                steps={steps}
+                debug={true}
+                run={isRunning}
+                callback={this.callback}
+                />
+              : null
+          }
           <Route key="Route"
             path="/"
             component={this.NavBarRoute} />
-          
+
           <Route
             exact
             path="/"
