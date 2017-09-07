@@ -25,3 +25,7 @@
 .NavBar-userDropdown .menu {
   margin-top: 5px !important;
 }
+
+.NavBar-notificationNumber {
+  margin-left: 0px !important;
+}

@@ -170,7 +170,7 @@ class EventBlock extends Component {
     return this.state.showDetails
       ? (
         <FacebookProvider appId={this.props.services.facebook.appId}>
-          <Comments href={this._getUrl()} width="100%" />
+          <Comments href={this._getUrl()} width="100%" orderBy="reverse_time" />
         </FacebookProvider>
       )
       : null;

@@ -12,7 +12,7 @@ class GiphySearch extends Component {
   };
 
   fetchGiphy() {
-    fetch(`http://api.giphy.com/v1/gifs/search?q=${this.props.searchText}&api_key=${this.API_KEY}`)
+    fetch(`https://api.giphy.com/v1/gifs/search?q=${this.props.searchText}&api_key=${this.API_KEY}`)
       .then(res => res.json())
       .then(data => data.data.map(entry => {
         return {
