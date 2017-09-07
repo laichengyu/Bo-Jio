@@ -70,10 +70,14 @@ class EventBlock extends Component {
           <Item.Extra>
             <div className="EventBlock-toolBar">
               {this._renderCommentCount()}
-              <span className="EventBlock-toggler" onClick={() => this.setState({ showDetails: !this.state.showDetails })}>
-                {!this.state.showDetails ? "Click for more details" : "Hide details"}
-                <Icon className="EventBlock-detailsIcon" name={this.state.showDetails ? "chevron up" : "chevron down"} />
-              </span>
+                <span className="EventBlock-toggler" onClick={() => this.setState({ showDetails: !this.state.showDetails })}>
+                  {!this.props.showDetails
+                      ? (!this.state.showDetails ? "Click for more details" : "Hide details")
+                      : null}
+                  {!this.props.showDetails
+                      ? <Icon className="EventBlock-detailsIcon" name={this.state.showDetails ? "chevron up" : "chevron down"} />
+                      : null}
+                </span>
               <FacebookProvider appId={this.props.services.facebook.appId}>
                 <Like href={this._getUrl()} layout="button_count" size="large" share />
               </FacebookProvider>
