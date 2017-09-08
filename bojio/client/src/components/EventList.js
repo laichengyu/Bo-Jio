@@ -164,9 +164,11 @@ class EventList extends Component {
         >
         <Item.Group divided relaxed>
         {
-          events.filter((_, index) => index < maxNum)
-          .map(
-            event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
+          events.length === 0 ? <span>No search results found...</span>
+          :
+            events.filter((_, index) => index < maxNum)
+            .map(
+              event => <EventBlock key={`EventBlock.${event.id}`} services={this.props.services} {...event} />)
         }
         </Item.Group>
       </InfiniteScroll>
