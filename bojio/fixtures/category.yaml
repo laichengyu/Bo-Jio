@@ -44,21 +44,21 @@ fixtures:
   - model: Art
     data:
       id: art
-      order_: 6
+      order_: 7
       name: Art
       icon: paint brush
       defaultImage: https://media.giphy.com/media/CovFciJgWyxUs/giphy.gif
   - model: Music
     data:
       id: music
-      order_: 6
+      order_: 8
       name: Music
       icon: music
       defaultImage: https://media.giphy.com/media/tqfS3mgQU28ko/giphy.gif
   - model: Category
     data:
       id: others
-      order_: 7
+      order_: 9
       name: Others
       icon: empty star
       defaultImage: https://media.giphy.com/media/rIJo9BAnfXaBG/giphy.gif
