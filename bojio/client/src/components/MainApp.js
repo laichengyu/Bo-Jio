@@ -38,6 +38,14 @@ class MainApp extends Component {
         isFixed: true
       },
       {
+        title: 'Notifications',
+        text: 'Check here for events your friends add you in!',
+        selector: '#NavBar-menu > div.right.menu > div.icon.item',
+        position: 'bottom',
+        type: 'click',
+        isFixed: true
+      },
+      {
         title: 'Search Filter',
         text: 'Select the category for events you wish to see!',
         selector: '#NavBar-search > div > div',
