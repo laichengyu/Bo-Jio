@@ -15,7 +15,9 @@ class NavBar extends Component {
     categories: [this.ANY_CATEGORY_OPTION],
     selectedCategory: this.ANY_CATEGORY_OPTION,
     searchText: "",
-    createEventFormOpen: false
+    createEventFormOpen: false,
+    notificationOpen: false,
+    notificationsCount: 0
   }
 
   Logo = withRouter(({ history }) => (
@@ -82,6 +84,12 @@ class NavBar extends Component {
     );
   }
 
+  onNotificationClick = () => {
+    this.setState({
+      notificationOpen: !this.state.notificationOpen
+    });
+  };
+
   render() {
     const userToken = !this.state.isLoading
       ? <Image shape='circular' src={this.state.user.pictureUrl} width="35px" />
@@ -101,21 +109,25 @@ class NavBar extends Component {
 
     const notificationIcon = (<Popup
       trigger={
-      true
+      this.state.notificationsCount === 0
         ? <Icon
+            className="NavBar-notificationIcon"
             name='bell outline'
             size='large'
+            onClick={this.onNotificationClick}
             link />
         : <Label
             className="NavBar-notificationNumber"
             color='yellow'
             circular
-            content={22}
+            content={this.state.notificationsCount}
+            onClick={this.onNotificationClick}
             size="medium" />
       }
       content='Notifications'
       position='bottom center'
       inverted
+      open={false}
     />
     );
 
@@ -189,12 +201,16 @@ class NavBar extends Component {
 
           <MyEventsIcon />
 
-          <Menu.Item icon link>
+          <Menu.Item icon>
             {notificationIcon}
-            <NotificationModal open={false} />
+            <NotificationModal
+              services={this.props.services}
+              open={this.state.notificationOpen}
+              onOutsideClick={() => this.setState({ notificationOpen: false })}
+              onNotificationsChange={notificationsCount => this.setState({ notificationsCount })}/>
           </Menu.Item>
 
-          <Menu.Item link>
+          <Menu.Item>
             {<Dropdown
                 className="NavBar-userDropdown"
                 trigger={userToken}

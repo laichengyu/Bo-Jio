@@ -28,4 +28,9 @@
 
 .NavBar-notificationNumber {
   margin-left: 0px !important;
+  cursor: pointer;
+}
+
+.NavBar-notificationIcon {
+  cursor: pointer;
 }

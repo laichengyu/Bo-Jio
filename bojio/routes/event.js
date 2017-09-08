@@ -245,9 +245,21 @@ router.post('/:event_id/add_participants',
     models.Event.findById(req.params.event_id)
       .then(function(event) {
         if (event) {
-          event.getParticipants()
-            .then(function(participants) {
-              const existingIds = participants.map(p => p.facebookId);
+          event.fetch()
+            .then(function(eventData) {
+              const existingIds = eventData.participants.map(p => p.facebookId);
+              req.body.inviteList
+                .filter(invite => (existingIds.indexOf(invite) === -1))
+                .map(
+                  invite => {
+                    models.Notification.create({
+                      subjectUserId: invite,
+                      objectUserId: req.user.id,
+                      timestamp: new Date(),
+                      eventId: eventData.id,
+                      type: 'TAG'
+                    });
+                  });
               event.setParticipants([...existingIds, ...req.body.inviteList])
                 .then(() => {
                   event.fetch()

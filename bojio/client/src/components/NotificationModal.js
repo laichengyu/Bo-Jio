@@ -1,10 +1,23 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { Feed, Card } from 'semantic-ui-react';
+import NotificationItem from './NotificationItem';
 import './NotificationModal.css';
 
 class NotificationModal extends Component {
   state = {
-    image: "https://cdn0.vox-cdn.com/images/verge/default-avatar.v989902574302a6378709709f7baab789b242ebbb.gif"
+    notifications: [],
+    notificationsCount: 0
+  }
+
+  markAllAsRead = (event) => {
+    event.preventDefault();
+    this.setState({
+      notificationsCount: 0
+    });
+
+    this.props.services.notification.markAllAsRead();
+    this.props.onOutsideClick();
   }
 
   render() {
@@ -14,42 +27,60 @@ class NotificationModal extends Component {
           <Card.Header>
             Notifications
           </Card.Header>
+          <span className="NotificationModal-markAll" onClick={this.markAllAsRead}> Mark all as read </span>
         </Card.Content>
         <Card.Content>
-          <Feed>
-            <Feed.Event>
-              <Feed.Label image='https://cdn0.vox-cdn.com/images/verge/default-avatar.v989902574302a6378709709f7baab789b242ebbb.gif' />
-              <Feed.Content>
-                <Feed.Date content='1 day ago' />
-                <Feed.Summary>
-                  You added <a>Jenny Hess</a> to your <a>coworker</a> group.
-                </Feed.Summary>
-              </Feed.Content>
-            </Feed.Event>
-
-            <Feed.Event>
-              <Feed.Label image='https://cdn0.vox-cdn.com/images/verge/default-avatar.v989902574302a6378709709f7baab789b242ebbb.gif' />
-              <Feed.Content>
-                <Feed.Date content='3 days ago' />
-                <Feed.Summary>
-                  You added <a>Molly Malone</a> as a friend.
-                </Feed.Summary>
-              </Feed.Content>
-            </Feed.Event>
-
-            <Feed.Event>
-              <Feed.Label image='https://cdn0.vox-cdn.com/images/verge/default-avatar.v989902574302a6378709709f7baab789b242ebbb.gif' />
-              <Feed.Content>
-                <Feed.Date content='4 days ago' />
-                <Feed.Summary>
-                  You added <a>Elliot Baker</a> to your <a>musicians</a> group.
-                </Feed.Summary>
-              </Feed.Content>
-            </Feed.Event>
+          <Feed className="NotificationModal-items">
+            {this.state.notifications.map(
+              notification => <NotificationItem key={`NotificationItem.${notification.id}`} services={this.props.services}
+                onClose={() => {
+                  if (!notification.read) {
+                    this.setState({
+                      notificationsCount: Math.max(0, this.state.notificationsCount - 1)
+                    });
+                    this.props.services.notification.markAsRead(notification.id);
+                  }
+                  this.props.onOutsideClick();
+                }}
+               {...notification} />)}
           </Feed>
         </Card.Content>
       </Card>
     );
+  }
+
+  componentDidMount() {
+    if (this.props.open) {
+      document.addEventListener('click', this.handleClickOutside.bind(this), true);
+    }
+
+    this.props.services.notification.list()
+      .then(notifications => {
+        this.setState({
+          notifications: notifications,
+          notificationsCount: notifications.filter(notification => !notification.read).length
+        });
+      });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.notificationsCount !== prevState.notificationsCount) {
+      this.props.onNotificationsChange(this.state.notificationsCount);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.open) {
+      document.removeEventListener('click', this.handleClickOutside.bind(this), true);
+    }
+  }
+
+  handleClickOutside(event) {
+    const domNode = ReactDOM.findDOMNode(this).parentNode;
+
+    if (!domNode || !domNode.contains(event.target)) {
+      this.props.onOutsideClick();
+    }
   }
 }
 
