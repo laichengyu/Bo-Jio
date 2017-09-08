@@ -16,7 +16,8 @@ class NavBar extends Component {
     selectedCategory: this.ANY_CATEGORY_OPTION,
     searchText: "",
     createEventFormOpen: false,
-    notificationOpen: false
+    notificationOpen: false,
+    notificationsCount: 0
   }
 
   Logo = withRouter(({ history }) => (
@@ -108,7 +109,7 @@ class NavBar extends Component {
 
     const notificationIcon = (<Popup
       trigger={
-      true
+      this.state.notificationsCount === 0
         ? <Icon
             name='bell outline'
             size='large'
@@ -118,13 +119,14 @@ class NavBar extends Component {
             className="NavBar-notificationNumber"
             color='yellow'
             circular
-            content={22}
+            content={this.state.notificationsCount}
             onClick={this.onNotificationClick}
             size="medium" />
       }
       content='Notifications'
       position='bottom center'
       inverted
+      open={false}
     />
     );
 
@@ -201,8 +203,10 @@ class NavBar extends Component {
           <Menu.Item icon link>
             {notificationIcon}
             <NotificationModal
+              services={this.props.services}
               open={this.state.notificationOpen}
-              onOutsideClick={() => this.setState({ notificationOpen: false })} />
+              onOutsideClick={() => this.setState({ notificationOpen: false })}
+              onNotificationsChange={notificationsCount => this.setState({ notificationsCount })}/>
           </Menu.Item>
 
           <Menu.Item link>

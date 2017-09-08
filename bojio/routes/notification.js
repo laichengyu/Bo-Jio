@@ -2,7 +2,7 @@ var models  = require('../models');
 var router = require('express').Router();
 var login = require('connect-ensure-login');
 
-router.get('/get',
+router.get('/list',
   login.ensureLoggedIn(),
   function(req, res) {
     models.Notification.findAll({

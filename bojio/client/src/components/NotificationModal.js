@@ -5,7 +5,8 @@ import './NotificationModal.css';
 
 class NotificationModal extends Component {
   state = {
-    image: "https://cdn0.vox-cdn.com/images/verge/default-avatar.v989902574302a6378709709f7baab789b242ebbb.gif"
+    notifications: [],
+    notificationsCount: 0
   }
 
   render() {
@@ -55,6 +56,20 @@ class NotificationModal extends Component {
 
   componentDidMount() {
     document.addEventListener('click', this.handleClickOutside.bind(this), true);
+
+    this.props.services.notification.list()
+      .then(notifications => {
+        this.setState({
+          notifications: notifications,
+          notificationsCount: notifications.filter(notification => !notification.read).length
+        });
+      });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.notificationsCount !== prevState.notificationsCount) {
+      this.props.onNotificationsChange(this.state.notificationsCount);
+    }
   }
 
   componentWillUnmount() {
