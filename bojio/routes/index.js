@@ -14,12 +14,19 @@ router.get('/status',
     if (req.user) {
       models.User.findById(req.user.id)
         .then(function(user) {
-          res.json({
-            status: 'OK',
-            user: req.user,
-            appId: facebookConfig.CLIENT_ID,
-            isFirstTimeUser: user.firstTimeUser(),
-        })
+          if (user.isActive()) {
+            res.json({
+              status: 'OK',
+              user: req.user,
+              appId: facebookConfig.CLIENT_ID,
+              isFirstTimeUser: user.firstTimeUser(),
+            })
+          } else {
+            req.logout();
+            res.json({
+              status: 'FAILED'
+            });
+          }
       });
     } else {
       res.json({
