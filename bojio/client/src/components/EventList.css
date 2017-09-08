@@ -24,3 +24,8 @@
   box-shadow: none !important;
   border: none !important;
 }
+
+.EventList-noResultsFound {
+  text-align: center;
+  color: #808080 !important;
+}

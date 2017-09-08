@@ -164,7 +164,7 @@ class EventList extends Component {
         >
         <Item.Group divided relaxed>
         {
-          events.length === 0 ? <span>No search results found...</span>
+          events.length === 0 ? <Header as='h3' className="EventList-noResultsFound">No search results found...</Header>
           :
             events.filter((_, index) => index < maxNum)
             .map(
