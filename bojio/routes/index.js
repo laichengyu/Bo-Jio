@@ -96,5 +96,6 @@ router.post('/onboarded',
 router.use('/login', require('./login'));
 router.use('/event', require('./event'));
 router.use('/category', require('./category'));
+router.use('/notification', require('./notification'));
 
 module.exports = router;
