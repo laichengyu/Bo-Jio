@@ -1,6 +1,7 @@
 .NotificationModal {
   position: absolute !important;
-  margin-top: 80px !important;
+  top: 90% !important;
+  left: 50px !important;
   max-width: initial !important;
   z-index: 11 !important;
 }

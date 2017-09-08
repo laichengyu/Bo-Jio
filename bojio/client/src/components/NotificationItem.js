@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Feed } from 'semantic-ui-react';
+import { Feed, Icon } from 'semantic-ui-react';
 import './NotificationItem.css';
 import { withRouter } from 'react-router-dom'
 
-var dateFormat = require('dateformat');
+var moment = require('moment');
 
 class NotificationItem extends Component {
   state = {
@@ -19,10 +19,16 @@ class NotificationItem extends Component {
     }}>
       <Feed.Label image={this.state.objectImage} />
       <Feed.Content>
-        <Feed.Date content={dateFormat(this.props.timestamp, "HH:MM")} />
+        <Feed.Date>
+          {!this.props.read
+          ? <Icon name="dot circle outline" />
+          : null}
+          {moment(this.props.timestamp).fromNow()}
+        </Feed.Date>
         <Feed.Summary>
           {this.getSummary()}
         </Feed.Summary>
+        {}
       </Feed.Content>
     </Feed.Event>
   ));
@@ -52,6 +58,24 @@ class NotificationItem extends Component {
       return (
         <span>
           <a>{this.state.objectName}</a> added you to <a>{this.state.eventName}</a>
+        </span>
+      );
+    } else if (this.props.type === 'EDIT') {
+      return (
+        <span>
+          <a>{this.state.objectName}</a> made changes to <a>{this.state.eventName}</a>
+        </span>
+      );
+    } else if (this.props.type === 'JOIN') {
+      return (
+        <span>
+          <a>{this.state.objectName}</a> joined <a>{this.state.eventName}</a>
+        </span>
+      );
+    } else if (this.props.type === 'REMINDER') {
+      return (
+        <span>
+          <a>{this.state.eventName}</a> starts in 30 minutes!
         </span>
       );
     }

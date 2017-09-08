@@ -12,7 +12,8 @@ router.get('/list',
         },
         subjectUserId: req.user.id
       },
-      order: models.sequelize.literal('timestamp DESC')
+      order: models.sequelize.literal('timestamp DESC'),
+      limit: 10
     })
       .then(function(notifications) {
         res.json({

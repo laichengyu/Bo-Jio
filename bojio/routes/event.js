@@ -201,6 +201,13 @@ router.post('/:event_id/join',
             .then(function() {
               event.fetch()
                 .then(event => {
+                  models.Notification.create({
+                    subjectUserId: event.creator.facebookId,
+                    objectUserId: req.user.id,
+                    timestamp: new Date(),
+                    eventId: event.id,
+                    type: 'JOIN'
+                  });
                   res.json({
                     status: 'OK',
                     event: event
@@ -225,6 +232,15 @@ router.post('/:event_id/set_participants',
             .then(function() {
               event.fetch()
                 .then(event => {
+                  event.participants.forEach(participant => {
+                    models.Notification.create({
+                      subjectUserId: participant.facebookId,
+                      objectUserId: req.user.id,
+                      timestamp: new Date((new Date(event.date)).getTime() - 60000 * 30),
+                      eventId: event.id,
+                      type: 'REMINDER'
+                    });
+                  });
                   res.json({
                     status: 'OK',
                     event: event
@@ -258,6 +274,13 @@ router.post('/:event_id/add_participants',
                       timestamp: new Date(),
                       eventId: eventData.id,
                       type: 'TAG'
+                    });
+                    models.Notification.create({
+                      subjectUserId: invite,
+                      objectUserId: req.user.id,
+                      timestamp: new Date((new Date(event.date)).getTime() - 60000 * 30),
+                      eventId: event.id,
+                      type: 'REMINDER'
                     });
                   });
               event.setParticipants([...existingIds, ...req.body.inviteList])
@@ -320,6 +343,16 @@ router.post('/:event_id/edit',
               .then(function() {
                 event.fetch()
                   .then(event => {
+                    event.participants.forEach(participant => {
+                      if (participant.facebookId === req.user.id) return;
+                      models.Notification.create({
+                        subjectUserId: participant.facebookId,
+                        objectUserId: req.user.id,
+                        timestamp: new Date(),
+                        eventId: event.id,
+                        type: 'EDIT'
+                      });
+                    });
                     res.json({
                       status: 'OK',
                       event: event

@@ -17,7 +17,6 @@ class NotificationModal extends Component {
     });
 
     this.props.services.notification.markAllAsRead();
-    this.props.onOutsideClick();
   }
 
   render() {
@@ -50,17 +49,15 @@ class NotificationModal extends Component {
   }
 
   componentDidMount() {
-    if (this.props.open) {
-      document.addEventListener('click', this.handleClickOutside.bind(this), true);
-    }
-
-    this.props.services.notification.list()
-      .then(notifications => {
-        this.setState({
-          notifications: notifications,
-          notificationsCount: notifications.filter(notification => !notification.read).length
+    setInterval(() => {
+      this.props.services.notification.list()
+        .then(notifications => {
+          this.setState({
+            notifications: notifications,
+            notificationsCount: notifications.filter(notification => !notification.read).length
+          });
         });
-      });
+      }, 3000);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -70,9 +67,6 @@ class NotificationModal extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.open) {
-      document.removeEventListener('click', this.handleClickOutside.bind(this), true);
-    }
   }
 
   handleClickOutside(event) {
