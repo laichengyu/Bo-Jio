@@ -6,3 +6,7 @@
 .joyride-tooltip__close {
   display: none !important;
 }
+
+.body--noScroll {
+  overflow: hidden;
+}

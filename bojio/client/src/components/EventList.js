@@ -77,18 +77,63 @@ class EventList extends Component {
   }
 
   getEvents() {
+    const dummyEventList = [{
+      id: "dummy1",
+      title: "Welcome to BoJio",
+      description: "Enjoy your time here!",
+      date: new Date(),
+      location: "National University of Singapore",
+      pictureUrl: "https://media.giphy.com/media/l4JyOCNEfXvVYEqB2/giphy.gif",
+      createdAt: new Date(),
+      category: {
+        id: "party",
+        name: "Party",
+        defaultImage: "https://media.giphy.com/media/l4JyOCNEfXvVYEqB2/giphy.gif",
+        icon: "cocktail",
+      },
+      creator: {
+        facebookId: "1852623078088890",
+        isFirstTimeUser: true,
+      },
+      participants: [{
+        facebookId: this.props.services.facebook.currentUserId,
+      }],
+    },
+    {
+      id: "dummy2",
+      title: "Your own event",
+      description: "All your event information in one place",
+      date: new Date(),
+      location: "National University of Singapore",
+      pictureUrl: "https://media.giphy.com/media/3o6ZtpxSZbQRRnwCKQ/giphy.gif",
+      createdAt: new Date(),
+      category: {
+        id: "others",
+        name: "Others",
+        defaultImage: "https://media.giphy.com/media/3o6ZtpxSZbQRRnwCKQ/giphy.gif",
+        icon: "empty star",
+      },
+      creator: {
+        facebookId: this.props.services.facebook.currentUserId,
+        isFirstTimeUser: true,
+      },
+      participants: [],
+    }];
     var filteredEvents = this.state.events;
+    if (this.props.isFirstTimeUser) {
+      return dummyEventList;
+    }
     if (this.props.filter.category !== 'all') {
       filteredEvents = filteredEvents.filter(event =>
         (event.category.id === this.props.filter.category)
       );
     }
-
     if (this.props.filter.text.length > 0) {
       filteredEvents = filteredEvents.filter(event =>
         (event.title.toLowerCase().indexOf(this.props.filter.text.toLowerCase()) !== -1)
       );
     }
+
     return filteredEvents;
   }
 

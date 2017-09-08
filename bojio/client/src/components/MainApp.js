@@ -54,10 +54,18 @@ class MainApp extends Component {
         isFixed: true
       },
       {
-        title: 'Manage Your Events',
-        text: 'Here\'s where you edit, join or leave events',
+        title: 'Event Interaction',
+        text: 'Click to join or leave events',
         selector: '.EventStatusToken',
-        position: 'top-left',
+        position: 'bottom',
+        type: 'click',
+        isFixed: true
+      },
+      {
+        title: 'Manage Your Events',
+        text: 'Here\'s where you edit events you\'ve hosted',
+        selector: '#root > div > div.EventList > div:nth-child(2) > div > div:nth-child(2) > div.content > div.header.EventBlock-header > div',
+        position: 'top',
         type: 'click',
         isFixed: true
       }
@@ -79,7 +87,8 @@ class MainApp extends Component {
     return <EventList
       services={this.props.services}
       filter={this.state.filter}
-      latestEventId={this.state.latestEventId} />
+      latestEventId={this.state.latestEventId}
+      isFirstTimeUser={this.state.isFirstTimeUser} />
   });
 
   MyEventsRouter = withRouter(props => {
@@ -100,7 +109,7 @@ class MainApp extends Component {
   }
 
   handleJoyrideCallback = (result) => {
-
+    window.jQuery('body').addClass('body--noScroll');
     if (result.type === 'step:before') {
       // Keep internal state in sync with joyride
       this.setState({ stepIndex: result.index });
@@ -109,6 +118,7 @@ class MainApp extends Component {
     if (result.type === 'finished' && this.state.isRunning) {
       // Need to set our running state to false, so we can restart if we click start again.
       this.setState({ isRunning: false, isFirstTimeUser: false });
+      window.jQuery('body').removeClass('body--noScroll');
       this.props.services.user.onboarded();
     }
   }

@@ -306,11 +306,14 @@ router.post('/:event_id/edit',
           }).then(function(event) {
             event.setCategory(req.body.category)
               .then(function() {
-                res.json({
-                  status: 'OK',
-                  event: event
-                });
-              })
+                event.fetch()
+                  .then(event => {
+                    res.json({
+                      status: 'OK',
+                      event: event
+                    });
+                  });
+              });
           });
         } else {
           res.json({
