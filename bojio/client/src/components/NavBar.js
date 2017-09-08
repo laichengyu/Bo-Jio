@@ -111,6 +111,7 @@ class NavBar extends Component {
       trigger={
       this.state.notificationsCount === 0
         ? <Icon
+            className="NavBar-notificationIcon"
             name='bell outline'
             size='large'
             onClick={this.onNotificationClick}
@@ -200,7 +201,7 @@ class NavBar extends Component {
 
           <MyEventsIcon />
 
-          <Menu.Item icon link>
+          <Menu.Item icon>
             {notificationIcon}
             <NotificationModal
               services={this.props.services}
@@ -209,7 +210,7 @@ class NavBar extends Component {
               onNotificationsChange={notificationsCount => this.setState({ notificationsCount })}/>
           </Menu.Item>
 
-          <Menu.Item link>
+          <Menu.Item>
             {<Dropdown
                 className="NavBar-userDropdown"
                 trigger={userToken}

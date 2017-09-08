@@ -1,10 +1,16 @@
 .NotificationModal {
   position: absolute !important;
-  margin-top: 137px !important;
+  margin-top: 80px !important;
   max-width: initial !important;
   z-index: 11 !important;
 }
 
 .NotificationModal--hidden {
   visibility: hidden;
+}
+
+.NotificationModal-markAll {
+  color: #4183c4;
+  text-decoration: none;
+  cursor: pointer;
 }
