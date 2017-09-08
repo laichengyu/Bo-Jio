@@ -113,6 +113,7 @@ class MyEvents extends Component {
   }
 
   renderContent() {
+    const events = this.getEvents();
     if (this.state.events.length === 0) {
       return <Image
         src="https://media.giphy.com/media/VvNblYZGFj2Ny/giphy.gif"
@@ -123,7 +124,9 @@ class MyEvents extends Component {
       return (
         <Item.Group divided relaxed>
         {
-          this.getEvents().map(
+          events.length === 0 ? <Header as='h3' className="EventList-noResultsFound">No search results found...</Header>
+          :
+          events.map(
             event => <EventBlock key={`MyEvents.${event.id}`} services={this.props.services} {...event} />)
         }
         </Item.Group>
