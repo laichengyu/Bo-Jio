@@ -41,14 +41,14 @@ fixtures:
       name: Travel
       icon: suitcase
       defaultImage: https://media.giphy.com/media/TZWXgCCUZz1fy/giphy.gif
-  - model: Art
+  - model: Category
     data:
       id: art
       order_: 7
       name: Art
       icon: paint brush
       defaultImage: https://media.giphy.com/media/CovFciJgWyxUs/giphy.gif
-  - model: Music
+  - model: Category
     data:
       id: music
       order_: 8
