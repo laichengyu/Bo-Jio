@@ -40,7 +40,7 @@ class MainApp extends Component {
       {
         title: 'Notifications',
         text: 'Check here for events your friends add you in!',
-        selector: '#NavBar-menu > div.right.menu > div.icon.item',
+        selector: '#NavBar-menu > div.right.menu > div.icon.item > i',
         position: 'bottom',
         type: 'click',
         isFixed: true
