@@ -101,7 +101,7 @@ class EventList extends Component {
     },
     {
       id: "dummy2",
-      title: "Your own event",
+      title: "Example of your own event",
       description: "All your event information in one place",
       date: new Date(),
       location: "National University of Singapore",
