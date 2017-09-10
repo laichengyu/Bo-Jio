@@ -182,6 +182,22 @@ class NavBar extends Component {
       </Menu.Item>
     );
 
+    const UserDropdown = withRouter(({ history }) => (
+      <Dropdown
+        className="NavBar-userDropdown"
+        trigger={userToken}
+        icon={null}
+        options={[
+          {
+            key: 'user',
+            text: <span>Signed in as <strong>{!this.state.isLoading ? this.state.user.name : ""}</strong></span>,
+            disabled: true,
+          },
+          { key: 'privacy-policy', text: 'Privacy Policy', icon: 'privacy', onClick: () => history.push('/privacypolicy') },
+          { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: this.logOut },
+        ]} />
+    ));
+
     return (
       <Menu fixed='top' id='NavBar-menu' borderless>
         {this._renderModal()}
@@ -211,19 +227,7 @@ class NavBar extends Component {
           </Menu.Item>
 
           <Menu.Item>
-            {<Dropdown
-                className="NavBar-userDropdown"
-                trigger={userToken}
-                icon={null}
-                options={[
-                  {
-                    key: 'user',
-                    text: <span>Signed in as <strong>{!this.state.isLoading ? this.state.user.name : ""}</strong></span>,
-                    disabled: true,
-                  },
-                  { key: 'privacy-policy', text: 'Privacy Policy', icon: 'privacy', onClick: () => {} },
-                  { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: this.logOut },
-                ]} />}
+            <UserDropdown/>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

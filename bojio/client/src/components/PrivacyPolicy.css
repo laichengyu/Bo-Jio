@@ -1,0 +1,8 @@
+.PrivacyPolicy {
+  width: 50%;
+  height: 100%;
+  display: table;
+  min-height: 100%;
+  overflow:auto;
+  margin: auto;
+}

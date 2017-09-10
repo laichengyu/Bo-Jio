@@ -6,6 +6,7 @@ import MyEvents from './MyEvents';
 import SingleEvent from './SingleEvent';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import Joyride from 'react-joyride';
+import PrivacyPolicy from './PrivacyPolicy';
 
 class MainApp extends Component {
   state = {
@@ -107,6 +108,13 @@ class MainApp extends Component {
       latestEventId={this.state.latestEventId} />
   });
 
+  PrivacyPolicyRouter = withRouter(props => {
+    this.props.services.ga.pageview(props.location.pathname);
+    return <PrivacyPolicy
+      services={this.props.services}
+      filter={this.state.filter} />
+  });
+
   componentDidMount() {
     setTimeout(() => {
       this.setState({
@@ -193,6 +201,11 @@ class MainApp extends Component {
             exact
             path="/"
             component={this.EventListRouter} />
+
+          <Route
+            exact
+            path="/privacypolicy"
+            component={this.PrivacyPolicyRouter} />
 
           <Route
             exact
