@@ -71,7 +71,7 @@ class MainApp extends Component {
       },
       {
         title: 'Manage Your Events',
-        text: 'Here\'s where you edit events you\'ve hosted.\n And we\'re done! Hope you enjoy your time here ^_^',
+        text: 'Here\'s where you edit events you\'ve hosted. </br> And we\'re done! Hope you enjoy your time here ^_^',
         selector: '#root > div > div.EventList > div:nth-child(2) > div > div:nth-child(2) > div.content > div.header.EventBlock-header > div',
         position: 'top',
         type: 'click',
