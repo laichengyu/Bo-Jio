@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Services from '../services';
 import Login from './Login';
 import MainApp from './MainApp';
-import { Dimmer, Loader } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 class App extends Component {
   state = { user: null, isLoading: true, services: null, isFirstTimeUser: null }

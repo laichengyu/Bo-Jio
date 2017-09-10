@@ -221,6 +221,7 @@ class NavBar extends Component {
                     text: <span>Signed in as <strong>{!this.state.isLoading ? this.state.user.name : ""}</strong></span>,
                     disabled: true,
                   },
+                  { key: 'privacy-policy', text: 'Privacy Policy', icon: 'privacy', onClick: () => {} },
                   { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: this.logOut },
                 ]} />}
           </Menu.Item>
