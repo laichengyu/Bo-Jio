@@ -22,7 +22,7 @@ class PrivacyPolicy extends Component {
 
         <Header as='h2'>User</Header>
 
-        We will ask for your personal information. The personal information collected includes but not restricting to the following:<br></br>
+        We will ask for your personal information. The personal information collected includes but not restricting to the following:
         <List ordered>
           <List.Item>Private information such as name and birthdate</List.Item>
           <List.Item>Contact information such as email address, mobile number and physical address</List.Item>
@@ -32,9 +32,9 @@ class PrivacyPolicy extends Component {
 
         <Header as='h2'>Information Usage</Header>
 
-        The primary purpose in collecting personal information is to provide the users with a smooth and customized experience.<br></br>
+        <p>The primary purpose in collecting personal information is to provide the users with a smooth and customized experience.</p>
 
-        We will use the information collected for the following purposes<br></br>
+        <span>We will use the information collected for the following purposes</span>
         <List ordered>
           <List.Item>To provide its intended services</List.Item>
           <List.Item>To resolve disputes, and troubleshoot problems and errors</List.Item>
@@ -42,7 +42,7 @@ class PrivacyPolicy extends Component {
         </List>
         <Header as='h2'>Disclosure of information</Header>
 
-        We may share information with governmental agencies or other companies assisting us in fraud prevention or investigation. We may do so when:<br></br>
+        We may share information with governmental agencies or other companies assisting us in fraud prevention or investigation. We may do so when:
         <List ordered>
           <List.Item>Permitted or required by law; or,</List.Item>
           <List.Item>Trying to protect against or prevent actual or potential fraud or unauthorized transactions; or,</List.Item>
@@ -60,8 +60,7 @@ class PrivacyPolicy extends Component {
 
         <Header as='h2'>Changes to the Policies</Header>
 
-        We reserved the rights to amend this Privacy Policy at any time. Upon posting of new policies, it will take immediate effect. We may notify you should there be any major changes to the policies.
-        <br></br>
+        <span>We reserved the rights to amend this Privacy Policy at any time. Upon posting of new policies, it will take immediate effect. We may notify you should there be any major changes to the policies.</span>
       </div>
     );
   }
