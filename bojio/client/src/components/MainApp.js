@@ -22,8 +22,8 @@ class MainApp extends Component {
     isFirstTimeUser: this.props.isFirstTimeUser,
     steps: [
       {
-        title: 'Create an Event',
-        text: 'Click here to start jio-ing!',
+        title: 'Welcome to BoJio!',
+        text: 'Click here to create an event and start jio-ing!',
         selector: '.NavBar-addEventIcon',
         position: 'bottom',
         type: 'click',
@@ -39,7 +39,7 @@ class MainApp extends Component {
       },
       {
         title: 'Notifications',
-        text: 'Check here for events your friends add you in!',
+        text: 'Check here when friends join your event or add you in one',
         selector: '#NavBar-menu > div.right.menu > div.icon.item > i',
         position: 'bottom',
         type: 'click',
@@ -63,7 +63,7 @@ class MainApp extends Component {
       },
       {
         title: 'Event Interaction',
-        text: 'Click to join or leave events',
+        text: 'Click this to join or leave events',
         selector: '.EventStatusToken',
         position: 'bottom',
         type: 'click',
@@ -71,7 +71,7 @@ class MainApp extends Component {
       },
       {
         title: 'Manage Your Events',
-        text: 'Here\'s where you edit events you\'ve hosted',
+        text: 'Here\'s where you edit events you\'ve hosted.\n And we\'re done! Hope you enjoy your time here ^_^',
         selector: '#root > div > div.EventList > div:nth-child(2) > div > div:nth-child(2) > div.content > div.header.EventBlock-header > div',
         position: 'top',
         type: 'click',
