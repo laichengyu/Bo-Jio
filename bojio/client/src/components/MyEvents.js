@@ -124,7 +124,7 @@ class MyEvents extends Component {
       return (
         <Item.Group divided relaxed>
         {
-          events.length === 0 ? <Header as='h3' className="EventList-noResultsFound">No events found...</Header>
+          events.length === 0 ? <Header as='h3' className="EventList-noResultsFound">No events found here...</Header>
           :
           events.map(
             event => <EventBlock key={`MyEvents.${event.id}`} services={this.props.services} {...event} />)
