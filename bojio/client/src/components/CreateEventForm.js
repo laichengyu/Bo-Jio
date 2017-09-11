@@ -405,11 +405,17 @@ class CreateEventForm extends Component {
     );
   }
 
+  fixBody() {
+    const anotherModal = document.getElementsByClassName('ui page modals').length;
+    if (anotherModal > 0) document.body.classList.add('scrolling', 'dimmable', 'dimmed');
+  }
+
   renderGiphyModal() {
     return (
       <Modal
         size="tiny"
         open={this.state.giphySearchOpen}
+        onUnmount={this.fixBody}
         >
         <Modal.Content>
           {this.giphyField()}
